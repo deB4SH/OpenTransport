@@ -1,6 +1,8 @@
 package de.b4sh.core.io;
 
 import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,19 +25,19 @@ public class TextureStorage {
             File dir = new File(canonicalDir + "/" + fileDir);
             String[] content = dir.list();
 
-            dir = null; canonicalDir = null;
-            ArrayList<String> imageFiles = new ArrayList<String>();
-            //check if there are images in
+            //check if there are images in and load them
             for(String e: content){
                 if(e.toLowerCase().contains(".png"))
-                    imageFiles.add(e);
+                    textureStorage.add(TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(dir.getCanonicalPath() + e)));
             }
-
-            
-            int a = 0;
 
         } catch (IOException e) {
             e.printStackTrace();
+            //TODO: add gamelog
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //TODO: add gamelog
         }
     }
 
