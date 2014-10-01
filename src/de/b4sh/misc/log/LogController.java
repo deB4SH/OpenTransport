@@ -11,6 +11,8 @@ public class LogController {
 
     }
 
-    public void writeLog()
+    public void writeLog(){
+        
+    }
 
 }
