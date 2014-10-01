@@ -1,4 +1,4 @@
-package de.b4sh.core.io;
+package de.b4sh.core.resource;
 
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TextureStorage {
+public class ResourceStorage {
 
     private ArrayList<Texture> textureStorage;
 
-    public TextureStorage(String fileDir){
+    public ResourceStorage(String fileDir){
         load(fileDir);
         System.out.println("Textures Loaded");
     }

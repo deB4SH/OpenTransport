@@ -1,7 +1,7 @@
 package de.fhstralsund.project;
 
 
-import de.b4sh.core.io.TextureStorage;
+import de.b4sh.core.resource.ResourceStorage;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -11,7 +11,7 @@ public class Window {
 
     public static void main(String[] args) {
 
-        TextureStorage textureStorage = new TextureStorage("res");
+        ResourceStorage resourceStorage = new ResourceStorage("res");
 
         Window window = new Window();
         window.start();
