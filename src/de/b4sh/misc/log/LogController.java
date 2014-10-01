@@ -8,5 +8,9 @@ public class LogController {
     }
 
     private LogController() {
+
     }
+
+    public void writeLog()
+
 }
