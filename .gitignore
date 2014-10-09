@@ -14,3 +14,5 @@ out
 *.ear
 
 
+*.swp
+.txt.swp

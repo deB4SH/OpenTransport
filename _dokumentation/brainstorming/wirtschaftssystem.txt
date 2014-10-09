@@ -1,0 +1,20 @@
+Inhalt: 
+- Wirtschaftszweige
+- Schwankung in der Wirtschaft
+
+------------------------------------------------
+
+Wirtschaftszweige:
+
+In OpenTransport wird es 3 verschiedene Wirtschafszweige geben in dem vom Spieler geführten Logistikunternehmen. Der erste und kleinste Zweig wird eie Verarbeitung von Holz sein. Dieses kauft man bei einer der umliegenden Holzwäldern transportiert diese zu seinem eigenen Zentrallager und verkauft es anschließend zum besten Preis an ein naheliegendes Sägewerk um Feinholz sowie Holzwaren herzustellen. Feinholz ist dabei ein Produkt für den Weltmarkt und wird nach der "Herstellung" aus dem Firmenlager in alle Welt verkauft. Waren müssen vom Lager in die Stadt zu Händlern gefahren werden und dort verkauft. Dabei bekommt man einen Preis vom Händler der auf der aktuellen Nachfrage basiert.
+
+Der zweite Zweig wird der Handler mit Erzen sein (bevorzugt Eisen). Dieses wird in einer umliegenden Erzmine gekauft und zu einem Hochofen zur Weiterverarbeitung gebracht. Der Schritt der Verarbeitung kostet dem Spieler Geld welches er klug investieren muss. (Einkaufspreis + Verarbeitung). Anschließend wird das nun herstellte Feineisen an naheliegende Hersteller gefahren und verkauft für höhere Preise oder direkt vom Firmenlager an den Weltmarkt.
+
+Der dritte und letzte Zweig wird der Handel mit wertvollen Waren sein (Diamanten). Dieser benötigt eigene Transporter welche gesichert sind. Diamanten können dabei gleich an Juweliere zur Veredlung gegeben werden (Kosten für den Spieler, dafür höhere Reinheit (mehr Verkaufswert) oder direkt Verkauft werden an den Weltmarkt.
+
+
+----------------------------------------------
+
+Schwankung der Wirtschaft
+
+Der Weltmarkt soll ein simulierter Großhandel sein. Dabei werden die Preise stark zwischen den Tagen schwanken um es dem Spieler zu erschweren seine Produkte sofort an den Weltmarkt zu verkaufen. Lokale Anbieter/Händler von Waren werden eine stabile Preisentwicklung haben. Da der Spieler Transportkosten aufbringen muss. 
