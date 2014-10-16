@@ -1,0 +1,39 @@
+WriteUP zum Projekt
+==================
+
+Topics
+- Resourcen
+- Gebäude
+- Entwicklung
+
+==================
+
+Resourcen
+> Nahrung
+> Holz
+> Eisen
+> Stahl
+> Diamanten
+
+=================
+
+Gebäude
+>Nahrung
+>>Bauernhof
+>>Einzelhandel
+
+>Holz
+>>Forst
+>>Sägewerk
+>>Baumarkt
+
+>Eisen
+>>Eisenmine
+
+>Stahl
+>>Hochofen
+
+>Diamanten
+>>Diamantenmine
+>>Juwelenschleifer
+>>Juwelier
