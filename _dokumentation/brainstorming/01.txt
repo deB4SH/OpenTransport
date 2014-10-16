@@ -37,3 +37,19 @@ Gebäude
 >>Diamantenmine
 >>Juwelenschleifer
 >>Juwelier
+
+====================
+
+Entwicklung
+
+Nahrung:
+- Stadt versorgt mit Nahrung -> Stadtwachstum
+-> Stadt überversorgt (niedrige Preise, hohes Wachstum)
+-> Stadt unterversorgt (hohe Preise, negatives Wachstum)
+
+-> Nahrung in Stadt 10000
+-> negativ Wachstum bei 2500 NahrungsEinheiten in der Stadt
+-> positives Wachstum bei 2501 -> 7500
+-> extremes Wachstum bei 7501 -> 10000
+
+
