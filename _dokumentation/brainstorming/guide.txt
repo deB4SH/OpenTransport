@@ -1,0 +1,15 @@
+LearnTO:
+-> Asylum Jam
+-> Ludum Dare 49
+
+Spielideen:
+-> Weltmarkt (über einen kleinen Webservice benutzen , php-api mit aktuellem bestand und wert der ware)
+
+Configs:
+-> Fahrzeuge (JSON via jimfs laden beim boot)
+-> Gebäude (JSON via jimfs)
+
+
+Libs:
+https://github.com/google/jimfs  -> Filesystem for Java
+https://github.com/skuzzle/plugz -> Pluginsystem for Java
