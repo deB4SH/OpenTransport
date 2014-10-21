@@ -1,21 +1,17 @@
-!lib/jimfs-1.0.jar  
-!lib/jimfs-1.0-javadoc.jar 
-
 OpenTransport.iml
 .idea
 out
-=======
-*.class
 
+*.class
 # Mobile Tools for Java (J2ME)
 .mtj
 .tmp/
-
 # Package Files #
 *.jar
 *.war
 *.ear
-
-
 *.swp
 .txt.swp
+
+!lib/jimfs-1.0.jar
+!lib/jimfs-1.0-javadoc.jar
