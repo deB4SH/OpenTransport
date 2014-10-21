@@ -1,3 +1,6 @@
+!lib/jimfs-1.0.jar  
+!lib/jimfs-1.0-javadoc.jar 
+
 OpenTransport.iml
 .idea
 out

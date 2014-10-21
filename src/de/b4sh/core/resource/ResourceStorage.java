@@ -8,7 +8,9 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystem;
 import java.util.ArrayList;
+import com.google.common.jimfs.*;
 
 public class ResourceStorage {
 
@@ -48,6 +50,8 @@ public class ResourceStorage {
             String canoncialDir = new File(".").getCanonicalPath();
             File dir = new File(canoncialDir + "/" + fileDir);
             String[] content = dir.list();
+
+
 
             //get content
             for(String e: content){
