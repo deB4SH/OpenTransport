@@ -1,12 +1,9 @@
 package de.fhstralsund.project.entity;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 
-/**
- * Created by Florian on 27.10.2014.
- */
 public class Camera {
 
     private static Camera instance = null;
@@ -33,19 +30,19 @@ public class Camera {
 
         clamp();
 
-        if(Mouse.getX() >(width * 90) / 100) {
+        if(Mouse.getX() >(width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.setX(position.getX() + 3);
         }
 
-        if(Mouse.getX() < (width * 10) / 100) {
+        if(Mouse.getX() < (width * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
             position.setX(position.getX() - 3);
         }
 
-        if(Mouse.getY() > (height * 90) / 100) {
+        if(Mouse.getY() > (height * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
             position.setY(position.getY() - 3);
         }
 
-        if(Mouse.getY() < (height * 10) / 100) {
+        if(Mouse.getY() < (height * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
             position.setY(position.getY() + 3);
         }
     }
