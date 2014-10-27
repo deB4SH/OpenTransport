@@ -1,6 +1,7 @@
 package de.fhstralsund.project.resource;
 
 import de.fhstralsund.project.resource.types.BasicTexture;
+import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public class ResourceLoader {
     public void loadImageFile(String filedir, String filename){
         try{
             String canoncialDir = new File(".").getCanonicalPath();
-            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "/" + filedir + "/" + filename)),filedir+"-"+filename));
+            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "\\" + filedir + "\\" + filename)),filedir+"-"+filename,textureList.size()));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -34,7 +35,7 @@ public class ResourceLoader {
             //get content
             for(String e: content){
                 if(e.toLowerCase().contains(".png")){
-                    this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "/" + filedir + "/" + e)),filedir+"-"+e));
+                    this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "\\" + filedir + "\\" + e)),filedir+"-"+e,this.textureList.size()));
                 }
             }
         } catch (IOException e) {
@@ -42,5 +43,9 @@ public class ResourceLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void bindTextureByID(int id){
+        this.textureList.get(id).bindTexture();
     }
 }

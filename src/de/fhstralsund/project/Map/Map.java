@@ -4,38 +4,34 @@ import de.fhstralsund.project.entity.IRenderable;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import de.fhstralsund.project.resource.ResourceLoader;
 
-/**
- * Created by Florian on 27.10.2014.
- */
+
 public class Map implements IRenderable{
 
     private List<Layer> layers = new ArrayList<Layer>();
     private Texture grastexture;
+    private static ResourceLoader rl;
 
-    public Map(int size) {
+    public Map(int size, ResourceLoader rl) {
 
+        this.rl = rl;
         layers.add(new Layer(size));   // layer 0 Gras
         //layers.add(new Layer(size)); // layer 1 Streets
         //layers.add(new Layer(size)); // layer 2 Buildings
 
-        try {
-            grastexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/ground.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void Render() {
         Color.white.bind();
-        grastexture.bind();
+        rl.bindTextureByID(0);
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x

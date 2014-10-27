@@ -5,10 +5,16 @@ import org.newdawn.slick.opengl.Texture;
 public class BasicTexture {
     private Texture texture;
     private String filename;
+    private int id;
 
-    public BasicTexture(Texture texture, String filename) {
+    public BasicTexture(Texture texture, String filename, int id) {
         this.texture = texture;
         this.filename = filename;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Texture getTexture() {
