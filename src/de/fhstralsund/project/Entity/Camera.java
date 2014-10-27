@@ -9,9 +9,9 @@ public class Camera {
     private static Camera instance = null;
     private static Vector2f position;
 
-    private static int width = 800;
-    private static int height = 600;
-    private static int size = 100;
+    private static int width = 1600;
+    private static int height = 800;
+    private static int size = 50;
 
     private Camera() {
         position = new Vector2f(0, 0);
@@ -57,8 +57,8 @@ public class Camera {
         if(position.getY() < (-size / 2) * 32) {
             position.setY((-size / 2) * 32);
         }
-        if(position.getY() > (size / 2) * 32) {
-            position.setY((size / 2) * 32);
+        if(position.getY() > (size / 2) * 32 - height) {
+            position.setY((size / 2) * 32 - height);
         }
     }
 

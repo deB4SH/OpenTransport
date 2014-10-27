@@ -38,7 +38,7 @@ public class Map implements IRenderable{
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x
-                for (int y = 0; y < layers.get(i).getMap().length; y++) {// array y
+                for(int y = 0; y < layers.get(i).getMap().length; y++) {// array y
 
                     GL11.glBegin(GL11.GL_QUADS);
 
