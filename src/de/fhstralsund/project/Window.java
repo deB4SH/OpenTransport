@@ -64,6 +64,10 @@ public class Window {
 
     private void setup(){
         rl  = new ResourceLoader();
-        map = new Map(200);
+
+        //load grastexture
+        rl.loadImageFile("res","ground.png");
+
+        map = new Map(200,rl);
     }
 }
