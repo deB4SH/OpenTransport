@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 
     private Map map;
-    private static ResourceLoader rl;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -44,6 +43,6 @@ public class Window {
     }
 
     private void setup(){
-       rl  = new ResourceLoader();
+        ResourceLoader rl = new ResourceLoader();
     }
 }
