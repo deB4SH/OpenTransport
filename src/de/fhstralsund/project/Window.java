@@ -1,5 +1,6 @@
 package de.fhstralsund.project;
 
+import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.map.Map;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;
@@ -24,6 +25,7 @@ public class Window {
 
         while(true){
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            this.update();
             this.render();
             Display.update();
             Display.sync(100);
@@ -33,6 +35,11 @@ public class Window {
                 System.exit(0);
             }
         }
+    }
+
+    private void update() {
+        Camera cam = Camera.getInstance();
+        cam.Update();
     }
 
     private void render() {
@@ -68,6 +75,6 @@ public class Window {
         //load grastexture
         rl.loadImageFile("res","ground.png");
 
-        map = new Map(200,rl);
+        map = new Map(100, rl);
     }
 }
