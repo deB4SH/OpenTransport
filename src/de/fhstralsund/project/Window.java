@@ -1,7 +1,5 @@
 package de.fhstralsund.project;
 
-
-import de.b4sh.core.resource.ResourceStorage;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
