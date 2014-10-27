@@ -15,7 +15,6 @@ import de.fhstralsund.project.resource.ResourceLoader;
 public class Map implements IRenderable{
 
     private List<Layer> layers = new ArrayList<Layer>();
-    private Texture grastexture;
     private static ResourceLoader rl;
 
     public Map(int size, ResourceLoader rl) {
@@ -24,7 +23,6 @@ public class Map implements IRenderable{
         layers.add(new Layer(size));   // layer 0 Gras
         //layers.add(new Layer(size)); // layer 1 Streets
         //layers.add(new Layer(size)); // layer 2 Buildings
-
 
     }
 
@@ -38,17 +36,13 @@ public class Map implements IRenderable{
                 for (int y = 0; y < layers.get(i).getMap().length; y++) {// array y
                     GL11.glBegin(GL11.GL_QUADS);
                     GL11.glTexCoord2f(0,0);
-                    GL11.glVertex2f((y * grastexture.getImageWidth() / 2) + (x * grastexture.getImageWidth() / 2),
-                            (x * grastexture.getImageHeight() / 2) + (y * grastexture.getImageHeight() / 2));
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 47 / 2) - (x * 47 / 2));
                     GL11.glTexCoord2f(1,0);
-                    GL11.glVertex2f((y * grastexture.getImageWidth() / 2) + (x * grastexture.getImageWidth() / 2) + grastexture.getImageWidth(),
-                            (x * grastexture.getImageHeight() / 2) + (y * grastexture.getImageHeight() / 2));
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 47 / 2) - (x * 47 / 2));
                     GL11.glTexCoord2f(1,1);
-                    GL11.glVertex2f((y * grastexture.getImageWidth() / 2) + (x * grastexture.getImageWidth() / 2) + grastexture.getImageWidth(),
-                            (x * grastexture.getImageHeight() / 2) + (y * grastexture.getImageHeight() / 2) + grastexture.getImageHeight());
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 47 / 2) - (x * 47 / 2) + 47 );
                     GL11.glTexCoord2f(0,1);
-                    GL11.glVertex2f((y * grastexture.getImageWidth() / 2) + (x * grastexture.getImageWidth() / 2),
-                            (x * grastexture.getImageHeight() / 2) + (y * grastexture.getImageHeight() / 2) + grastexture.getImageHeight());
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 47 / 2) - (x * 47 / 2) + 47);
                     GL11.glEnd();
                 }
             }
