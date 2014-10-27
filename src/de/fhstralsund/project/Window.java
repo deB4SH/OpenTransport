@@ -2,6 +2,7 @@ package de.fhstralsund.project;
 
 
 import de.b4sh.core.resource.ResourceStorage;
+import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -10,15 +11,14 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 
     public static void main(String[] args) {
-
-        ResourceStorage resourceStorage = new ResourceStorage("res");
-
         Window window = new Window();
         window.start();
     }
 
     public void start() {
         try {
+            this.setup();
+
             Display.setDisplayMode(new DisplayMode(800,600));
             Display.create();
         } catch (LWJGLException e) {
@@ -45,5 +45,9 @@ public class Window {
         }
 
         Display.destroy();
+    }
+
+    private void setup(){
+        ResourceLoader rl = new ResourceLoader();
     }
 }
