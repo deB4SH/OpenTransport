@@ -1,6 +1,7 @@
 package de.fhstralsund.project.resource;
 
 import de.fhstralsund.project.resource.types.BasicTexture;
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -47,5 +48,17 @@ public class ResourceLoader {
 
     public void bindTextureByID(int id){
         this.textureList.get(id).bindTexture();
+    }
+
+    public Vector2f getTextureSizeByID(int id){
+        return new Vector2f(this.textureList.get(id).getTexture().getWidth(),this.textureList.get(id).getTexture().getHeight());
+    }
+
+    public void bindTextureByFileName(String filename){
+        for(BasicTexture e: this.textureList){
+            if(e.getFilename() == filename){
+                e.bindTexture();
+            }
+        }
     }
 }
