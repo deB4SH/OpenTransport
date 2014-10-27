@@ -33,7 +33,7 @@ public class Map implements IRenderable{
     @Override
     public void Render() {
         Color.white.bind();
-        rl.bindTextureByID(0);
+        rl.bindTextureByID(grasslandID);
         Camera cam = Camera.getInstance();
 
         for(int i = 0; i < layers.size(); i++) {                         // layers

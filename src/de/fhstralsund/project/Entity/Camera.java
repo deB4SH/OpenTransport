@@ -2,6 +2,7 @@ package de.fhstralsund.project.entity;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Camera {
@@ -28,7 +29,11 @@ public class Camera {
         if ( instance == null)
             return;
 
-        clamp();
+        if(Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            GL11.glTranslated(width/2, height/2, 1);
+            GL11.glScaled(1.005f, 1.005f, 1);
+            GL11.glTranslated(-width/2, -height/2, -1);
+        }
 
         if(Mouse.getX() >(width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.setX(position.getX() + 3);
@@ -45,6 +50,7 @@ public class Camera {
         if(Mouse.getY() < (height * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
             position.setY(position.getY() + 3);
         }
+        clamp();
     }
 
     private void clamp() {
