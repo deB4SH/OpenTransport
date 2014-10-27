@@ -16,6 +16,8 @@ public class Map implements IRenderable{
 
     private List<Layer> layers = new ArrayList<Layer>();
     private static ResourceLoader rl;
+    private int grasslandID = 0;
+    private int tileWidth=64,tileHeigth=32;
 
     public Map(int size, ResourceLoader rl) {
 
@@ -36,13 +38,13 @@ public class Map implements IRenderable{
                 for (int y = 0; y < layers.get(i).getMap().length; y++) {// array y
                     GL11.glBegin(GL11.GL_QUADS);
                     GL11.glTexCoord2f(0,0);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 32 / 2) - (x * 32 / 2));
+                    GL11.glVertex2f((x * tileWidth / 2) + (y * tileWidth / 2), (y * tileHeigth / 2) - (x * tileHeigth / 2));
                     GL11.glTexCoord2f(1,0);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 32 / 2) - (x * 32 / 2));
+                    GL11.glVertex2f((x * tileWidth / 2) + (y * tileWidth / 2) + tileWidth, (y * tileHeigth / 2) - (x * tileHeigth / 2));
                     GL11.glTexCoord2f(1,1);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 32 / 2) - (x * 32 / 2) + 32 );
+                    GL11.glVertex2f((x * tileWidth / 2) + (y * tileWidth / 2) + tileWidth, (y * tileHeigth / 2) - (x * tileHeigth / 2) + tileHeigth );
                     GL11.glTexCoord2f(0,1);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 32 / 2) - (x * 32 / 2) + 32);
+                    GL11.glVertex2f((x * tileWidth / 2) + (y * tileWidth / 2), (y * tileHeigth / 2) - (x * tileHeigth / 2) + tileHeigth);
                     GL11.glEnd();
                 }
             }
