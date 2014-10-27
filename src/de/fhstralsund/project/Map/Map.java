@@ -36,13 +36,13 @@ public class Map implements IRenderable{
                 for (int y = 0; y < layers.get(i).getMap().length; y++) {// array y
                     GL11.glBegin(GL11.GL_QUADS);
                     GL11.glTexCoord2f(0,0);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 47 / 2) - (x * 47 / 2));
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 32 / 2) - (x * 32 / 2));
                     GL11.glTexCoord2f(1,0);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 47 / 2) - (x * 47 / 2));
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 32 / 2) - (x * 32 / 2));
                     GL11.glTexCoord2f(1,1);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 47 / 2) - (x * 47 / 2) + 47 );
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2) + 64, (y * 32 / 2) - (x * 32 / 2) + 32 );
                     GL11.glTexCoord2f(0,1);
-                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 47 / 2) - (x * 47 / 2) + 47);
+                    GL11.glVertex2f((x * 64 / 2) + (y * 64 / 2), (y * 32 / 2) - (x * 32 / 2) + 32);
                     GL11.glEnd();
                 }
             }
