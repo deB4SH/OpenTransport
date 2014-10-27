@@ -1,7 +1,6 @@
-package de.fhstralsund.project.Map;
+package de.fhstralsund.project.map;
 
-import de.fhstralsund.project.Entity.IRenderable;
-import org.lwjgl.opengl.Display;
+import de.fhstralsund.project.entity.IRenderable;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -10,7 +9,6 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ public class Map implements IRenderable{
 
     public Map(int size) {
 
-        layers.add(new Layer(size)); // layer 0 Gras
+        layers.add(new Layer(size));   // layer 0 Gras
         //layers.add(new Layer(size)); // layer 1 Streets
         //layers.add(new Layer(size)); // layer 2 Buildings
 
@@ -36,27 +34,25 @@ public class Map implements IRenderable{
 
     @Override
     public void Render() {
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glColor3f(0.5f,0.5f,1.0f);
-        GL11.glBegin(GL11.GL_QUADS);
         Color.white.bind();
         grastexture.bind();
 
-        for(int i = 0; i < layers.size(); i++) {         // layers
-            for(int x = 0; x < layers.size(); x++) {     // array x
-                for (int y = 0; y < layers.size(); y++) {// array y
-
-                    GL11.glVertex2f(x * grastexture.getImageWidth(), y * grastexture.getImageHeight());
-                    GL11.glVertex2f(x * grastexture.getImageWidth() + grastexture.getImageWidth(), y * grastexture.getImageHeight());
-                    GL11.glVertex2f(x * grastexture.getImageWidth() + grastexture.getImageWidth(), y * grastexture.getImageHeight() + grastexture.getImageHeight());
-                    GL11.glVertex2f(x * grastexture.getImageWidth(), y * grastexture.getImageHeight() + grastexture.getImageHeight());
-
+        for(int i = 0; i < layers.size(); i++) {                         // layers
+            for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x
+                for (int y = 0; y < layers.get(i).getMap().length; y++) {// array y
+                    GL11.glBegin(GL11.GL_QUADS);
+                    GL11.glTexCoord2f(0,0);
+                    GL11.glVertex2f(100, 100);
+                    GL11.glTexCoord2f(1,0);
+                    GL11.glVertex2f(150, 100);
+                    GL11.glTexCoord2f(1,1);
+                    GL11.glVertex2f(150, 150);
+                    GL11.glTexCoord2f(0,1);
+                    GL11.glVertex2f(100, 150);
+                    GL11.glEnd();
                 }
             }
         }
-
-        GL11.glEnd();
-        Display.update();
 
     }
 }
