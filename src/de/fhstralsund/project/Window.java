@@ -19,7 +19,7 @@ public class Window {
     }
 
     public void start() {
-        this.setupGL(800,600);
+        this.setupGL(1600,800);
         this.setup();
 
 
@@ -75,6 +75,6 @@ public class Window {
         //load grastexture
         rl.loadImageFile("res","ground.png");
 
-        map = new Map(100, rl);
+        map = new Map(50, rl);
     }
 }
