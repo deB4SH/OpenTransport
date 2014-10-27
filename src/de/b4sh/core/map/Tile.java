@@ -8,12 +8,12 @@ public class Tile {
 
     private TileType tileType;
     private Vector2f position;
-    private Texture textureRef;
+    private Texture texture;
 
     public Tile(TileType tileType, Vector2f position, Texture textureRef) {
         this.tileType = tileType;
         this.position = position;
-        this.textureRef = textureRef;
+        this.texture = textureRef;
     }
 
     public void render(){
