@@ -11,7 +11,6 @@ public class Camera {
 
     private static Camera instance = null;
     private static Vector2f position;
-    private static Rectangle rectangle;
 
     private static int width = 800;
     private static int height = 600;
@@ -49,8 +48,6 @@ public class Camera {
         if(Mouse.getY() < (height * 10) / 100) {
             position.setY(position.getY() + 3);
         }
-        rectangle.setX((int)position.getX());
-        rectangle.setY((int) position.getY());
     }
 
     private void clamp() {
@@ -70,9 +67,5 @@ public class Camera {
 
     public Vector2f getPosition() {
         return position;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
     }
 }
