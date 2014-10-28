@@ -21,7 +21,7 @@ public class GamestateManager implements IRenderable,IUpdateable{
 
     @Override
     public void update() {
-
+        activeScreen.update();
     }
 
     public void addGameState(GameScreen gamescreen){

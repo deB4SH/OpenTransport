@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 
     private GamestateManager gs;
-    private ResourceLoader rl;
+    private static ResourceLoader rl;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -41,10 +41,12 @@ public class Window {
     private void update() {
         Camera cam = Camera.getInstance();
         cam.Update();
+        this.gs.update();
     }
 
     private void render() {
-
+        //render actual gamestate
+        this.gs.render();
     }
 
     private void setupGL(int width,int height){
@@ -71,9 +73,14 @@ public class Window {
     }
 
     private void setup(){
-        this.rl = new ResourceLoader();
+        rl = new ResourceLoader();
+        //load grastexture
+        rl.loadImageFile("res","ground.png");
+        rl.loadImageFile("res\\street","ne.png");
+
 
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl,50));
+        this.gs.switchGameState(0);
     }
 }

@@ -10,10 +10,11 @@ import de.fhstralsund.project.resource.ResourceLoader;
 public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private Map map;
-    private static ResourceLoader rl;
+    private ResourceLoader rl;
 
-    public Game(ResourceLoader rl,int size) {
-        this.map = new Map(size, rl);
+    public Game(ResourceLoader rlo,int size) {
+        this.map = new Map(size, rlo);
+        this.rl = rlo;
     }
 
     @Override
@@ -28,11 +29,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     @Override
     public void setup() {
-        rl  = new ResourceLoader();
-
-        //load grastexture
-        rl.loadImageFile("res","ground.png");
-        rl.loadImageFile("res\\street","ne.png");
 
         map = new Map(50, rl);
     }
