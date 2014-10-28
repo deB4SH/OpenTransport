@@ -68,15 +68,16 @@ public class Window {
 
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0,width,height,0,1,-1);
+        GL11.glOrtho(0, width, height, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
     private void setup(){
         rl = new ResourceLoader();
         //load grastexture
-        rl.loadImageFile("res","ground.png");
-        rl.loadImageFile("res\\street","ne.png");
+        rl.loadImageFile("res", "ground.png");
+        rl.loadImageFile("res\\street", "street_NE.png");
+        rl.loadImageFile("res\\street", "street_SE.png");
 
 
         this.gs = new GamestateManager();

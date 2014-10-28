@@ -77,5 +77,28 @@ public class Map implements IRenderable{
             }
         }
 
+        rl.bindTextureByID(2);
+
+        for(int i = 0; i < layers.size(); i++) {                         // layers
+            for(int y = 0; y < layers.get(i).getMap().length; y++) {     // array x
+                int x = 5;
+
+                GL11.glBegin(GL11.GL_QUADS);
+
+                float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
+                float ypos = ((y * tileHeigth / 2) - (x * tileHeigth / 2) - cam.getPosition().y);
+
+                GL11.glTexCoord2f(0, 0);
+                GL11.glVertex2f(xpos, ypos);
+                GL11.glTexCoord2f(1, 0);
+                GL11.glVertex2f(xpos + tileWidth, ypos);
+                GL11.glTexCoord2f(1, 1);
+                GL11.glVertex2f(xpos + tileWidth, ypos + tileHeigth);
+                GL11.glTexCoord2f(0, 1);
+                GL11.glVertex2f(xpos, ypos + tileHeigth);
+                GL11.glEnd();
+            }
+        }
+
     }
 }
