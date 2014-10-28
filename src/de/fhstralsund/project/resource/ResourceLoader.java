@@ -8,18 +8,23 @@ import org.newdawn.slick.opengl.TextureLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResourceLoader {
 
     ArrayList<BasicTexture> textureList;
+    private Map<String, Integer> textures;
 
     public ResourceLoader() {
         this.textureList = new ArrayList<BasicTexture>();
+        this.textures = new HashMap<String, Integer>();
     }
 
     public void loadImageFile(String filedir, String filename){
         try{
             String canoncialDir = new File(".").getCanonicalPath();
+            this.textures.put(filename, textureList.size());
             this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "\\" + filedir + "\\" + filename)),filedir+"-"+filename,textureList.size()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,5 +65,9 @@ public class ResourceLoader {
                 e.bindTexture();
             }
         }
+    }
+
+    public Integer getTexturesID(String name) {
+        return textures.get(name);
     }
 }

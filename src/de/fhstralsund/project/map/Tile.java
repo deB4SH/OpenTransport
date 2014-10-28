@@ -12,4 +12,8 @@ public class Tile {
         this.position = position;
         this.textureId = textureId;
     }
+
+    public int getTextureId() {
+        return textureId;
+    }
 }

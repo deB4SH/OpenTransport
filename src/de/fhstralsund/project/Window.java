@@ -75,12 +75,12 @@ public class Window {
         rl = new ResourceLoader();
         //load grastexture
         rl.loadImageFile("res", "ground.png");
-        rl.loadImageFile("res\\street", "street_NE.png");
-        rl.loadImageFile("res\\street", "street_SE.png");
+        rl.loadImageFile("res\\street\\rural", "street_NE.png");
+        rl.loadImageFile("res\\street\\urban", "street_SE_.png");
 
 
         this.gs = new GamestateManager();
-        this.gs.addGameState(new Game(rl,50));
+        this.gs.addGameState(new Game(rl, 50));
         this.gs.switchGameState(0);
     }
 }

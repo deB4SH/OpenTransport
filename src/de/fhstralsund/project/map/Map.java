@@ -20,7 +20,7 @@ public class Map implements IRenderable{
     public Map(int size, ResourceLoader rl) {
 
         this.rl = rl;
-        layers.add(new Layer(size));   // layer 0 Gras
+        layers.add(new Layer(size, rl));   // layer 0 Gras
         //layers.add(new Layer(size)); // layer 1 Streets
         //layers.add(new Layer(size)); // layer 2 Buildings
 
@@ -29,13 +29,13 @@ public class Map implements IRenderable{
     @Override
     public void render() {
         Color.white.bind();
-        rl.bindTextureByID(grasslandID);
         Camera cam = Camera.getInstance();
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x
                 for(int y = 0; y < layers.get(i).getMap().length; y++) {// array y
 
+                    rl.bindTextureByID(layers.get(i).getMap()[x][y].getTextureId());
                     GL11.glBegin(GL11.GL_QUADS);
 
                     float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
@@ -54,7 +54,7 @@ public class Map implements IRenderable{
             }
         }
 
-        rl.bindTextureByID(1);
+        rl.bindTextureByID(rl.getTexturesID("street_NE.png"));
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x
@@ -77,7 +77,7 @@ public class Map implements IRenderable{
             }
         }
 
-        rl.bindTextureByID(2);
+        rl.bindTextureByID(rl.getTexturesID("street_SE_.png"));
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int y = 0; y < layers.get(i).getMap().length; y++) {     // array x
