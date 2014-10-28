@@ -4,11 +4,10 @@ import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
-
+import de.fhstralsund.project.resource.ResourceLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import de.fhstralsund.project.resource.ResourceLoader;
 
 
 public class Map implements IRenderable{

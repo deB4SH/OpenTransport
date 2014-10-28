@@ -2,9 +2,6 @@ package de.fhstralsund.project.map;
 
 import org.lwjgl.util.vector.Vector2f;
 
-/**
- * Created by Florian on 27.10.2014.
- */
 public class Layer {
 
     private Tile map[][];

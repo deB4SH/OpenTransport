@@ -1,5 +1,6 @@
 package de.fhstralsund.project.core.screen;
 
+
 import de.fhstralsund.project.core.GameScreen;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
@@ -10,6 +11,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private Map map;
     private static ResourceLoader rl;
+
+    public Game(ResourceLoader rl,int size) {
+        this.map = new Map(size, rl);
+    }
 
     @Override
     public void render() {

@@ -1,8 +1,8 @@
 package de.fhstralsund.project;
 
 import de.fhstralsund.project.core.GamestateManager;
+import de.fhstralsund.project.core.screen.Game;
 import de.fhstralsund.project.entity.Camera;
-import de.fhstralsund.project.map.Map;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 
     private GamestateManager gs;
+    private ResourceLoader rl;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -70,6 +71,9 @@ public class Window {
     }
 
     private void setup(){
+        this.rl = new ResourceLoader();
+
         this.gs = new GamestateManager();
+        this.gs.addGameState(new Game(rl,50));
     }
 }
