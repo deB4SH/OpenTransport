@@ -1,6 +1,10 @@
 package de.fhstralsund.project.map.generator;
 
+import de.fhstralsund.project.entity.Building;
 import de.fhstralsund.project.entity.City;
+import de.fhstralsund.project.entity.Street;
+
+import java.util.ArrayList;
 
 public class CityGenerator {
 
@@ -11,8 +15,5 @@ public class CityGenerator {
         this.seedY = seedY;
     }
 
-    public City generateCity(){
 
-        return new City();
-    }
 }

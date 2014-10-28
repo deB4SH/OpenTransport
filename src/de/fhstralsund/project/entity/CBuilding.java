@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class CBuilding {
 
-    private ArrayList<Building> buildingList;
+    private ArrayList<City> cityList;
 
     public CBuilding() {
-        this.buildingList = new ArrayList<Building>();
+        this.cityList = new ArrayList<City>();
     }
 }

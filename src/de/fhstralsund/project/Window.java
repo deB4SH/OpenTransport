@@ -74,6 +74,7 @@ public class Window {
 
         //load grastexture
         rl.loadImageFile("res","ground.png");
+        rl.loadImageFile("res\\street","ne.png");
 
         map = new Map(50, rl);
     }
