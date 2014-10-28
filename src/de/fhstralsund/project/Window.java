@@ -23,7 +23,6 @@ public class Window {
         this.setupGL(1600,800);
         this.setup();
 
-
         while(true){
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             this.update();
