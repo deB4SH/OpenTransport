@@ -3,20 +3,34 @@ package de.fhstralsund.project.map;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.util.Random;
+
 public class Layer {
 
     private Tile map[][];
     private int size;
+    private ResourceLoader rl;
 
-    public Layer(int size, ResourceLoader rl) {
+    public Layer(int size, ResourceLoader rl, String type) {
         this.size = size;
         map = new Tile[size][size];
+        this.rl = rl;
 
-        for(int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                // Gras
-                map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("ground.png"));
+        if (type.equalsIgnoreCase("")) {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    // Gras
+                    map[i][j] = new Tile(new Vector2f(i, j), this.rl.getTexturesID("ground.png"));
+                }
             }
+        }
+
+        if (type.equalsIgnoreCase("vegetation")) {
+            genereateEnvironement();
+        }
+
+        if(type.equalsIgnoreCase("streets")) {
+            generateStreets();
         }
     }
 
@@ -24,8 +38,22 @@ public class Layer {
     public void genereateEnvironement() {
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                map[i][j] = new Tile(new Vector2f(i, j), 0);
+                if(i % 2 == 0 || j % 4 == 0) {
+                    map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("wood" + (new Random().nextInt(6) + 1) + ".png"));
+                }
             }
+        }
+    }
+
+
+    public void generateStreets() {
+        for (int i = 0; i < size; i++) {
+            int j = 5;
+            map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("Street_NE.png"));
+        }
+        for (int i = 0; i < size; i++) {
+            int j = 5;
+            map[j][i] = new Tile(new Vector2f(i, j), rl.getTexturesID("street_SE_.png"));
         }
     }
 
