@@ -1,14 +1,11 @@
 package de.fhstralsund.project.map;
 
 import de.fhstralsund.project.entity.Camera;
-import de.fhstralsund.project.entity.IRenderable;
+import de.fhstralsund.project.core.interfaces.IRenderable;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import de.fhstralsund.project.resource.ResourceLoader;
@@ -31,7 +28,7 @@ public class Map implements IRenderable{
     }
 
     @Override
-    public void Render() {
+    public void render() {
         Color.white.bind();
         rl.bindTextureByID(grasslandID);
         Camera cam = Camera.getInstance();

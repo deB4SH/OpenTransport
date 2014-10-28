@@ -1,5 +1,6 @@
 package de.fhstralsund.project;
 
+import de.fhstralsund.project.core.GamestateManager;
 import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.map.Map;
 import de.fhstralsund.project.resource.ResourceLoader;
@@ -10,8 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Window {
 
-    private Map map;
-    private static ResourceLoader rl;
+    private GamestateManager gs;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -43,7 +43,7 @@ public class Window {
     }
 
     private void render() {
-        map.Render();
+
     }
 
     private void setupGL(int width,int height){
@@ -70,12 +70,6 @@ public class Window {
     }
 
     private void setup(){
-        rl  = new ResourceLoader();
-
-        //load grastexture
-        rl.loadImageFile("res","ground.png");
-        rl.loadImageFile("res\\street","ne.png");
-
-        map = new Map(50, rl);
+        this.gs = new GamestateManager();
     }
 }
