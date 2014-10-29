@@ -9,6 +9,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import java.io.File;
+
 public class Window {
 
     private GamestateManager gs;
@@ -75,14 +77,14 @@ public class Window {
         rl = new ResourceLoader();
         //load grastexture
         rl.loadImageFile("res", "ground.png");
-        rl.loadImageFile("res\\street\\rural", "Street_NE.png");
-        rl.loadImageFile("res\\street\\urban", "street_SE_.png");
-        rl.loadImageFile("res\\landscape", "wood1.png");
-        rl.loadImageFile("res\\landscape", "wood2.png");
-        rl.loadImageFile("res\\landscape", "wood3.png");
-        rl.loadImageFile("res\\landscape", "wood4.png");
-        rl.loadImageFile("res\\landscape", "wood5.png");
-        rl.loadImageFile("res\\landscape", "wood6.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"urban", "street_SE_.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood1.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood2.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood3.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood4.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood5.png");
+        rl.loadImageFile("res"+File.separator+"landscape", "wood6.png");
 
 
 
