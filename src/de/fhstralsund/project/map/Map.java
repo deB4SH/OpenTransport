@@ -14,7 +14,7 @@ public class Map implements IRenderable{
 
     private List<Layer> layers = new ArrayList<Layer>();
     private static ResourceLoader rl;
-    private int tileWidth=64,tileHeigth=32;
+    private int tileWidth=64, tileHeigth=32;
 
     public Map(int size, ResourceLoader rl) {
 
@@ -30,7 +30,7 @@ public class Map implements IRenderable{
         Camera cam = Camera.getInstance();
 
         for(int i = 0; i < layers.size(); i++) {                         // layers
-            for(int x = 0; x < layers.get(i).getMap().length; x++) {     // array x
+            for(int x = layers.get(i).getMap().length-1; x >= 0; x--) {     // array x
                 for(int y = 0; y < layers.get(i).getMap().length; y++) { // array y
                     if(layers.get(i).getMap()[x][y] != null) {
                         rl.bindTextureByID(layers.get(i).getMap()[x][y].getTextureId());
@@ -44,8 +44,7 @@ public class Map implements IRenderable{
                         GL11.glTexCoord2f(1, 0);
                         GL11.glVertex2f(xpos + tileWidth, ypos);
                         GL11.glTexCoord2f(1, 1);
-                        int g = (int)rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y;
-                        GL11.glVertex2f(xpos + tileWidth, ypos + g);
+                        GL11.glVertex2f(xpos + tileWidth, ypos + (int)rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y);
                         GL11.glTexCoord2f(0, 1);
                         GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y);
                         GL11.glEnd();
