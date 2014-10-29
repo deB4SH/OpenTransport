@@ -25,7 +25,7 @@ public class ResourceLoader {
         try{
             String canoncialDir = new File(".").getCanonicalPath();
             this.textures.put(filename, textureList.size());
-            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "\\" + filedir + "\\" + filename)),filedir+"-"+filename,textureList.size()));
+            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + filename)),filedir+"-"+filename,textureList.size()));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class ResourceLoader {
             //get content
             for(String e: content){
                 if(e.toLowerCase().contains(".png")){
-                    this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + "\\" + filedir + "\\" + e)),filedir+"-"+e,this.textureList.size()));
+                    this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + e)),filedir+"-"+e,this.textureList.size()));
                 }
             }
         } catch (IOException e) {
