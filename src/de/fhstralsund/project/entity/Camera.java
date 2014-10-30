@@ -13,6 +13,8 @@ public class Camera {
     private static int width = 1600;
     private static int height = 800;
     private static int size = 50;
+    private int zoomin, zoomout = 0;
+
 
     private Camera() {
         position = new Vector2f(0, 0);
@@ -29,10 +31,24 @@ public class Camera {
         if ( instance == null)
             return;
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_E)) {
-            GL11.glTranslated(width/2, height/2, 1);
-            GL11.glScaled(1.005f, 1.005f, 1);
-            GL11.glTranslated(-width/2, -height/2, -1);
+        if(Keyboard.isKeyDown(Keyboard.KEY_E) && !Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+            if(zoomin < 10) {
+                GL11.glTranslated(width/2, height/2, 1);
+                GL11.glScaled(1.05f, 1.05f, 1);
+                GL11.glTranslated(-width/2, -height/2, -1);
+                zoomin++;
+                zoomout--;
+            }
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q) && !Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            if(zoomout < 10) {
+                GL11.glTranslated(width/2, height/2, 1);
+                GL11.glScaled(0.95f, 0.95f, 1);
+                GL11.glTranslated(-width/2, -height/2, -1);
+                zoomin--;
+                zoomout++;
+            }
         }
 
         if(Mouse.getX() >(width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
