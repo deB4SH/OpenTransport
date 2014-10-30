@@ -38,7 +38,9 @@ public class Layer {
     public void genereateEnvironement() {
         for(int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if((i % 2 == 0 || j % 4 == 0) && i != 5 && j != 5) {
+                if((i % 2 == 0 || j % 2 == 0) && i != 5 && j != 5 &&
+                        ((new Random().nextInt(size) + 2) % (j + 1) != 0 &&
+                                (new Random().nextInt(size) + 2) % (i + 1) != 0) && (new Random().nextInt(6) + 1) % 2 == 0) {
                     map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("wood" + (new Random().nextInt(6) + 1) + ".png"));
                 }
             }

@@ -1,13 +1,16 @@
 package de.fhstralsund.project;
 
 import de.fhstralsund.project.core.GamestateManager;
+import de.fhstralsund.project.core.io.Configreader;
 import de.fhstralsund.project.core.screen.Game;
+import de.fhstralsund.project.core.screen.Menu;
 import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 
 import java.io.File;
 
@@ -15,6 +18,8 @@ public class Window {
 
     private GamestateManager gs;
     private static ResourceLoader rl;
+    private Configreader config;
+    private Vector2f displaySize;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -22,7 +27,8 @@ public class Window {
     }
 
     public void start() {
-        this.setupGL(1600,800);
+        this.readConfig();
+        this.setupGL((int)this.displaySize.x,(int)this.displaySize.y);
         this.setup();
 
         while(true){
@@ -37,6 +43,10 @@ public class Window {
                 System.exit(0);
             }
         }
+    }
+
+    private void readConfig() {
+        this.displaySize = new Vector2f(800,600);
     }
 
     private void update() {
@@ -86,10 +96,9 @@ public class Window {
         rl.loadImageFile("res"+File.separator+"landscape", "wood5.png");
         rl.loadImageFile("res"+File.separator+"landscape", "wood6.png");
 
-
-
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, 50));
-        this.gs.switchGameState(0);
+        this.gs.addGameState(new Menu(rl));
+        this.gs.switchGameState("game");
     }
 }
