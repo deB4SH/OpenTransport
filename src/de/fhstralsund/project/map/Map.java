@@ -3,6 +3,7 @@ package de.fhstralsund.project.map;
 import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 import de.fhstralsund.project.resource.ResourceLoader;
 
@@ -32,6 +33,20 @@ public class Map implements IRenderable{
         for(int i = 0; i < layers.size(); i++) {                         // layers
             for(int x = layers.get(i).getMap().length-1; x >= 0; x--) {     // array x
                 for(int y = 0; y < layers.get(i).getMap().length; y++) { // array y
+
+                    int camPosXinGrid = (int)(cam.getPosition().getX() / tileWidth);
+                    int camPosYinGrid = (int)(cam.getPosition().getY() / tileHeigth);
+
+                    camPosXinGrid = (int)rotate(new Vector2f(camPosXinGrid, camPosYinGrid), 45).getX();
+                    camPosYinGrid = (int)rotate(new Vector2f(camPosYinGrid, camPosYinGrid), 45).getY();
+
+                    int camPosXendinGrid = (int)(cam.getPosition().getX() + cam.getPosition().getX() + 1600) / tileWidth;
+                    int camPosYendinGrid = (int)(cam.getPosition().getY() + cam.getPosition().getY() + 800) / tileHeigth;
+
+                    camPosXendinGrid = (int)rotate(new Vector2f(camPosXendinGrid, camPosYinGrid), 45).getX();
+                    camPosYendinGrid = (int)rotate(new Vector2f(camPosYendinGrid, camPosYinGrid), 45).getY();
+
+
                     if(layers.get(i).getMap()[x][y] != null) {
                         rl.bindTextureByID(layers.get(i).getMap()[x][y].getTextureId());
                         GL11.glBegin(GL11.GL_QUADS);
@@ -39,7 +54,7 @@ public class Map implements IRenderable{
                         float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
                         float ypos = ((y * tileHeigth / 2) - (x * tileHeigth / 2) - cam.getPosition().y);
 
-                        if((int)rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y != 64) {
+                        if((int)rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y == 32) {
                             GL11.glTexCoord2f(0, 0);
                             GL11.glVertex2f(xpos, ypos);
                             GL11.glTexCoord2f(1, 0);
@@ -62,10 +77,17 @@ public class Map implements IRenderable{
                             GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeigth);
                             GL11.glEnd();
                         }
-
                     }
                 }
             }
         }
+    }
+
+    private Vector2f rotate(Vector2f point, float degree) {
+
+        double xNeu = point.getX() * Math.cos(degree) - point.getY() * Math.sin(degree);
+        double yNeu = point.getX() * Math.sin(degree) + point.getY() * Math.cos(degree);
+
+        return new Vector2f((float)xNeu, (float)yNeu);
     }
 }

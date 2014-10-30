@@ -46,7 +46,7 @@ public class Window {
     }
 
     private void readConfig() {
-        this.displaySize = new Vector2f(800,600);
+        this.displaySize = new Vector2f(1600, 800);
     }
 
     private void update() {
