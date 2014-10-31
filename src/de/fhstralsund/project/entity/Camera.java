@@ -3,6 +3,7 @@ package de.fhstralsund.project.entity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Camera {
@@ -13,11 +14,16 @@ public class Camera {
     private static int width = 1600;
     private static int height = 800;
     private static int size = 50;
+    private static int tilewidth = 64;
+    private static int tileheigt = 32;
+    private Rectangle rectangle;
     private int zoomin, zoomout = 0;
+    private int scrolled = 0;
 
 
     private Camera() {
         position = new Vector2f(0, 0);
+        rectangle = new Rectangle((int)position.x, (int)position.y, width, height);
     }
 
     public static Camera getInstance() {
@@ -51,8 +57,9 @@ public class Camera {
             }
         }
 
-        if(Mouse.getX() >(width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
+        if(Mouse.getX() > (width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.setX(position.getX() + 3);
+            scrolled++;
         }
 
         if(Mouse.getX() < (width * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
@@ -73,18 +80,22 @@ public class Camera {
         if(position.getX() < 0) {
             position.setX(0);
         }
-        if(position.getX() > (size * 64 - width)) {
-            position.setX(size * 64 - width);
+        if(position.getX() > (size * tilewidth - width)) {
+            position.setX(size * tilewidth - width);
         }
-        if(position.getY() < (-size / 2) * 32) {
-            position.setY((-size / 2) * 32);
+        if(position.getY() < (-size / 2) * tileheigt) {
+            position.setY((-size / 2) * tileheigt);
         }
-        if(position.getY() > (size / 2) * 32 - height) {
-            position.setY((size / 2) * 32 - height);
+        if(position.getY() > (size / 2) * tileheigt - height) {
+            position.setY((size / 2) * tileheigt - height);
         }
     }
 
     public Vector2f getPosition() {
         return position;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 }
