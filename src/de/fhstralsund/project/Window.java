@@ -19,7 +19,7 @@ public class Window {
     private GamestateManager gs;
     private static ResourceLoader rl;
     private Configreader config;
-    private Vector2f displaySize;
+    private static Vector2f displaySize;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -46,7 +46,7 @@ public class Window {
     }
 
     private void readConfig() {
-        this.displaySize = new Vector2f(1600, 800);
+        this.displaySize = new Vector2f(800, 600);
     }
 
     private void update() {
@@ -87,18 +87,25 @@ public class Window {
         rl = new ResourceLoader();
         //load grastexture
         rl.loadImageFile("res", "ground.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"urban", "street_SE_.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood1.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood2.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood3.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood4.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood5.png");
-        rl.loadImageFile("res"+File.separator+"landscape", "wood6.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png"); //0
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"urban", "street_SE_.png"); //1
+        rl.loadImageFile("res"+File.separator+"landscape", "wood1.png"); //0
+        rl.loadImageFile("res"+File.separator+"landscape", "wood2.png"); //0
+        rl.loadImageFile("res"+File.separator+"landscape", "wood3.png"); //0
+        rl.loadImageFile("res"+File.separator+"landscape", "wood4.png"); //0
+        rl.loadImageFile("res"+File.separator+"landscape", "wood5.png"); //0
+        rl.loadImageFile("res"+File.separator+"landscape", "wood6.png"); //0
+
+        rl.loadImageFile("res"+ File.separator + "background","menu_bg.png"); //9
+        rl.loadImageFile("res"+ File.separator + "background","menu_logo.png"); //10
 
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, 50));
         this.gs.addGameState(new Menu(rl));
-        this.gs.switchGameState("game");
+        this.gs.switchGameState("menu");
+    }
+
+    public static Vector2f getDisplay(){
+        return displaySize;
     }
 }
