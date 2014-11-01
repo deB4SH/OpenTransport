@@ -41,6 +41,7 @@ public class ResourceLoader {
             //get content
             for(String e: content){
                 if(e.toLowerCase().contains(".png")){
+                    this.textures.put(e, textureList.size());
                     this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + e)),filedir+"-"+e,this.textureList.size()));
                 }
             }
