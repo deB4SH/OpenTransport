@@ -1,12 +1,13 @@
 package de.fhstralsund.project.entity;
 
+import de.fhstralsund.project.core.interfaces.IUpdateable;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 
-public class Camera {
+public class Camera implements IUpdateable{
 
     private static Camera instance = null;
     private static Vector2f position;
@@ -21,7 +22,7 @@ public class Camera {
     private int scrolled = 0;
 
 
-    private Camera() {
+    private Camera()  {
         position = new Vector2f(0, 0);
         rectangle = new Rectangle((int)position.x, (int)position.y, width, height);
     }
@@ -33,7 +34,8 @@ public class Camera {
         return instance;
     }
 
-    public void Update() {
+    @Override
+    public void update() {
         if ( instance == null)
             return;
 

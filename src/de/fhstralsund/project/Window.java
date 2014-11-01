@@ -13,12 +13,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class Window {
 
     private GamestateManager gs;
     private static ResourceLoader rl;
     private Configreader config;
+    private HashMap<String, Integer> configmap;
     private Vector2f displaySize;
 
     public static void main(String[] args) {
@@ -46,12 +48,15 @@ public class Window {
     }
 
     private void readConfig() {
-        this.displaySize = new Vector2f(1600, 800);
+        config = new Configreader();
+        //TODO: config wird bisher NICHT in Map und camera genutzt.. muss noch angepasst werden!
+        configmap = config.loadConfig();
+        this.displaySize = new Vector2f(configmap.get("width"), configmap.get("height"));
     }
 
     private void update() {
         Camera cam = Camera.getInstance();
-        cam.Update();
+        cam.update();
         this.gs.update();
     }
 
@@ -97,7 +102,7 @@ public class Window {
         rl.loadImageFile("res"+File.separator+"landscape", "wood6.png");
 
         this.gs = new GamestateManager();
-        this.gs.addGameState(new Game(rl, 50));
+        this.gs.addGameState(new Game(rl, configmap.get("size")));
         this.gs.addGameState(new Menu(rl));
         this.gs.switchGameState("game");
     }
