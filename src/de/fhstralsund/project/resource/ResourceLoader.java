@@ -61,11 +61,7 @@ public class ResourceLoader {
     }
 
     public void bindTextureByFileName(String filename){
-        for(BasicTexture e: this.textureList){
-            if(e.getFilename() == filename){
-                e.bindTexture();
-            }
-        }
+        textureList.get(textures.get(filename)).bindTexture();
     }
 
     public Integer getTexturesID(String name) {

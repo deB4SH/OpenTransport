@@ -30,7 +30,7 @@ public class Menu extends GameScreen implements IRenderable, IUpdateable {
     @Override
     public void render() {
         //background
-        this.rl.bindTextureByID(9);
+        this.rl.bindTextureByFileName("menu_bg.png");
         GL11.glBegin(GL11.GL_QUADS);
             GL11.glTexCoord2f(0, 0);
             GL11.glVertex2f(0,0);
@@ -43,7 +43,7 @@ public class Menu extends GameScreen implements IRenderable, IUpdateable {
         GL11.glEnd();
 
         //name
-        this.rl.bindTextureByID(10);
+        this.rl.bindTextureByFileName("menu_logo.png");
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glTexCoord2f(0, 0);
         GL11.glVertex2f(50,0);
