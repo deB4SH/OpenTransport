@@ -88,8 +88,8 @@ public class Camera implements IUpdateable{
         if(position.getY() < (-size / 2) * tileheigt) {
             position.setY((-size / 2) * tileheigt);
         }
-        if(position.getY() > (size / 2) * tileheigt - height) {
-            position.setY((size / 2) * tileheigt - height);
+        if(position.getY() > (size / 2) * tileheigt - height + tileheigt/2) {
+            position.setY((size / 2) * tileheigt - height + tileheigt / 2);
         }
     }
 

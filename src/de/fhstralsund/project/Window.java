@@ -107,7 +107,7 @@ public class Window {
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, configmap.get("size")));
         this.gs.addGameState(new Menu(rl));
-        this.gs.switchGameState("menu");
+        this.gs.switchGameState("game");
     }
 
     public static Vector2f getDisplay(){
