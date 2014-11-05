@@ -15,7 +15,7 @@ public class Map implements IRenderable{
 
     private List<Layer> layers = new ArrayList<Layer>();
     private static ResourceLoader rl;
-    private int tileWidth=64, tileHeigth=32;
+    private int tileWidth=64, tileHeight =32;
 
     public Map(int size, ResourceLoader rl) {
 
@@ -35,13 +35,13 @@ public class Map implements IRenderable{
                 for(int y = 0; y < layers.get(i).getMap().length; y++) { // array y
 
                     float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
-                    float ypos = ((y * tileHeigth / 2) - (x * tileHeigth / 2) - cam.getPosition().y);
+                    float ypos = ((y * tileHeight / 2) - (x * tileHeight / 2) - cam.getPosition().y);
 
                     // nur das zeichnen was in der Kamera zu sehen ist
                     if((x * tileWidth / 2) + (y * tileWidth / 2) + tileWidth >= cam.getPosition().x &&
                             (x * tileWidth / 2) + (y * tileWidth / 2) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
-                            (y * tileHeigth / 2) - (x * tileHeigth / 2) + tileHeigth >=cam.getPosition().getY() &&
-                            (y * tileHeigth / 2) - (x * tileHeigth / 2) - tileHeigth / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
+                            (y * tileHeight / 2) - (x * tileHeight / 2) + tileHeight >=cam.getPosition().getY() &&
+                            (y * tileHeight / 2) - (x * tileHeight / 2) - tileHeight / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
 
                         if(layers.get(i).getMap()[x][y] != null) {
                             rl.bindTextureByID(layers.get(i).getMap()[x][y].getTextureId());
@@ -61,13 +61,13 @@ public class Map implements IRenderable{
                                 // wenn tiles höher als 32 px sind, in dem fall nur 64, dann 32 abziehen damit es ordentlich gerendert wird
                                 else {
                                     GL11.glTexCoord2f(0, 0);
-                                    GL11.glVertex2f(xpos, ypos - tileHeigth);
+                                    GL11.glVertex2f(xpos, ypos - tileHeight);
                                     GL11.glTexCoord2f(1, 0);
-                                    GL11.glVertex2f(xpos + tileWidth, ypos - tileHeigth);
+                                    GL11.glVertex2f(xpos + tileWidth, ypos - tileHeight);
                                     GL11.glTexCoord2f(1, 1);
-                                    GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeigth);
+                                    GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeight);
                                     GL11.glTexCoord2f(0, 1);
-                                    GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeigth);
+                                    GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeight);
                                     GL11.glEnd();
                             }
                         }

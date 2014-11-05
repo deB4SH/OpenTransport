@@ -14,12 +14,12 @@ public class Camera implements IUpdateable{
 
     private static int width = 1600;
     private static int height = 800;
-    private static int size = 50;
+    private static int size = 64;
     private static int tilewidth = 64;
-    private static int tileheigt = 32;
+    private static int tileheight = 32;
     private Rectangle rectangle;
-    private int zoomin, zoomout = 0;
-    private int scrolled = 0;
+    private int zoomin;
+    private int zoomout = 0;
 
 
     private Camera()  {
@@ -61,7 +61,6 @@ public class Camera implements IUpdateable{
 
         if(Mouse.getX() > (width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.setX(position.getX() + 3);
-            scrolled++;
         }
 
         if(Mouse.getX() < (width * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
@@ -85,11 +84,11 @@ public class Camera implements IUpdateable{
         if(position.getX() > (size * tilewidth - width)) {
             position.setX(size * tilewidth - width);
         }
-        if(position.getY() < (-size / 2) * tileheigt) {
-            position.setY((-size / 2) * tileheigt);
+        if(position.getY() < (-size / 2) * tileheight) {
+            position.setY((-size / 2) * tileheight);
         }
-        if(position.getY() > (size / 2) * tileheigt - height + tileheigt/2) {
-            position.setY((size / 2) * tileheigt - height + tileheigt / 2);
+        if(position.getY() > (size / 2) * tileheight - height + tileheight /2) {
+            position.setY((size / 2) * tileheight - height + tileheight / 2);
         }
     }
 
@@ -99,5 +98,13 @@ public class Camera implements IUpdateable{
 
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public int getZoomin() {
+        return zoomin;
+    }
+
+    public int getZoomout() {
+        return zoomout;
     }
 }
