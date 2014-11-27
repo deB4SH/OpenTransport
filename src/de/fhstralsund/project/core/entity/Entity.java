@@ -32,11 +32,6 @@ public class Entity implements IUpdateable, IRenderable {
     }
 
     @Override
-    public void render() {
-
-    }
-
-    @Override
     public void render(ResourceLoader rl) {
 
     }
