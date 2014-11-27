@@ -1,10 +1,8 @@
-package de.fhstralsund.project.map.generator;
+package de.fhstralsund.project.core.map.generator;
 
 import de.fhstralsund.project.entity.Building;
 import de.fhstralsund.project.entity.City;
 import de.fhstralsund.project.entity.Street;
-
-import java.util.ArrayList;
 
 public class CityGenerator {
 

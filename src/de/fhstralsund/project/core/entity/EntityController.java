@@ -1,11 +1,9 @@
 package de.fhstralsund.project.core.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.io.ResourceLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EntityController implements IRenderable, IUpdateable {

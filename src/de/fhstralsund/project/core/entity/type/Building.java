@@ -6,20 +6,19 @@ import de.fhstralsund.project.core.interfaces.IUpdateable;
 import de.fhstralsund.project.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
-public class Street extends Entity implements IUpdateable,IRenderable{
+public class Building extends Entity implements IRenderable,IUpdateable{
 
-    private Vector2f to;
+    private int citizienCount;
     private int textureID;
 
-    public Street(Vector2f start, Vector2f to) {
-        super(start,true);
-        this.to = to;
+    public Building(Vector2f tilePos, Boolean enterAble) {
+        super(tilePos, enterAble);
     }
 
     @Override
     public void render(ResourceLoader rl) {
         rl.bindTextureByID(textureID);
-        //TODO: street rendercalls
+        //TODO: building rendercalls
     }
 
     @Override

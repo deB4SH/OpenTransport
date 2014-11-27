@@ -1,8 +1,7 @@
-package de.fhstralsund.project.resource;
+package de.fhstralsund.project.core.io;
 
-import de.fhstralsund.project.resource.types.BasicTexture;
+import de.fhstralsund.project.core.io.resoucetype.BasicTexture;
 import org.lwjgl.util.vector.Vector2f;
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import java.io.File;

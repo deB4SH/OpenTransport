@@ -1,11 +1,11 @@
-package de.fhstralsund.project.map;
+package de.fhstralsund.project.core.map;
 
-import de.fhstralsund.project.entity.Camera;
+import de.fhstralsund.project.core.screen.Camera;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.io.ResourceLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,11 @@ public class Map implements IRenderable{
         layers.add(new Layer(size, rl, ""));                  // layer 0 Gras
         layers.add(new Layer(size, rl, "streets"));           // layer 2 Streets
         layers.add(new Layer(size, rl, "vegetation"));        // layer 1 Vegetation
+    }
+
+    @Override
+    public void render(ResourceLoader rl) {
+
     }
 
     @Override

@@ -4,7 +4,7 @@ import de.fhstralsund.project.Window;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
 import de.fhstralsund.project.core.screen.GameScreen;
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.io.ResourceLoader;
 import org.lwjgl.opengl.GL11;
 
 public class Menu extends GameScreen implements IRenderable, IUpdateable {

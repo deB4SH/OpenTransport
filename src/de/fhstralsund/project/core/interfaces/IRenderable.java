@@ -1,6 +1,6 @@
 package de.fhstralsund.project.core.interfaces;
 
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.io.ResourceLoader;
 
 public interface IRenderable {
 

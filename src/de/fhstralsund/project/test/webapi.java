@@ -1,4 +1,4 @@
-package de.fhstralsund.test;
+package de.fhstralsund.project.test;
 
 import de.fhstralsund.project.core.api.web;
 

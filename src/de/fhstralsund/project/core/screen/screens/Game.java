@@ -4,8 +4,8 @@ package de.fhstralsund.project.core.screen.screens;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
 import de.fhstralsund.project.core.screen.GameScreen;
-import de.fhstralsund.project.map.Map;
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.map.Map;
+import de.fhstralsund.project.core.io.ResourceLoader;
 
 public class Game extends GameScreen implements IRenderable, IUpdateable {
 

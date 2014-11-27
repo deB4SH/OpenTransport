@@ -1,4 +1,4 @@
-package de.fhstralsund.project.map;
+package de.fhstralsund.project.core.map;
 
 
 import org.lwjgl.util.vector.Vector2f;

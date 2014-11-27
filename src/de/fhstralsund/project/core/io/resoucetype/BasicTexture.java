@@ -1,4 +1,4 @@
-package de.fhstralsund.project.resource.types;
+package de.fhstralsund.project.core.io.resoucetype;
 
 import org.newdawn.slick.opengl.Texture;
 

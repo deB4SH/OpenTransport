@@ -1,4 +1,4 @@
-package de.fhstralsund.project.entity;
+package de.fhstralsund.project.core.screen;
 
 import de.fhstralsund.project.core.interfaces.IUpdateable;
 import org.lwjgl.input.Keyboard;

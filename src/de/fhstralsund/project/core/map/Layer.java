@@ -1,6 +1,6 @@
-package de.fhstralsund.project.map;
+package de.fhstralsund.project.core.map;
 
-import de.fhstralsund.project.resource.ResourceLoader;
+import de.fhstralsund.project.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.Random;
