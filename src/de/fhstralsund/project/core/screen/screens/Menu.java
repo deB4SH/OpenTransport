@@ -1,13 +1,11 @@
-package de.fhstralsund.project.core.screen;
+package de.fhstralsund.project.core.screen.screens;
 
 import de.fhstralsund.project.Window;
-import de.fhstralsund.project.core.GameScreen;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
+import de.fhstralsund.project.core.screen.GameScreen;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.opengl.GL11;
-
-import java.io.File;
 
 public class Menu extends GameScreen implements IRenderable, IUpdateable {
 

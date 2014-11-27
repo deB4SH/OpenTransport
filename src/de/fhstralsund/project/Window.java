@@ -1,9 +1,9 @@
 package de.fhstralsund.project;
 
-import de.fhstralsund.project.core.GamestateManager;
+import de.fhstralsund.project.core.screen.GamestateManager;
 import de.fhstralsund.project.core.io.Configreader;
-import de.fhstralsund.project.core.screen.Game;
-import de.fhstralsund.project.core.screen.Menu;
+import de.fhstralsund.project.core.screen.screens.Game;
+import de.fhstralsund.project.core.screen.screens.Menu;
 import de.fhstralsund.project.entity.Camera;
 import de.fhstralsund.project.resource.ResourceLoader;
 import org.lwjgl.LWJGLException;

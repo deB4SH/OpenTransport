@@ -1,7 +1,8 @@
-package de.fhstralsund.project.core;
+package de.fhstralsund.project.core.screen;
 
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
+import de.fhstralsund.project.core.screen.GameScreen;
 
 import java.util.ArrayList;
 
