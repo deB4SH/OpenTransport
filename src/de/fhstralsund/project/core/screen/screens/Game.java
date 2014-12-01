@@ -1,6 +1,8 @@
 package de.fhstralsund.project.core.screen.screens;
 
 
+import de.fhstralsund.project.core.entity.CityController;
+import de.fhstralsund.project.core.entity.EntityController;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
 import de.fhstralsund.project.core.screen.GameScreen;
@@ -12,6 +14,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private Map map;
     private ResourceLoader rl;
     private int mapSize;
+
+    private EntityController buildingController, streetController;
+    private CityController cityController;
+
 
     public Game(ResourceLoader rlo,int size) {
         this.map = new Map(size, rlo);
