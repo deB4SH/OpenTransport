@@ -20,8 +20,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     }
 
     @Override
-    public void render() {
-        map.render();
+    public void render(ResourceLoader rl) {
+        map.render(rl);
     }
 
     @Override

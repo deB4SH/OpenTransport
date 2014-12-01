@@ -26,7 +26,7 @@ public class Menu extends GameScreen implements IRenderable, IUpdateable {
     }
 
     @Override
-    public void render() {
+    public void render(ResourceLoader rl) {
         //background
         this.rl.bindTextureByFileName("menu_bg.png");
         GL11.glBegin(GL11.GL_QUADS);

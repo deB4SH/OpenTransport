@@ -62,7 +62,7 @@ public class Window {
 
     private void render() {
         //render actual gamestate
-        this.gs.render();
+        this.gs.render(rl);
     }
 
     private void setupGL(int width,int height){

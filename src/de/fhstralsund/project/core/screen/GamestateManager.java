@@ -2,6 +2,7 @@ package de.fhstralsund.project.core.screen;
 
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
+import de.fhstralsund.project.core.io.ResourceLoader;
 import de.fhstralsund.project.core.screen.GameScreen;
 
 import java.util.ArrayList;
@@ -13,11 +14,6 @@ public class GamestateManager implements IRenderable,IUpdateable{
 
     public GamestateManager() {
         this.gameStates = new ArrayList<GameScreen>();
-    }
-
-    @Override
-    public void render() {
-        activeScreen.render();
     }
 
     @Override
@@ -42,5 +38,10 @@ public class GamestateManager implements IRenderable,IUpdateable{
     public void switchGameState(int id){
         oldScreen = activeScreen;
         activeScreen = this.gameStates.get(id);
+    }
+
+    @Override
+    public void render(ResourceLoader rl) {
+        activeScreen.render(rl);
     }
 }

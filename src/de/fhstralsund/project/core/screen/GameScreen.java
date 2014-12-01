@@ -2,6 +2,7 @@ package de.fhstralsund.project.core.screen;
 
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
+import de.fhstralsund.project.core.io.ResourceLoader;
 
 public class GameScreen implements IRenderable, IUpdateable {
 
@@ -14,12 +15,12 @@ public class GameScreen implements IRenderable, IUpdateable {
     };
 
     @Override
-    public void render() {
+    public void update() {
 
     }
 
     @Override
-    public void update() {
+    public void render(ResourceLoader rl) {
 
     }
 }
