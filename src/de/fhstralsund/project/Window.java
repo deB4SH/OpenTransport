@@ -103,6 +103,7 @@ public class Window {
 
         rl.loadImageFile("res"+ File.separator + "background","menu_bg.png"); //9
         rl.loadImageFile("res"+ File.separator + "background","menu_logo.png"); //10
+        rl.loadImageFile("res"+ File.separator + "gui","gui_background.png"); //11
 
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, configmap.get("size")));

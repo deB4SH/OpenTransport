@@ -59,19 +59,19 @@ public class Camera implements IUpdateable{
             }
         }
 
-        if(Mouse.getX() > (width * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
+        if(Mouse.getX() > (width * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.setX(position.getX() + 3);
         }
 
-        if(Mouse.getX() < (width * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
+        if(Mouse.getX() < (width * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
             position.setX(position.getX() - 3);
         }
 
-        if(Mouse.getY() > (height * 90) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
+        if(Mouse.getY() > (height * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
             position.setY(position.getY() - 3);
         }
 
-        if(Mouse.getY() < (height * 10) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        if(Mouse.getY() < (height * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
             position.setY(position.getY() + 3);
         }
         clamp();

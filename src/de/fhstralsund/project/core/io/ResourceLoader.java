@@ -59,6 +59,10 @@ public class ResourceLoader {
         return new Vector2f(this.textureList.get(id).getTexture().getImageWidth(), this.textureList.get(id).getTexture().getImageHeight());
     }
 
+    public Vector2f getTextureSizeByFileName(String filename){
+        return new Vector2f(this.textureList.get(textures.get(filename)).getTexture().getImageWidth(), this.textureList.get(textures.get(filename)).getTexture().getImageHeight());
+    }
+
     public void bindTextureByFileName(String filename){
         textureList.get(textures.get(filename)).bindTexture();
     }

@@ -18,7 +18,7 @@ public class Street extends Entity implements IUpdateable,IRenderable{
         this.north = north;
         this.east = east;
         this.south = south;
-        this.east = east;
+        this.west = west;
     }
 
     @Override

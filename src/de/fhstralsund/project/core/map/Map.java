@@ -30,9 +30,11 @@ public class Map implements IRenderable{
         Color.white.bind();
         Camera cam = Camera.getInstance();
 
-        for (int i = 0; i < layers.size(); i++) {                         // layers
+
+
+        for (int i = 0; i < layers.size(); i++) {                           // layers
             for (int x = layers.get(i).getMap().length - 1; x >= 0; x--) {  // array x
-                for (int y = 0; y < layers.get(i).getMap().length; y++) { // array y
+                for (int y = 0; y < layers.get(i).getMap().length; y++) {   // array y
 
                     float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
                     float ypos = ((y * tileHeight / 2) - (x * tileHeight / 2) - cam.getPosition().y);
