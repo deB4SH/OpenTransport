@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EntityController implements IRenderable, IUpdateable {
 
-    private List<Entity> entityList;
+    private List<Entity> entityList;    //TODO: implement this as R-Tree (searchable and alot faster than ArrayList
     private int mapSize;
 
     public EntityController(int mapSize) {

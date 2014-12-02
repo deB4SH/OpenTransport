@@ -20,6 +20,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private int mapSize;
     private Gui gui;
 
+    public static int TILEWIDTH=64;
+    public static int TILEHEIGHT =32;
+
+
     private EntityController buildingController, streetController;
     private CityController cityController;
 
