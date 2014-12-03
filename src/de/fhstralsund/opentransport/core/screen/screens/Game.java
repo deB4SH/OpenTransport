@@ -22,6 +22,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     public static int TILEWIDTH=64;
     public static int TILEHEIGHT =32;
+    public static boolean MOUSESCROLL = false;
 
 
     private EntityController buildingController, streetController;

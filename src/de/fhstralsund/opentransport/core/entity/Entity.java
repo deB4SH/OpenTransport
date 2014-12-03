@@ -43,9 +43,9 @@ public class Entity implements IUpdateable, IRenderable {
         float xpos = (getTilePos().getX() * Game.TILEWIDTH / 2) + (getTilePos().getY() * Game.TILEWIDTH / 2) - cam.getPosition().x;
         float ypos = ((getTilePos().getY() * Game.TILEHEIGHT / 2) - (getTilePos().getX() * Game.TILEHEIGHT / 2) - cam.getPosition().y);
         //screenrelated render
-        if((getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( getTilePos().getY() * Game.TILEWIDTH / 2 ) + Game.TILEWIDTH >= cam.getPosition().x &&
+        if((getTilePos().getY() * Game.TILEWIDTH / 2 ) + ( getTilePos().getY() * Game.TILEWIDTH / 2 ) + Game.TILEWIDTH >= cam.getPosition().x &&
                 (getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( getTilePos().getY() * Game.TILEWIDTH / 2 ) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
-                (getTilePos().getX() * Game.TILEHEIGHT / 2 ) - ( getTilePos().getX() * Game.TILEHEIGHT / 2 ) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
+                (getTilePos().getY() * Game.TILEHEIGHT / 2 ) - ( getTilePos().getX() * Game.TILEHEIGHT / 2 ) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
                 (getTilePos().getY() * Game.TILEHEIGHT / 2) - (getTilePos().getX() * Game.TILEHEIGHT / 2) - Game.TILEHEIGHT / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
 
             GL11.glBegin(GL11.GL_QUADS);

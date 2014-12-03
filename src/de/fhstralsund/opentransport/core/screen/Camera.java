@@ -1,6 +1,7 @@
 package de.fhstralsund.opentransport.core.screen;
 
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
+import de.fhstralsund.opentransport.core.screen.screens.Game;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -59,20 +60,39 @@ public class Camera implements IUpdateable{
             }
         }
 
-        if(Mouse.getX() > (width * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            position.setX(position.getX() + 3);
-        }
+        if(Game.MOUSESCROLL){
+            if(Mouse.getX() > (width * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
+                position.setX(position.getX() + 3);
+            }
 
-        if(Mouse.getX() < (width * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            position.setX(position.getX() - 3);
-        }
+            if(Mouse.getX() < (width * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
+                position.setX(position.getX() - 3);
+            }
 
-        if(Mouse.getY() > (height * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            position.setY(position.getY() - 3);
-        }
+            if(Mouse.getY() > (height * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
+                position.setY(position.getY() - 3);
+            }
 
-        if(Mouse.getY() < (height * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            position.setY(position.getY() + 3);
+            if(Mouse.getY() < (height * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
+                position.setY(position.getY() + 3);
+            }
+        }
+        else{
+            if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
+                position.setX(position.getX() + 3);
+            }
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
+                position.setX(position.getX() - 3);
+            }
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
+                position.setY(position.getY() - 3);
+            }
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+                position.setY(position.getY() + 3);
+            }
         }
         clamp();
     }
