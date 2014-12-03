@@ -3,6 +3,7 @@ package de.fhstralsund.opentransport.core.entity;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ public class EntityController implements IRenderable, IUpdateable {
     }
 
     public void addEntity(Entity entity){
-        this.entityList.add(entity);
+        //check if there is an entity on this vector
+        if(!isEntityOnVec(entity.getTilePos()))
+            this.entityList.add(entity);
     }
 
     public boolean[][] getcollisionArray(int mapSize){
@@ -51,5 +54,14 @@ public class EntityController implements IRenderable, IUpdateable {
         for(Entity e: this.entityList){
             e.render(rl);
         }
+    }
+
+    private boolean isEntityOnVec(Vector2f vec){
+        for(Entity e: this.entityList){
+            if(e.getTilePos() == vec){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -20,7 +20,6 @@ public class CityController implements IUpdateable{
     public void spawnCity(Vector2f seed, int popCap, EntityController buildingController, EntityController streetController, ResourceLoader rl){
         this.cityList.add(new City(seed,"Stralsund",100,buildingController,streetController));
         int number = cityList.size();
-        this.cityList.get(number).addStreet(new Street(seed,rl.getTexturesID("Street_NE.png"),true,true,true,true));
         this.cityList.get(number).generateCity(rl);
     }
 
