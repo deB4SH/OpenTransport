@@ -3,6 +3,7 @@ package de.fhstralsund.project.core.screen.screens;
 
 import de.fhstralsund.project.core.entity.CityController;
 import de.fhstralsund.project.core.entity.EntityController;
+import de.fhstralsund.project.core.entity.type.Street;
 import de.fhstralsund.project.core.interfaces.IRenderable;
 import de.fhstralsund.project.core.interfaces.IUpdateable;
 import de.fhstralsund.project.core.screen.GameScreen;
@@ -10,6 +11,7 @@ import de.fhstralsund.project.core.map.Map;
 import de.fhstralsund.project.core.io.ResourceLoader;
 import de.fhstralsund.project.core.screen.gui.Gui;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector2f;
 
 import java.security.Key;
 
@@ -33,11 +35,23 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.rl = rlo;
         this.mapSize = size; //quad map
         this.gui = new Gui(rl);
+
+        this.buildingController = new EntityController(mapSize);
+        this.streetController = new EntityController(mapSize);
+        this.cityController = new CityController();
+
+
+        streetController.addEntity(new Street(new Vector2f(10,10),rl.getTexturesID("Street_NE.png"),true,true,true,true));
+
     }
 
     @Override
     public void render(ResourceLoader rl) {
         map.render(rl);
+
+        streetController.render(rl);
+        buildingController.render(rl);
+
         gui.render(rl);
     }
 

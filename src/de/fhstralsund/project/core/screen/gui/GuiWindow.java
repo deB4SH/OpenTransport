@@ -39,28 +39,28 @@ public class GuiWindow implements IUpdateable, IRenderable{
         Color.white.bind();
         rl.bindTextureByFileName("gui_background.png");
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glTexCoord2f(0, 0);
-        GL11.glVertex2f(position.x, position.y);
-        GL11.glTexCoord2f(1, 0);
-        GL11.glVertex2f(position.x + dimension.x, position.y);
-        GL11.glTexCoord2f(1, 1);
-        GL11.glVertex2f(position.x + dimension.x, position.y + dimension.y);
-        GL11.glTexCoord2f(0, 1);
-        GL11.glVertex2f(position.x, position.y + dimension.y);
+            GL11.glTexCoord2f(0, 0);
+            GL11.glVertex2f(position.x, position.y);
+            GL11.glTexCoord2f(1, 0);
+            GL11.glVertex2f(position.x + dimension.x, position.y);
+            GL11.glTexCoord2f(1, 1);
+            GL11.glVertex2f(position.x + dimension.x, position.y + dimension.y);
+            GL11.glTexCoord2f(0, 1);
+            GL11.glVertex2f(position.x, position.y + dimension.y);
         GL11.glEnd();
 
 
         for (GuiWindowElement element : guiWindowElements) {
             rl.bindTextureByID(element.getTextureID());
             GL11.glBegin(GL11.GL_QUADS);
-            GL11.glTexCoord2f(0, 0);
-            GL11.glVertex2f(element.getPosition().x, element.getPosition().y);
-            GL11.glTexCoord2f(1, 0);
-            GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y);
-            GL11.glTexCoord2f(1, 1);
-            GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y + element.getDimension().y /2);
-            GL11.glTexCoord2f(0, 1);
-            GL11.glVertex2f(element.getPosition().x, element.getPosition().y + element.getDimension().y / 2);
+                GL11.glTexCoord2f(0, 0);
+                GL11.glVertex2f(element.getPosition().x, element.getPosition().y);
+                GL11.glTexCoord2f(1, 0);
+                GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y);
+                GL11.glTexCoord2f(1, 1);
+                GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y + element.getDimension().y /2);
+                GL11.glTexCoord2f(0, 1);
+                GL11.glVertex2f(element.getPosition().x, element.getPosition().y + element.getDimension().y / 2);
             GL11.glEnd();
         }
     }
