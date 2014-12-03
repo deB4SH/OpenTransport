@@ -21,7 +21,7 @@ public class Map implements IRenderable{
 
         this.rl = rl;
         layers.add(new Layer(size, rl, ""));                  // layer 0 Gras
-        layers.add(new Layer(size, rl, "streets"));           // layer 2 Streets
+        //layers.add(new Layer(size, rl, "streets"));           // layer 2 Streets
         layers.add(new Layer(size, rl, "vegetation"));        // layer 1 Vegetation
     }
 

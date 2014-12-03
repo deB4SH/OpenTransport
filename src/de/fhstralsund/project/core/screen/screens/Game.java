@@ -41,7 +41,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.cityController = new CityController();
 
 
-        streetController.addEntity(new Street(new Vector2f(10,10),rl.getTexturesID("Street_NE.png"),true,true,true,true));
+        generateTestStreet();
+
 
     }
 
@@ -66,12 +67,18 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     @Override
     public void setup() {
-
         map = new Map(50, rl);
     }
 
     @Override
     public String getScreenName() {
         return "game";
+    }
+
+    private void generateTestStreet(){
+        for(int x=5; x<mapSize; x++){
+            streetController.addEntity(new Street(new Vector2f(x,10),rl.getTexturesID("Street_NE.png"),true,true,true,true));
+        }
+
     }
 }
