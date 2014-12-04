@@ -90,25 +90,47 @@ public class Window {
 
     private void setup(){
         rl = new ResourceLoader();
-        //load grastexture
-        rl.loadImageFile("res", "ground.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png"); //0
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"urban", "street_SE_.png"); //1
-        rl.loadImageFile("res"+File.separator+"landscape", "wood1.png"); //0
-        rl.loadImageFile("res"+File.separator+"landscape", "wood2.png"); //0
-        rl.loadImageFile("res"+File.separator+"landscape", "wood3.png"); //0
-        rl.loadImageFile("res"+File.separator+"landscape", "wood4.png"); //0
-        rl.loadImageFile("res"+File.separator+"landscape", "wood5.png"); //0
-        rl.loadImageFile("res"+File.separator+"landscape", "wood6.png"); //0
 
-        rl.loadImageFile("res"+ File.separator + "background","menu_bg.png"); //9
-        rl.loadImageFile("res"+ File.separator + "background","menu_logo.png"); //10
-        rl.loadImageFile("res"+ File.separator + "gui","gui_background.png"); //11
+        loadAssets(rl);
 
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, configmap.get("size")));
         this.gs.addGameState(new Menu(rl));
         this.gs.switchGameState("game");
+    }
+
+    private void loadAssets(ResourceLoader rl) {
+
+        //load grastexture
+        rl.loadImageFile("res", "ground.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_SE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_SEN.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_SWN.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_WNE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_WSE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_ES.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_NE.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_WN.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_WS.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_E.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_N.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_S.png");
+        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_W.png");
+
+
+        for(int i = 1; i < 7; i++) {
+            rl.loadImageFile("res"+File.separator+"landscape", "wood" + i +".png");
+        }
+
+        rl.loadImageFile("res"+ File.separator + "background","menu_bg.png");
+        rl.loadImageFile("res"+ File.separator + "background","menu_logo.png");
+
+        rl.loadImageFile("res"+ File.separator + "gui","gui_background.png");
+        rl.loadImageFile("res"+ File.separator + "gui","gui_chosen.png");
+        rl.loadImageFile("res", "delete.png");
+
     }
 
     public static Vector2f getDisplay(){

@@ -59,7 +59,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     public void update() {
 
         if(Keyboard.isKeyDown(Keyboard.KEY_B)) {
-            this.gui.createBuildGui();
+            this.gui.createStreetGui();
         }
         gui.update();
     }

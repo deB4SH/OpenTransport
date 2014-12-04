@@ -24,18 +24,29 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
     public void addWindow(Vector2f position, Vector2f dimension) {
     }
 
-    public void createBuildGui() {
-        if (windows.containsKey("buildMenue")) { return;}
+    public void createStreetGui() {
+        if (windows.containsKey("streetMenue")) { return;}
 
-        GuiWindow buildwindow = new GuiWindow(new Vector2f(250,50), rl.getTextureSizeByFileName("gui_background.png"), "buildMenue", this);
+        GuiWindow buildwindow = new GuiWindow(new Vector2f(250,50), rl.getTextureSizeByFileName("gui_background.png"), "streetMenue", this);
 
-        buildwindow.getGuiWindowElements().add(new GuiWindowElement(1, new Vector2f(buildwindow.getPosition().x + 5,
-                buildwindow.getPosition().y + 30), new Vector2f(rl.getTextureSizeByID(1))));
+        // add elements to buildGUI
+        int xoffset = 0;
+        int yoffset = 1;
+        for(int i = 1; i < 16; i++) {
+            buildwindow.getGuiWindowElements().add(new GuiWindowElement(i, new Vector2f(buildwindow.getPosition().x + xoffset,
+                    buildwindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(i)), true));
+            xoffset += 30;
+            if(i % 4 == 0) {
+                yoffset++;
+                xoffset = 0;
+            }
+        }
 
-        buildwindow.getGuiWindowElements().add(new GuiWindowElement(2, new Vector2f(buildwindow.getPosition().x + 40,
-                buildwindow.getPosition().y + 30), new Vector2f(rl.getTextureSizeByID(2))));
+        // add last element - the destruction icon
+        buildwindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTexturesID("delete.png"), new Vector2f(buildwindow.getPosition().x + xoffset,
+                buildwindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("delete.png")), true));
 
-        windows.put("buildMenue", buildwindow);
+        windows.put("streetMenue", buildwindow);
     }
 
     public void destroyGui() {

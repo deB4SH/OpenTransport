@@ -23,6 +23,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
     private List<GuiWindowElement> guiWindowElements = null;
     private String name;
     private Gui gui;
+    private GuiWindowElement lastChosenGuiElement = null;
 
     public GuiWindow(Vector2f position, Vector2f dimension, String name, Gui gui) {
         this.position = position;
@@ -52,6 +53,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
 
         for (GuiWindowElement element : guiWindowElements) {
             rl.bindTextureByID(element.getTextureID());
+
             GL11.glBegin(GL11.GL_QUADS);
                 GL11.glTexCoord2f(0, 0);
                 GL11.glVertex2f(element.getPosition().x, element.getPosition().y);
@@ -62,15 +64,39 @@ public class GuiWindow implements IUpdateable, IRenderable{
                 GL11.glTexCoord2f(0, 1);
                 GL11.glVertex2f(element.getPosition().x, element.getPosition().y + element.getDimension().y / 2);
             GL11.glEnd();
+
+            if(element.chosen) {
+                rl.bindTextureByFileName("gui_chosen.png");
+                GL11.glBegin(GL11.GL_QUADS);
+                    GL11.glTexCoord2f(0, 0);
+                    GL11.glVertex2f(element.getPosition().x, element.getPosition().y);
+                    GL11.glTexCoord2f(1, 0);
+                    GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y);
+                    GL11.glTexCoord2f(1, 1);
+                    GL11.glVertex2f(element.getPosition().x + element.getDimension().x / 2, element.getPosition().y + element.getDimension().y / 2);
+                    GL11.glTexCoord2f(0, 1);
+                    GL11.glVertex2f(element.getPosition().x, element.getPosition().y + element.getDimension().y / 2);
+                GL11.glEnd();
+            }
         }
     }
 
     @Override
     public void update() {
 
+        // X Knöp
         ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + 800); // invertieren weil windows andere koordinaten liefert
         if(closeRectangle.contains(p) && Mouse.isButtonDown(0)) {
             gui.closeRequest(this.name);
+        }
+
+        // Elemente angeklickt
+        for(GuiWindowElement guiWindowElement : this.guiWindowElements) {
+            if(guiWindowElement.getRectangle().contains(p) && guiWindowElement.clickable && Mouse.isButtonDown(0)){
+                if( lastChosenGuiElement != null) {lastChosenGuiElement.chosen =false;}
+                guiWindowElement.chosen = true;
+                lastChosenGuiElement = guiWindowElement;
+            }
         }
     }
 
