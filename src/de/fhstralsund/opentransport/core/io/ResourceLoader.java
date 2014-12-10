@@ -67,7 +67,6 @@ public class ResourceLoader {
     }
 
     public Integer getTextureID(String name) {
-        System.out.println(name);
         return this.textures.get(name);
     }
 }

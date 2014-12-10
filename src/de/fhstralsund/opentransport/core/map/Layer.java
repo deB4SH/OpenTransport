@@ -3,6 +3,7 @@ package de.fhstralsund.opentransport.core.map;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.io.File;
 import java.util.Random;
 
 public class Layer {
@@ -20,31 +21,23 @@ public class Layer {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     // Gras
-                    map[i][j] = new Tile(new Vector2f(i, j), this.rl.getTextureID("ground.png"));
+                    map[i][j] = new Tile(new Vector2f(i, j), this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png"));
                 }
             }
         }
 
-        if (type.equalsIgnoreCase("vegetation")) {
+  /*      if (type.equalsIgnoreCase("vegetation")) {
             genereateEnvironement();
         }
 
         if(type.equalsIgnoreCase("streets")) {
             generateStreets();
-        }
+        }*/
     }
 
 
     public void genereateEnvironement() {
-        for(int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if((i % 2 == 0 || j % 2 == 0) && i != 5 && j != 5 &&
-                        ((new Random().nextInt(size) + 2) % (j + 1) != 0 &&
-                                (new Random().nextInt(size) + 2) % (i + 1) != 0) && (new Random().nextInt(6) + 1) % 2 == 0) {
-                    map[i][j] = new Tile(new Vector2f(i, j), rl.getTextureID("wood" + (new Random().nextInt(6) + 1) + ".png"));
-                }
-            }
-        }
+
     }
 
 
