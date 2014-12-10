@@ -20,7 +20,7 @@ public class Layer {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     // Gras
-                    map[i][j] = new Tile(new Vector2f(i, j), this.rl.getTexturesID("ground.png"));
+                    map[i][j] = new Tile(new Vector2f(i, j), this.rl.getTextureID("ground.png"));
                 }
             }
         }
@@ -41,7 +41,7 @@ public class Layer {
                 if((i % 2 == 0 || j % 2 == 0) && i != 5 && j != 5 &&
                         ((new Random().nextInt(size) + 2) % (j + 1) != 0 &&
                                 (new Random().nextInt(size) + 2) % (i + 1) != 0) && (new Random().nextInt(6) + 1) % 2 == 0) {
-                    map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("wood" + (new Random().nextInt(6) + 1) + ".png"));
+                    map[i][j] = new Tile(new Vector2f(i, j), rl.getTextureID("wood" + (new Random().nextInt(6) + 1) + ".png"));
                 }
             }
         }
@@ -51,11 +51,11 @@ public class Layer {
     public void generateStreets() {
         for (int i = 0; i < size; i++) {
             int j = 5;
-            map[i][j] = new Tile(new Vector2f(i, j), rl.getTexturesID("Street_NE.png"));
+            map[i][j] = new Tile(new Vector2f(i, j), rl.getTextureID("Street_NE.png"));
         }
         for (int i = 0; i < size; i++) {
             int j = 5;
-            map[j][i] = new Tile(new Vector2f(i, j), rl.getTexturesID("street_SE_.png"));
+            map[j][i] = new Tile(new Vector2f(i, j), rl.getTextureID("street_SE_.png"));
         }
     }
 

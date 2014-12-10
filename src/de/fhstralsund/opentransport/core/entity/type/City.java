@@ -38,7 +38,7 @@ public class City {
 
     public void generateCity(ResourceLoader rl){
         //place at seed a street
-        this.streetController.addEntity(new Street(seed,rl.getTexturesID("Street_cross.png"),true,true,true,true));
+        this.streetController.addEntity(new Street(seed,rl.getTextureID("Street_cross.png"),true,true,true,true));
         //TODO: generate Code
 
     }

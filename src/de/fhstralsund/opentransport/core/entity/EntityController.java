@@ -12,6 +12,7 @@ public class EntityController implements IRenderable, IUpdateable {
 
     private List<Entity> entityList;    //TODO: implement this as R-Tree (searchable and alot faster than ArrayList)
     private int mapSize;
+    private static boolean[][] collisionMap;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
@@ -20,11 +21,14 @@ public class EntityController implements IRenderable, IUpdateable {
 
     public void addEntity(Entity entity){
         //check if there is an entity on this vector
-        if(!isEntityOnVec(entity.getTilePos()))
+        if(!isEntityOnVec(entity.getTilePos())){
             this.entityList.add(entity);
+            collisionMap = getcollisionArray();
+        }
+
     }
 
-    public boolean[][] getcollisionArray(int mapSize){
+    private boolean[][] getcollisionArray(){
 
         boolean collisionarray[][] = new boolean[mapSize][mapSize];
         //fill with false(not moveable)
@@ -64,4 +68,6 @@ public class EntityController implements IRenderable, IUpdateable {
         }
         return false;
     }
+
+
 }

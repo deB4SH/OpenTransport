@@ -23,8 +23,8 @@ public class ResourceLoader {
     public void loadImageFile(String filedir, String filename){
         try{
             String canoncialDir = new File(".").getCanonicalPath();
-            this.textures.put(filename, textureList.size());
-            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + filename)),filedir+"-"+filename,textureList.size()));
+            this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + filename)),filedir+File.separator+filename,textureList.size()));
+            this.textures.put(filedir + File.separator + filename, textureList.size());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -40,8 +40,7 @@ public class ResourceLoader {
             //get content
             for(String e: content){
                 if(e.toLowerCase().contains(".png")){
-                    this.textures.put(e, textureList.size());
-                    this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + e)),filedir+"-"+e,this.textureList.size()));
+                    loadImageFile(filedir, e);
                 }
             }
         } catch (IOException e) {
@@ -67,7 +66,8 @@ public class ResourceLoader {
         textureList.get(textures.get(filename)).bindTexture();
     }
 
-    public Integer getTexturesID(String name) {
-        return textures.get(name);
+    public Integer getTextureID(String name) {
+        System.out.println(name);
+        return this.textures.get(name);
     }
 }

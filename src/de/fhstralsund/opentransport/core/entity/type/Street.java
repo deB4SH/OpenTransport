@@ -1,6 +1,7 @@
 package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.Entity;
+import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -26,6 +27,10 @@ public class Street extends Entity implements IUpdateable,IRenderable{
 
     @Override
     public void update() {
+        //check if i need to update my textureID
+    }
+
+    public void updateTexture(EntityController streetController){
 
     }
 }

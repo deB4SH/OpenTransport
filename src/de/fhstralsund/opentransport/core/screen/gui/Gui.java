@@ -43,7 +43,7 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         }
 
         // add last element - the destruction icon
-        buildwindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTexturesID("delete.png"), new Vector2f(buildwindow.getPosition().x + xoffset,
+        buildwindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTextureID("delete.png"), new Vector2f(buildwindow.getPosition().x + xoffset,
                 buildwindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("delete.png")), true));
 
         windows.put("streetMenue", buildwindow);

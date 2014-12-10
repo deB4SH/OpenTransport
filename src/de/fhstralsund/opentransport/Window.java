@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport;
 
+import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.screen.GamestateManager;
 import de.fhstralsund.opentransport.core.io.Configreader;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
@@ -22,6 +23,7 @@ public class Window {
     private Configreader config;
     private HashMap<String, Integer> configmap;
     private static Vector2f displaySize;
+    private StreetTID streetTID;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -101,35 +103,14 @@ public class Window {
 
     private void loadAssets(ResourceLoader rl) {
 
-        //load grastexture
-        rl.loadImageFile("res", "ground.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "Street_NE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_SE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_SEN.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_SWN.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_WNE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_cross_WSE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_ES.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_NE.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_WN.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_curve_WS.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_E.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_N.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_S.png");
-        rl.loadImageFile("res"+File.separator+"street"+File.separator+"rural", "street_end_W.png");
+        rl.loadImageDir("res");
+        rl.loadImageDir("res"+File.separator+"background");
+        rl.loadImageDir("res"+File.separator+"gui");
+        rl.loadImageDir("res"+File.separator+"landscape");
+        rl.loadImageDir("res"+File.separator+"street"+File.separator+"rural");
+        rl.loadImageDir("res"+File.separator+"street"+File.separator+"urban");
 
-
-        for(int i = 1; i < 7; i++) {
-            rl.loadImageFile("res"+File.separator+"landscape", "wood" + i +".png");
-        }
-
-        rl.loadImageFile("res"+ File.separator + "background","menu_bg.png");
-        rl.loadImageFile("res"+ File.separator + "background","menu_logo.png");
-
-        rl.loadImageFile("res"+ File.separator + "gui","gui_background.png");
-        rl.loadImageFile("res"+ File.separator + "gui","gui_chosen.png");
-        rl.loadImageFile("res", "delete.png");
+        streetTID = new StreetTID(rl);
 
     }
 

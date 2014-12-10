@@ -76,7 +76,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private void generateTestStreet(){
         for(int x=5; x<mapSize; x++){
-            streetController.addEntity(new Street(new Vector2f(x,10),rl.getTexturesID("Street_NE.png"),true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(x,10),rl.getTextureID("Street_NE.png"),true,true,true,true));
         }
 
     }
