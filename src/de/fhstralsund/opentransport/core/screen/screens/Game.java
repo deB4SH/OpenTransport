@@ -79,6 +79,5 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         for(int x=5; x<mapSize; x++){
             streetController.addEntity(new Street(new Vector2f(x,10), StreetTID.urban_street_ns,true,true,true,true));
         }
-
     }
 }

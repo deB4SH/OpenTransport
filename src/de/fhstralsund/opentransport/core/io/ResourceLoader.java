@@ -24,7 +24,7 @@ public class ResourceLoader {
         try{
             String canoncialDir = new File(".").getCanonicalPath();
             this.textureList.add(new BasicTexture(TextureLoader.getTexture("PNG", org.newdawn.slick.util.ResourceLoader.getResourceAsStream(canoncialDir + File.separator + filedir + File.separator + filename)),filedir+File.separator+filename,textureList.size()));
-            this.textures.put(filedir + File.separator + filename, textureList.size());
+            this.textures.put(filedir + File.separator + filename, textureList.size()-1);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
