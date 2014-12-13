@@ -105,8 +105,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private void generateCars() {
         this.pathfinder = new Pathfinder();
-        this.carController.addEntity(new Car(new Vector2f(4,2), 20, false,
-                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(4, 2), new Vector2f(44, 6))));
+        this.carController.addEntity(new Car(new Vector2f(40,24), 20, false,
+                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(40, 24), new Vector2f(2, 3))));
         this.carController.addEntity(new Car(new Vector2f(44,3), 20, false,
                 this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(44,3), new Vector2f(6, 9))));
     }

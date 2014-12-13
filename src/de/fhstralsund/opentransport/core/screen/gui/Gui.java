@@ -33,8 +33,8 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         // add elements to buildGUI
         int xoffset = 0;
         int yoffset = 1;
-        int startingStreetIds = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"Street_cross.png");
-        for(int i = 1; i < 16; i++) {
+        int startingStreetIds = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_cross.png");
+        for(int i = 1; i < 15; i++) {
             buildWindow.getGuiWindowElements().add(new GuiWindowElement(i + startingStreetIds, new Vector2f(buildWindow.getPosition().x + xoffset,
                     buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(i + startingStreetIds)), true));
             xoffset += 30;

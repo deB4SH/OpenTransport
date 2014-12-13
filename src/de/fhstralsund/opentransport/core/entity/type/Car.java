@@ -49,7 +49,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
             if(movementX > 0 && movementY <= 0) {
                 super.setTextureID(CarID.car_wood_SW);
             }
-            if(movementX > 0 && movementY > 0) {
+            if(movementX >= 0 && movementY > 0) {
                 super.setTextureID(CarID.car_wood_NW);
             }
             if(movementX <= 0 && movementY < 0) {
