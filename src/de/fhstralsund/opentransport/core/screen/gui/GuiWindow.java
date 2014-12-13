@@ -12,6 +12,7 @@ import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
     public void render(ResourceLoader rl) {
 
         Color.white.bind();
-        rl.bindTextureByFileName("gui_background.png");
+        rl.bindTextureByFileName("res"+ File.separator+"gui"+File.separator+"gui_background.png");
         GL11.glBegin(GL11.GL_QUADS);
             GL11.glTexCoord2f(0, 0);
             GL11.glVertex2f(position.x, position.y);
@@ -66,7 +67,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
             GL11.glEnd();
 
             if(element.chosen) {
-                rl.bindTextureByFileName("gui_chosen.png");
+                rl.bindTextureByFileName("res"+ File.separator+"gui"+File.separator+"gui_chosen.png");
                 GL11.glBegin(GL11.GL_QUADS);
                     GL11.glTexCoord2f(0, 0);
                     GL11.glVertex2f(element.getPosition().x, element.getPosition().y);

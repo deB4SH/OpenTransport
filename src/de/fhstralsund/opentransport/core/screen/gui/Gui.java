@@ -6,6 +6,7 @@ import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +28,15 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
     public void createStreetGui() {
         if (windows.containsKey("streetMenue")) { return;}
 
-        GuiWindow buildwindow = new GuiWindow(new Vector2f(250,50), rl.getTextureSizeByFileName("gui_background.png"), "streetMenue", this);
+        GuiWindow buildWindow = new GuiWindow(new Vector2f(250,50), rl.getTextureSizeByFileName("res"+ File.separator+"gui"+File.separator+"gui_background.png"), "streetMenue", this);
 
         // add elements to buildGUI
         int xoffset = 0;
         int yoffset = 1;
+        int startingStreetIds = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"Street_cross.png");
         for(int i = 1; i < 16; i++) {
-            buildwindow.getGuiWindowElements().add(new GuiWindowElement(i, new Vector2f(buildwindow.getPosition().x + xoffset,
-                    buildwindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(i)), true));
+            buildWindow.getGuiWindowElements().add(new GuiWindowElement(i + startingStreetIds, new Vector2f(buildWindow.getPosition().x + xoffset,
+                    buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(i + startingStreetIds)), true));
             xoffset += 30;
             if(i % 4 == 0) {
                 yoffset++;
@@ -43,10 +45,10 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         }
 
         // add last element - the destruction icon
-        buildwindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTextureID("delete.png"), new Vector2f(buildwindow.getPosition().x + xoffset,
-                buildwindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("delete.png")), true));
+        buildWindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTextureID("res"+ File.separator+"delete.png"), new Vector2f(buildWindow.getPosition().x + xoffset,
+                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("res"+ File.separator+"delete.png")), true));
 
-        windows.put("streetMenue", buildwindow);
+        windows.put("streetMenue", buildWindow);
     }
 
     public void destroyGui() {

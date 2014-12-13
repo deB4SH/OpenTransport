@@ -3,7 +3,6 @@ package de.fhstralsund.opentransport.Pathfinding;
 import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 public class Pathfinder {

@@ -43,7 +43,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
             }
             float movementX = (path.get(currentNode-1).x - path.get(currentNode).x);
             float movementY = (path.get(currentNode-1).y - path.get(currentNode).y);
-            if(movementX < 0 && movementY > 0) {
+            if(movementX < 0 && movementY == 0) {
                 super.setTextureID(CarID.car_wood_NE);
             }
             if(movementX > 0 && movementY <= 0) {
