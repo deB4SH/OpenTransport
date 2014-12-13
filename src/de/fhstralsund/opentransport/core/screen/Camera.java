@@ -37,7 +37,7 @@ public class Camera implements IUpdateable{
 
     @Override
     public void update() {
-        if ( instance == null)
+        if (instance == null)
             return;
 
         if(Keyboard.isKeyDown(Keyboard.KEY_E) && !Keyboard.isKeyDown(Keyboard.KEY_Q)) {

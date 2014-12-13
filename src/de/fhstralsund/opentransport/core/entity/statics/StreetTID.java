@@ -28,7 +28,7 @@ public class StreetTID {
     public StreetTID(ResourceLoader rl){
         urban_cross = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"Street_cross.png");
         urban_street_ns = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"Street_NE.png");
-
+        urban_street_we = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"Street_SE_.png");
 
     }
 

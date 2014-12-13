@@ -25,11 +25,9 @@ public class EntityController implements IRenderable, IUpdateable {
             this.entityList.add(entity);
             collisionMap = getcollisionArray();
         }
-
     }
 
-    private boolean[][] getcollisionArray(){
-
+    public boolean[][] getcollisionArray(){
         boolean collisionarray[][] = new boolean[mapSize][mapSize];
         //fill with false(not moveable)
         for(int i=0;i<mapSize;i++){
@@ -50,7 +48,9 @@ public class EntityController implements IRenderable, IUpdateable {
 
     @Override
     public void update() {
-
+        for(Entity e: this.entityList){
+            e.update();
+        }
     }
 
     @Override

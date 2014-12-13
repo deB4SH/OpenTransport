@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport;
 
+import de.fhstralsund.opentransport.core.entity.statics.CarID;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.screen.GamestateManager;
 import de.fhstralsund.opentransport.core.io.Configreader;
@@ -24,6 +25,7 @@ public class Window {
     private HashMap<String, Integer> configmap;
     private static Vector2f displaySize;
     private StreetTID streetTID;
+    private CarID carIDs;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -109,8 +111,9 @@ public class Window {
         rl.loadImageDir("res"+File.separator+"landscape");
         rl.loadImageDir("res"+File.separator+"street"+File.separator+"rural");
         rl.loadImageDir("res"+File.separator+"street"+File.separator+"urban");
-
+        rl.loadImageDir("res"+File.separator+"cars");
         streetTID = new StreetTID(rl);
+        carIDs = new CarID(rl);
 
     }
 
