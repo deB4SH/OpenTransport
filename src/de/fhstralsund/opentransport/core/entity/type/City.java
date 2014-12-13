@@ -41,6 +41,8 @@ public class City {
         //place at seed a street
         this.streetController.addEntity(new Street(seed, StreetTID.urban_cross,true,true,true,true));
         //TODO: generate Code
+        //attach some extending street points
+        Vector2f north=seed, south=seed, west=seed,east = seed;
 
     }
 }
