@@ -69,5 +69,7 @@ public class EntityController implements IRenderable, IUpdateable {
         return false;
     }
 
-
+    public static boolean[][] getCollisionMap() {
+        return collisionMap;
+    }
 }
