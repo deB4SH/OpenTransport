@@ -1,6 +1,7 @@
 package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -38,7 +39,7 @@ public class City {
 
     public void generateCity(ResourceLoader rl){
         //place at seed a street
-        this.streetController.addEntity(new Street(seed,rl.getTextureID("Street_cross.png"),true,true,true,true));
+        this.streetController.addEntity(new Street(seed, StreetTID.urban_cross,true,true,true,true));
         //TODO: generate Code
 
     }
