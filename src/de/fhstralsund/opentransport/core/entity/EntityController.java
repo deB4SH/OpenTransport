@@ -30,16 +30,16 @@ public class EntityController implements IRenderable, IUpdateable {
             if(entity.getClass() == Street.class){
                 Vector2f seed = entity.getTilePos();
                 entity.updateTexture(this); //central
-                if(this.entities[(int)seed.getX()+1][(int)seed.getY()] != null){ //north
+                if(isEntityOnVec(new Vector2f(seed.getX()+1,seed.getY()))){ //north
                     this.entities[(int)seed.getX()+1][(int)seed.getY()].updateTexture(this);
                 }
-                if(this.entities[(int)seed.getX()-1][(int)seed.getY()] != null){ //south
+                if(isEntityOnVec(new Vector2f(seed.getX()-1,seed.getY()))){ //south
                     this.entities[(int)seed.getX()-1][(int)seed.getY()].updateTexture(this);
                 }
-                if(this.entities[(int)seed.getX()][(int)seed.getY()+1] != null){ //east
+                if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()+1))){ //east
                     this.entities[(int)seed.getX()][(int)seed.getY()+1].updateTexture(this);
                 }
-                if(this.entities[(int)seed.getX()][(int)seed.getY()-1] != null){ //west
+                if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()-1))){ //west
                     this.entities[(int)seed.getX()][(int)seed.getY()-1].updateTexture(this);
                 }
             }
@@ -94,6 +94,7 @@ public class EntityController implements IRenderable, IUpdateable {
     public boolean isEntityOnVec(Vector2f vec){
         if(vec.getX() < this.mapSize-1 && vec.getY() < this.mapSize-1 && vec.getX() > 0 &&  vec.getY() > 0){
             if(this.entities[(int)vec.getX()][(int)vec.getY()] != null){
+                System.out.println("True");
                 return true;
             }
         }

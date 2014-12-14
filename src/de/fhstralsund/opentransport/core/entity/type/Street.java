@@ -27,6 +27,11 @@ public class Street extends Entity implements IUpdateable,IRenderable{
 
     @Override
     public void updateTexture(EntityController entityController){
+
+        if(super.getTilePos().getX() == 4 && super.getTilePos().getY() == 3){
+            int a = 0;
+        }
+
         boolean north=false,east=false,south=false,west=false;
 
         //check the directions
