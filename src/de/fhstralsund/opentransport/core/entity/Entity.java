@@ -66,6 +66,10 @@ public class Entity implements IUpdateable, IRenderable {
 
     }
 
+    public void updateTexture(EntityController entityController){
+
+    }
+
     public int getTextureID() {
         return textureID;
     }

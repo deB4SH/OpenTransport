@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport.core.entity;
 
+import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -10,20 +11,38 @@ import java.util.List;
 
 public class EntityController implements IRenderable, IUpdateable {
 
-    private List<Entity> entityList;    //TODO: implement this as R-Tree (searchable and alot faster than ArrayList)
     private int mapSize;
     private static boolean[][] collisionMap;
+    private Entity[][] entities;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
-        this.entityList = new ArrayList<Entity>();
+        this.entities = new Entity[this.mapSize][this.mapSize];
     }
 
     public void addEntity(Entity entity){
         //check if there is an entity on this vector
         if(!isEntityOnVec(entity.getTilePos())){
-            this.entityList.add(entity);
+            this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
+
+            //if street update next tiles
+            if(entity.getClass() == Street.class){
+                Vector2f seed = entity.getTilePos();
+                entity.updateTexture(this); //central
+                if(this.entities[(int)seed.getX()+1][(int)seed.getY()] != null){ //north
+                    this.entities[(int)seed.getX()+1][(int)seed.getY()].updateTexture(this);
+                }
+                if(this.entities[(int)seed.getX()-1][(int)seed.getY()] != null){ //south
+                    this.entities[(int)seed.getX()-1][(int)seed.getY()].updateTexture(this);
+                }
+                if(this.entities[(int)seed.getX()][(int)seed.getY()+1] != null){ //east
+                    this.entities[(int)seed.getX()][(int)seed.getY()+1].updateTexture(this);
+                }
+                if(this.entities[(int)seed.getX()][(int)seed.getY()-1] != null){ //west
+                    this.entities[(int)seed.getX()][(int)seed.getY()-1].updateTexture(this);
+                }
+            }
         }
     }
 
@@ -36,9 +55,13 @@ public class EntityController implements IRenderable, IUpdateable {
             }
         }
         //place all enterable
-        for(Entity e: this.entityList){
-            if(e.isEnterAble()){
-                collisionarray[(int)e.getTilePos().x][(int)e.getTilePos().y] = true;
+        for(Entity[] e: this.entities){
+            for(Entity entity: e) {
+                if(entity != null){
+                    if(entity.isEnterAble()) {
+                        collisionarray[(int) entity.getTilePos().x][(int) entity.getTilePos().y] = true;
+                    }
+                }
             }
         }
 
@@ -48,21 +71,29 @@ public class EntityController implements IRenderable, IUpdateable {
 
     @Override
     public void update() {
-        for(Entity e: this.entityList){
-            e.update();
+        for(Entity[] e: this.entities){
+            for(Entity entity: e){
+                if(entity != null){
+                    entity.update();
+                }
+            }
         }
     }
 
     @Override
     public void render(ResourceLoader rl) {
-        for(Entity e: this.entityList){
-            e.render(rl);
+        for(Entity[] e: this.entities){
+            for(Entity entity: e){
+                if(entity != null) {
+                    entity.render(rl);
+                }
+            }
         }
     }
 
-    private boolean isEntityOnVec(Vector2f vec){
-        for(Entity e: this.entityList){
-            if(e.getTilePos() == vec){
+    public boolean isEntityOnVec(Vector2f vec){
+        if(vec.getX() < this.mapSize-1 && vec.getY() < this.mapSize-1 && vec.getX() > 0 &&  vec.getY() > 0){
+            if(this.entities[(int)vec.getX()][(int)vec.getY()] != null){
                 return true;
             }
         }
