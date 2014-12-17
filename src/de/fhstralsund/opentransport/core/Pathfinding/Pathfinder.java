@@ -1,4 +1,4 @@
-package de.fhstralsund.opentransport.Pathfinding;
+package de.fhstralsund.opentransport.core.Pathfinding;
 
 import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;

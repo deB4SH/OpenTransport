@@ -1,5 +1,7 @@
 package de.fhstralsund.opentransport.core.entity;
 
+import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
+import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -13,10 +15,12 @@ public class EntityController implements IRenderable, IUpdateable {
     private List<Entity> entityList;    //TODO: implement this as R-Tree (searchable and alot faster than ArrayList)
     private int mapSize;
     private static boolean[][] collisionMap;
+    private Pathfinder pathfinder;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
         this.entityList = new ArrayList<Entity>();
+        pathfinder = new Pathfinder();
     }
 
     public void addEntity(Entity entity){
@@ -71,5 +75,9 @@ public class EntityController implements IRenderable, IUpdateable {
 
     public static boolean[][] getCollisionMap() {
         return collisionMap;
+    }
+
+    public List<Vector2f> requestNewWay(Vector2f start, Vector2f target) {
+        return this.pathfinder.findWay(getcollisionArray(), start, target);
     }
 }

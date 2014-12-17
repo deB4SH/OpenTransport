@@ -37,7 +37,7 @@ public class Map implements IRenderable{
                 for (int y = 0; y < layers.get(i).getMap().length; y++) {   // array y
 
                     float xpos = (x * tileWidth / 2) + (y * tileWidth / 2) - cam.getPosition().x;
-                    float ypos = ((y * tileHeight / 2) - (x * tileHeight / 2) - cam.getPosition().y);
+                    float ypos = (y * tileHeight / 2) - (x * tileHeight / 2) - cam.getPosition().y;
 
                     // nur das zeichnen was in der Kamera zu sehen ist
                     if ((x * tileWidth / 2) + (y * tileWidth / 2) + tileWidth >= cam.getPosition().x &&

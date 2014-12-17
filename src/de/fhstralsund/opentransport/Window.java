@@ -23,6 +23,7 @@ public class Window {
     private static ResourceLoader rl;
     private Configreader config;
     private HashMap<String, Integer> configmap;
+    private Camera cam;
     private static Vector2f displaySize;
     private StreetTID streetTID;
     private CarID carIDs;
@@ -53,13 +54,14 @@ public class Window {
 
     private void readConfig() {
         config = new Configreader();
-        //TODO: config wird bisher NICHT in Map und camera genutzt.. muss noch angepasst werden!
         configmap = config.loadConfig();
         this.displaySize = new Vector2f(configmap.get("width"), configmap.get("height"));
+        cam = Camera.getInstance();
+        cam.setValues(configmap.get("size"), new Vector2f(configmap.get("tilewidth"), configmap.get("tileheight")),
+            new Vector2f(configmap.get("width"), configmap.get("height")));
     }
 
     private void update() {
-        Camera cam = Camera.getInstance();
         cam.update();
         this.gs.update();
     }

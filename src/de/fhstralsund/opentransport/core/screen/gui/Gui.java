@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport.core.screen.gui;
 
+import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.interfaces.IGuiClose;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
@@ -59,6 +60,12 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
     public void render(ResourceLoader rl) {
         for(String window : windows.keySet()) {
             windows.get(window).render(rl);
+        }
+    }
+
+    public void update(EntityController entityController) {
+        for(String window : windows.keySet()) {
+            windows.get(window).update(entityController);
         }
     }
 

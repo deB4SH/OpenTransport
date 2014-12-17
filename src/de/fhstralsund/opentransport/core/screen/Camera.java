@@ -13,19 +13,18 @@ public class Camera implements IUpdateable{
     private static Camera instance = null;
     private static Vector2f position;
 
-    private static int width = 1600;
-    private static int height = 800;
-    private static int size = 64;
-    private static int tilewidth = 64;
-    private static int tileheight = 32;
+    private int width;
+    private int height;
+    private int size;
+    private int tilewidth;
+    private int tileheight;
     private Rectangle rectangle;
-    private int zoomin;
+    private int zoomin = 0;
     private int zoomout = 0;
 
 
     private Camera()  {
         position = new Vector2f(0, 0);
-        rectangle = new Rectangle((int)position.x, (int)position.y, width, height);
     }
 
     public static Camera getInstance() {
@@ -126,5 +125,18 @@ public class Camera implements IUpdateable{
 
     public int getZoomout() {
         return zoomout;
+    }
+
+    public void setValues(int size, Vector2f tileWidthHeight, Vector2f screenWidthHeight) {
+        this.size = size;
+        this.tilewidth = (int)tileWidthHeight.x;
+        this.tileheight = (int)tileWidthHeight.y;
+        this.width = (int)screenWidthHeight.x;
+        this.height = (int)screenWidthHeight.y;
+        rectangle = new Rectangle((int)position.x, (int)position.y, width, height);
+    }
+
+    public int getSize() {
+        return size;
     }
 }

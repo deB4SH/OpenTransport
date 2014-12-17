@@ -1,7 +1,7 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
 
-import de.fhstralsund.opentransport.Pathfinding.Pathfinder;
+import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
 import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
@@ -70,8 +70,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         if(Keyboard.isKeyDown(Keyboard.KEY_B)) {
             this.gui.createStreetGui();
         }
-        gui.update();
 
+        gui.update(streetController);
         carController.update();
     }
 
@@ -106,8 +106,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private void generateCars() {
         this.pathfinder = new Pathfinder();
         this.carController.addEntity(new Car(new Vector2f(40,24), 20, false,
-                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(40, 24), new Vector2f(2, 3))));
+                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(40, 24), new Vector2f(4, 24)),
+                streetController));
         this.carController.addEntity(new Car(new Vector2f(44,3), 20, false,
-                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(44,3), new Vector2f(6, 9))));
+                this.pathfinder.findWay(this.streetController.getcollisionArray(), new Vector2f(44,3), new Vector2f(6, 9)),
+                streetController));
     }
 }

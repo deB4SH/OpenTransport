@@ -2,6 +2,7 @@ package de.fhstralsund.opentransport.core.entity.type;
 
 
 import de.fhstralsund.opentransport.core.entity.Entity;
+import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.entity.statics.CarID;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
@@ -15,6 +16,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
     private List<Vector2f> path;
     private int currentNode = 0;
+    private EntityController streetController = null;
 
     public Car(Vector2f tilePos, int textureID, Boolean enterAble) {
         super(tilePos, enterAble);
@@ -28,17 +30,27 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         this.path = path;
     }
 
+    public Car(Vector2f tilePos, int textureID, boolean enterAble, ArrayList<Vector2f> path, EntityController streetController) {
+        super(tilePos, enterAble);
+        super.setTextureID(textureID);
+        this.path = path;
+        this.streetController = streetController;
+    }
+
     @Override
     public void update() {
-        Vector2f waypoint;
+        Vector2f wayPoint;
 
         if (path != null && path.size() != 1) {
-            waypoint = path.get(currentNode);
-            if(distance(waypoint, this.getTilePos()) <= 0.05f) {
+            wayPoint = path.get(currentNode);
+            if(distance(wayPoint, this.getTilePos()) <= 0.05f) {
                 currentNode++;
                 if(currentNode == path.size()) {
-                    path = null;
-                    return;
+                    //path = null;
+                    //currentNode = 0;
+                    //return;
+                    currentNode = 1;
+                    requestNewWay();
                 }
             }
             float movementX = (path.get(currentNode-1).x - path.get(currentNode).x);
@@ -71,5 +83,10 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
     private float distance(Vector2f wayPoint, Vector2f tilePos) {
         return (float)Math.sqrt((wayPoint.x - tilePos.x) * (wayPoint.x - tilePos.x) + (wayPoint.y - tilePos.y) * (wayPoint.y - tilePos.y));
+    }
+
+    private void requestNewWay() {
+        if(streetController != null) {
+            path = this.streetController.requestNewWay(path.get(path.size() -1), path.get(0));        }
     }
 }

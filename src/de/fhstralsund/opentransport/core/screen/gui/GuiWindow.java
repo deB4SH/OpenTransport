@@ -1,9 +1,13 @@
 package de.fhstralsund.opentransport.core.screen.gui;
 
 
+import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.Camera;
+import de.fhstralsund.opentransport.core.screen.screens.Game;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Point;
@@ -21,6 +25,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
     private Vector2f position;
     private Vector2f dimension;
     private Rectangle closeRectangle;
+    private Rectangle windowRectangle;
     private List<GuiWindowElement> guiWindowElements = null;
     private String name;
     private Gui gui;
@@ -30,6 +35,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
         this.position = position;
         this.dimension = dimension;
         this.closeRectangle = new Rectangle((int)position.x + (int)dimension.x - 28, (int)position.y, 28, 19);
+        this.windowRectangle = new Rectangle((int)position.x , (int)position.y, (int)dimension.x, (int)dimension.y);
         this.name = name;
         this.guiWindowElements = new ArrayList<GuiWindowElement>();
         this.gui = gui;
@@ -80,6 +86,38 @@ public class GuiWindow implements IUpdateable, IRenderable{
                 GL11.glEnd();
             }
         }
+    }
+
+
+    public void update(EntityController entityController) {
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + 800); // invertieren weil windows andere koordinaten liefert
+        if(closeRectangle.contains(p) && Mouse.isButtonDown(0)) {
+            gui.closeRequest(this.name);
+        }
+
+        // Elemente angeklickt
+        for(GuiWindowElement guiWindowElement : this.guiWindowElements) {
+            if(guiWindowElement.getRectangle().contains(p) && guiWindowElement.clickable && Mouse.isButtonDown(0)){
+                if( lastChosenGuiElement != null) {lastChosenGuiElement.chosen =false;}
+                guiWindowElement.chosen = true;
+                lastChosenGuiElement = guiWindowElement;
+            }
+            // gui element ausgewählt, es soll platziert werden
+            else if(Mouse.isButtonDown(0) && !windowRectangle.contains(p))  {
+                if (lastChosenGuiElement != null) {
+                    Camera cam = Camera.getInstance();
+
+                    float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
+                    float isoMouseY = Math.round(((p.getX()  + cam.getPosition().getX()) / Game.TILEWIDTH) +  ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT))-1;
+
+                    if(isoMouseX >= 0 && isoMouseY >= 0 && isoMouseX < cam.getSize() && isoMouseY < cam.getSize()) {
+                        entityController.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), lastChosenGuiElement.getTextureID(), true, true, true, true));
+                    }
+                }
+            }
+        }
+
+
     }
 
     @Override
