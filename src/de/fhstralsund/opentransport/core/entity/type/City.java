@@ -39,10 +39,17 @@ public class City {
 
     public void generateCity(ResourceLoader rl){
         //place at seed a street
-        this.streetController.addEntity(new Street(seed, StreetTID.urban_cross,true,true,true,true));
-        //TODO: generate Code
+        addStreet(new Street(seed, StreetTID.urban_cross));
+
         //attach some extending street points
-        Vector2f north=seed, south=seed, west=seed,east = seed;
+            //north
+        addStreet(new Street(new Vector2f(seed.getX()+1,seed.getY()), StreetTID.urban_street_ns));
+            //south
+        addStreet(new Street(new Vector2f(seed.getX()-1,seed.getY()), StreetTID.urban_street_ns));
+            //east
+        addStreet(new Street(new Vector2f(seed.getX(),seed.getY()+1), StreetTID.urban_street_we));
+            //west
+        addStreet(new Street(new Vector2f(seed.getX(),seed.getY()-1), StreetTID.urban_street_we));
 
     }
 }

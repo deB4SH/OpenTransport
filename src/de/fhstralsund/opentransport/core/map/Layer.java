@@ -25,14 +25,6 @@ public class Layer {
                 }
             }
         }
-
-  /*      if (type.equalsIgnoreCase("vegetation")) {
-            genereateEnvironement();
-        }
-
-        if(type.equalsIgnoreCase("streets")) {
-            generateStreets();
-        }*/
     }
 
 

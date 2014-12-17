@@ -71,7 +71,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
             this.gui.createStreetGui();
         }
 
-        gui.update(streetController);
+        buildingController.update();
+        streetController.update();
         carController.update();
     }
 
@@ -87,19 +88,19 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private void generateTestStreet(){
         for(int x=1; x<mapSize; x++){
-            streetController.addEntity(new Street(new Vector2f(x,3), StreetTID.urban_street_ns,true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(x,3), StreetTID.urban_street_ns));
         }
         for(int x=1; x<mapSize; x++){
-            streetController.addEntity(new Street(new Vector2f(x,6), StreetTID.urban_street_ns,true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(x,6), StreetTID.urban_street_ns));
         }
         for(int y=1; y<mapSize; y++){
-            streetController.addEntity(new Street(new Vector2f(40,y), StreetTID.urban_street_we,true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(40,y), StreetTID.urban_street_we));
         }
         for(int y=1; y<mapSize; y++){
-            streetController.addEntity(new Street(new Vector2f(4,y), StreetTID.urban_street_we,true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(4,y), StreetTID.urban_street_we));
         }
         for(int y=1; y<mapSize; y++){
-            streetController.addEntity(new Street(new Vector2f(6,y), StreetTID.urban_street_we,true,true,true,true));
+            streetController.addEntity(new Street(new Vector2f(6,y), StreetTID.urban_street_we));
         }
     }
 
