@@ -111,7 +111,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
                     float isoMouseY = Math.round(((p.getX()  + cam.getPosition().getX()) / Game.TILEWIDTH) +  ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT))-1;
 
                     if(isoMouseX >= 0 && isoMouseY >= 0 && isoMouseX < cam.getSize() && isoMouseY < cam.getSize()) {
-                        entityController.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), lastChosenGuiElement.getTextureID(), true, true, true, true));
+                        entityController.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), lastChosenGuiElement.getTextureID()));
                     }
                 }
             }

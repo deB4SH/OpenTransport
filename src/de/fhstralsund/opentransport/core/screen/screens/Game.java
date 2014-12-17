@@ -70,7 +70,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         if(Keyboard.isKeyDown(Keyboard.KEY_B)) {
             this.gui.createStreetGui();
         }
-
+        gui.update(streetController);
         buildingController.update();
         streetController.update();
         carController.update();
