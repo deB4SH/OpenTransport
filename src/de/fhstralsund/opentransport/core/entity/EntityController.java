@@ -95,6 +95,16 @@ public class EntityController implements IRenderable, IUpdateable {
         }
     }
 
+    public void updateTexture(){
+        for(int x=0; x < this.mapSize; x++){
+            for(int y=0; y < this.mapSize; y++){
+                if(this.entities[x][y] != null){
+                    this.entities[x][y].updateTexture(this);
+                }
+            }
+        }
+    }
+
     public boolean isEntityOnVec(Vector2f vec){
         if(vec.getX() < this.mapSize-1 && vec.getY() < this.mapSize-1 && vec.getX() > 0 &&  vec.getY() > 0){
             if(this.entities[(int)vec.getX()][(int)vec.getY()] != null){

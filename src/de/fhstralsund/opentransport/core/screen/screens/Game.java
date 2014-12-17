@@ -102,6 +102,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         for(int y=1; y<mapSize; y++){
             streetController.addEntity(new Street(new Vector2f(6,y), StreetTID.urban_street_we));
         }
+        this.streetController.updateTexture();
     }
 
     private void generateCars() {
