@@ -34,17 +34,15 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         // add elements to buildGUI
         int xoffset = 0;
         int yoffset = 1;
-        int startingStreetIds = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_cross.png");
-        for(int i = 1; i < 15; i++) {
-            buildWindow.getGuiWindowElements().add(new GuiWindowElement(i + startingStreetIds, new Vector2f(buildWindow.getPosition().x + xoffset,
-                    buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(i + startingStreetIds)), true));
-            xoffset += 30;
-            if(i % 4 == 0) {
-                yoffset++;
-                xoffset = 0;
-            }
-        }
 
+        int StreetNS = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_ns.png");
+        int StreetWE = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_we.png");
+        buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetNS, new Vector2f(buildWindow.getPosition().x + xoffset,
+                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetNS)), true));
+        xoffset += 30;
+        buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetWE, new Vector2f(buildWindow.getPosition().x + xoffset,
+                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetWE)), true));
+        xoffset += 30;
         // add last element - the destruction icon
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTextureID("res"+ File.separator+"delete.png"), new Vector2f(buildWindow.getPosition().x + xoffset,
                 buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("res"+ File.separator+"delete.png")), true));

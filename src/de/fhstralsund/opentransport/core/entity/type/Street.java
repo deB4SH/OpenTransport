@@ -45,35 +45,35 @@ public class Street extends Entity implements IUpdateable,IRenderable{
         }
 
         //select by direction the correct texture
-        if(north && south){
-            super.setTextureID(StreetTID.urban_street_ns);
-        }
-        else if(north && east){
-            super.setTextureID(StreetTID.urban_curve_ne);
-        }
-        else if(north && west){
-            super.setTextureID(StreetTID.urban_curve_nw);
-        }
-        else if(south && east) {
-            super.setTextureID(StreetTID.urban_curve_se);
-        }
-        else if(south && west) {
-            super.setTextureID(StreetTID.urban_curve_sw);
-        }
-        else if(north && east && west){
+        if(north && east && west && !south){
             super.setTextureID(StreetTID.urban_cross_nwe);
         }
-        else if(north && east && south){
+        else if(north && east && south && !west){
             super.setTextureID(StreetTID.urban_cross_sen);
         }
-        else if(north && west && south){
+        else if(north && west && south && !east){
             super.setTextureID(StreetTID.urban_cross_swn);
         }
-        else if(south && east && west){
+        else if(south && east && west && !north){
             super.setTextureID(StreetTID.urban_cross_swe);
         }
-        else if(north && east && south && west){
+        else if(north && east && south && west) {
             super.setTextureID(StreetTID.urban_cross);
+        }
+        else if(north && south && !east && ! west){
+            super.setTextureID(StreetTID.urban_street_ns);
+        }
+        else if(north && east && !west && !south){
+            super.setTextureID(StreetTID.urban_curve_ne);
+        }
+        else if(north && west && !south && !east){
+            super.setTextureID(StreetTID.urban_curve_nw);
+        }
+        else if(south && east && !north && !west) {
+            super.setTextureID(StreetTID.urban_curve_se);
+        }
+        else if(south && west && !north && !east) {
+            super.setTextureID(StreetTID.urban_curve_sw);
         }
     }
 }
