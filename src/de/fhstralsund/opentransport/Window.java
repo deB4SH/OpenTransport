@@ -38,8 +38,10 @@ public class Window {
         this.setupGL((int)this.displaySize.x,(int)this.displaySize.y);
         this.setup();
 
+        Display.setTitle("OpenTransport");
+
         while(true){
-            GL11.glClearColor(255,0,0,1);
+            GL11.glClearColor(0,0,0,1);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             this.update();
             this.render();

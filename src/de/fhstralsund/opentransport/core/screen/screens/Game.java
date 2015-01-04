@@ -4,6 +4,7 @@ package de.fhstralsund.opentransport.core.screen.screens;
 import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.Vegatation;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.entity.type.Street;
@@ -20,6 +21,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private Map map;
     private ResourceLoader rl;
+    private Vegatation vegatation;
     private int mapSize;
     private Gui gui;
     private Pathfinder pathfinder;
@@ -51,6 +53,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
         this.cityController.spawnCity(new Vector2f(20,20),"Stralsund",100,this.buildingController,this.streetController,rl);
 
+        this.vegatation = new Vegatation(mapSize,rl,streetController);
+
     }
 
     @Override
@@ -60,7 +64,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         streetController.render(rl);
         carController.render(rl);
         buildingController.render(rl);
-
+        vegatation.render(rl);
         gui.render(rl);
     }
 
@@ -74,11 +78,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         buildingController.update();
         streetController.update();
         carController.update();
-    }
-
-    @Override
-    public void setup() {
-        map = new Map(50, rl);
     }
 
     @Override
