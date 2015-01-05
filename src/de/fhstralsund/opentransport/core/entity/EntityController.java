@@ -2,13 +2,12 @@ package de.fhstralsund.opentransport.core.entity;
 
 import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
-import de.fhstralsund.opentransport.core.entity.type.Car;
+import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EntityController implements IRenderable, IUpdateable {
@@ -17,6 +16,7 @@ public class EntityController implements IRenderable, IUpdateable {
     private static boolean[][] collisionMap;
     private Entity[][] entities;
 	private Pathfinder pathfinder;
+    private Vegetation veg;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
@@ -24,14 +24,21 @@ public class EntityController implements IRenderable, IUpdateable {
         pathfinder = new Pathfinder();
     }
 
+
     public void addEntity(Entity entity){
         //check if there is an entity on this vector
         if(!isEntityOnVec(entity.getTilePos())){
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
-
-            //if street update next tiles
+            
+            //if tile == street.class
             if(entity.getClass() == Street.class){
+
+                //remove veg if existing there
+                if(veg.isVegetationOn(entity.getTilePos())){
+                    veg.removeVegetationAt(entity.getTilePos());
+                }
+
                 Vector2f seed = entity.getTilePos();
                 entity.updateTexture(this); //central
                 if(isEntityOnVec(new Vector2f(seed.getX()+1,seed.getY()))){ //north
@@ -120,5 +127,9 @@ public class EntityController implements IRenderable, IUpdateable {
 
     public List<Vector2f> requestNewWay(Vector2f start, Vector2f target) {
         return this.pathfinder.findWay(getcollisionArray(), start, target);
+    }
+
+    public void setVeg(Vegetation veg) {
+        this.veg = veg;
     }
 }

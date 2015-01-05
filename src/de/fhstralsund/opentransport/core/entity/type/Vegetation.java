@@ -1,5 +1,6 @@
-package de.fhstralsund.opentransport.core.entity;
+package de.fhstralsund.opentransport.core.entity.type;
 
+import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
@@ -10,13 +11,13 @@ import org.lwjgl.util.vector.Vector2f;
 import java.io.File;
 import java.util.Random;
 
-public class Vegatation implements IRenderable {
+public class Vegetation implements IRenderable {
 
     private int mapSize;
     private int[][] veg;
     private static int tileWidth = 64, tileHeight = 32;
 
-    public Vegatation(int mapSize, ResourceLoader rl, EntityController ec) {
+    public Vegetation(int mapSize, ResourceLoader rl, EntityController ec) {
         this.mapSize = mapSize;
         veg = new int[mapSize][mapSize];
         generateVegeration(rl,ec);
@@ -68,5 +69,25 @@ public class Vegatation implements IRenderable {
                 }
             }
         }
+    }
+
+    public boolean isVegetationOn(Vector2f vec){
+        if(veg[((int) vec.x)][((int) vec.y)] >= 0)
+            return true;
+        return false;
+    }
+
+    public boolean isVegetationOn(int x, int y){
+        if(veg[x][y] >= 0)
+            return true;
+        return false;
+    }
+
+    public void removeVegetationAt(Vector2f vec){
+        this.veg[((int) vec.x)][((int) vec.y)] = 0;
+    }
+
+    public void removeVegetationAt(int x,int y){
+        this.veg[x][y] = 0;
     }
 }
