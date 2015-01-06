@@ -30,7 +30,7 @@ public class EntityController implements IRenderable, IUpdateable {
         if(!isEntityOnVec(entity.getTilePos())){
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
-            
+
             //if tile == street.class
             if(entity.getClass() == Street.class){
 

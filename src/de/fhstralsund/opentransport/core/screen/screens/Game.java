@@ -54,7 +54,9 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         generateTestStreet();
         generateCars();
 
-        this.cityController.spawnCity(new Vector2f(20,20),"Stralsund",100,this.buildingController,this.streetController,rl);
+        this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.buildingController,this.streetController,rl);
+        this.cityController.spawnCity(new Vector2f(60,18),"Moew",100,this.buildingController,this.streetController,rl);
+        this.cityController.spawnCity(new Vector2f(35,40),"Blubb",100,this.buildingController,this.streetController,rl);
     }
 
     @Override

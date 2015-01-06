@@ -5,8 +5,10 @@ import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class City {
 
@@ -44,8 +46,22 @@ public class City {
         //attach some extending street points
             //north
         addStreet(new Street(new Vector2f(seed.getX()+1,seed.getY()), StreetTID.urban_street_ns));
+            //spawn buildings beside //east
+            if(new Random().nextInt(10) % 2 == 0){
+                addBuilding(new Building(new Vector2f(seed.getX()+1,seed.getY()+1),false,rl.getTextureID("res"+ File.separator+ "building"+File.separator+"house_01.png")));
+            }
+            if(new Random().nextInt(10) % 2 == 0){
+                addBuilding(new Building(new Vector2f(seed.getX()+1,seed.getY()-1),false,rl.getTextureID("res"+ File.separator+ "building"+File.separator+"house_01.png")));
+            }
             //south
         addStreet(new Street(new Vector2f(seed.getX()-1,seed.getY()), StreetTID.urban_street_ns));
+            //spawn buildings beside //east
+            if(new Random().nextInt(10) % 2 == 0){
+                addBuilding(new Building(new Vector2f(seed.getX()-1,seed.getY()+1),false,rl.getTextureID("res"+ File.separator+ "building"+File.separator+"house_01.png")));
+            }
+            if(new Random().nextInt(10) % 2 == 0){
+                addBuilding(new Building(new Vector2f(seed.getX()-1,seed.getY()-1),false,rl.getTextureID("res"+ File.separator+ "building"+File.separator+"house_01.png")));
+            }
             //east
         addStreet(new Street(new Vector2f(seed.getX(),seed.getY()+1), StreetTID.urban_street_we));
             //west
