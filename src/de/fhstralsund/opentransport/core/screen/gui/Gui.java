@@ -5,8 +5,13 @@ import de.fhstralsund.opentransport.core.interfaces.IGuiClose;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.Camera;
+import de.fhstralsund.opentransport.core.screen.screens.Game;
 import org.lwjgl.util.vector.Vector2f;
 
+import org.newdawn.slick.TrueTypeFont;
+
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +21,17 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
     private Map<String, GuiWindow> windows;
     private ResourceLoader rl;
 
+    public static HashMap<String, Vector2f> Citynames = new HashMap<String, Vector2f>();
+    private TrueTypeFont font;
+    private Font awtFont;
+
+
     public Gui(ResourceLoader rl) {
         this.rl = rl;
         windows = new HashMap<String, GuiWindow>();
+
+        awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+        this.font = new TrueTypeFont(awtFont, false); //base Font, anti-aliasing true/false
     }
 
     // TODO: Optionen hinzufügen für buttons, text, diagramme, etc..
@@ -59,6 +72,10 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         for(String window : windows.keySet()) {
             windows.get(window).render(rl);
         }
+
+        for(String name : Citynames.keySet()) {
+            renderText(name, Citynames.get(name));
+        }
     }
 
     public void update(EntityController entityController) {
@@ -77,5 +94,14 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
     @Override
     public void closeRequest(String name) {
         windows.remove(name);
+    }
+
+    private void renderText(String text, Vector2f position) {
+        Camera cam = Camera.getInstance();
+
+        float xpos = (position.getX() * Game.TILEWIDTH / 2) + (position.getY() * Game.TILEWIDTH / 2) - cam.getPosition().x;
+        float ypos = ((position.getY() * Game.TILEHEIGHT / 2) - (position.getX() * Game.TILEHEIGHT / 2) - cam.getPosition().y);
+
+        this.font.drawString(xpos, ypos, text);
     }
 }

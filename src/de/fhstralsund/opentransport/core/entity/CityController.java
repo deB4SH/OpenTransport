@@ -4,6 +4,7 @@ import de.fhstralsund.opentransport.core.entity.type.City;
 import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.gui.Gui;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class CityController implements IUpdateable{
         this.cityList.add(new City(seed,cityName, popCap, buildingController, streetController));
         int number = cityList.size()-1;
         this.cityList.get(number).generateCity(rl);
+
+        Gui.Citynames.put(cityName, seed);
     }
 
     @Override
