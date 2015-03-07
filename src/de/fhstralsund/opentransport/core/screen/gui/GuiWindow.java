@@ -57,6 +57,7 @@ public class GuiWindow implements IUpdateable, IRenderable{
             GL11.glVertex2f(position.x, position.y + dimension.y);
         GL11.glEnd();
 
+        this.gui.renderText(this.name, new Vector2f(position.x, position.y));
 
         for (GuiWindowElement element : guiWindowElements) {
             rl.bindTextureByID(element.getTextureID());
@@ -107,17 +108,21 @@ public class GuiWindow implements IUpdateable, IRenderable{
                 if (lastChosenGuiElement != null) {
                     Camera cam = Camera.getInstance();
 
+                    // Mouse to Iso-Tiles
                     float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
                     float isoMouseY = Math.round(((p.getX()  + cam.getPosition().getX()) / Game.TILEWIDTH) +  ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT))-1;
 
                     if(isoMouseX >= 0 && isoMouseY >= 0 && isoMouseX < cam.getSize() && isoMouseY < cam.getSize()) {
-                        entityController.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), lastChosenGuiElement.getTextureID()));
+                        if(gui.rl.getTextureID("res" + File.separator + "delete.png") == lastChosenGuiElement.getTextureID()) {
+                            entityController.remove(new Vector2f(isoMouseX, isoMouseY));
+                        }
+                        else{
+                            entityController.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), lastChosenGuiElement.getTextureID()));
+                        }
                     }
                 }
             }
         }
-
-
     }
 
     @Override

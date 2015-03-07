@@ -132,4 +132,9 @@ public class EntityController implements IRenderable, IUpdateable {
     public void setVeg(Vegetation veg) {
         this.veg = veg;
     }
+
+    public void remove(Vector2f entityInArray) {
+        entities[(int)entityInArray.x][(int)entityInArray.y] = null;
+        collisionMap[(int)entityInArray.x][(int)entityInArray.y] = false;
+    }
 }

@@ -18,19 +18,20 @@ import java.util.Map;
 
 public class Gui implements IUpdateable, IRenderable, IGuiClose{
 
-    private Map<String, GuiWindow> windows;
-    private ResourceLoader rl;
+    public Map<String, GuiWindow> windows;
+    public ResourceLoader rl;
 
     public static HashMap<String, Vector2f> Citynames = new HashMap<String, Vector2f>();
     private TrueTypeFont font;
     private Font awtFont;
 
 
+
     public Gui(ResourceLoader rl) {
         this.rl = rl;
         windows = new HashMap<String, GuiWindow>();
 
-        awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+        awtFont = new Font("Times New Roman", Font.BOLD, 18); //name, style (PLAIN, BOLD, or ITALIC), size
         this.font = new TrueTypeFont(awtFont, false); //base Font, anti-aliasing true/false
     }
 
@@ -50,12 +51,15 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
 
         int StreetNS = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_ns.png");
         int StreetWE = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_we.png");
+
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetNS, new Vector2f(buildWindow.getPosition().x + xoffset,
                 buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetNS)), true));
         xoffset += 30;
+
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetWE, new Vector2f(buildWindow.getPosition().x + xoffset,
                 buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetWE)), true));
         xoffset += 30;
+
         // add last element - the destruction icon
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(rl.getTextureID("res"+ File.separator+"delete.png"), new Vector2f(buildWindow.getPosition().x + xoffset,
                 buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByFileName("res"+ File.separator+"delete.png")), true));
@@ -74,7 +78,7 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         }
 
         for(String name : Citynames.keySet()) {
-            renderText(name, Citynames.get(name));
+            renderCityText(name, Citynames.get(name));
         }
     }
 
@@ -96,12 +100,16 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         windows.remove(name);
     }
 
-    private void renderText(String text, Vector2f position) {
+    public void renderCityText(String text, Vector2f position) {
         Camera cam = Camera.getInstance();
 
         float xpos = (position.getX() * Game.TILEWIDTH / 2) + (position.getY() * Game.TILEWIDTH / 2) - cam.getPosition().x;
         float ypos = ((position.getY() * Game.TILEHEIGHT / 2) - (position.getX() * Game.TILEHEIGHT / 2) - cam.getPosition().y);
 
         this.font.drawString(xpos, ypos, text);
+    }
+
+    public void renderText(String name, Vector2f position) {
+        this.font.drawString(position.x, position.y, name);
     }
 }

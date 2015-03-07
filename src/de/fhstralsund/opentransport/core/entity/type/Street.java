@@ -60,7 +60,7 @@ public class Street extends Entity implements IUpdateable,IRenderable{
         else if(north && east && south && west) {
             super.setTextureID(StreetTID.urban_cross);
         }
-        else if(north && south && !east && ! west){
+        else if(north && south && !east && !west){
             super.setTextureID(StreetTID.urban_street_ns);
         }
         else if(north && east && !west && !south){
@@ -74,6 +74,21 @@ public class Street extends Entity implements IUpdateable,IRenderable{
         }
         else if(south && west && !north && !east) {
             super.setTextureID(StreetTID.urban_curve_sw);
+        }
+        else if(!south && !west && north && !east) {
+            super.setTextureID(StreetTID.urban_end_s);
+        }
+        else if(!south && west && !north && east) {
+            super.setTextureID(StreetTID.urban_street_we);
+        }
+        else if(south && !west && !north && !east) {
+            super.setTextureID(StreetTID.urban_end_n);
+        }
+        else if(!south && !west && !north && east) {
+            super.setTextureID(StreetTID.urban_end_w);
+        }
+        else if(!south && west && !north && !east) {
+            super.setTextureID(StreetTID.urban_end_e);
         }
     }
 }
