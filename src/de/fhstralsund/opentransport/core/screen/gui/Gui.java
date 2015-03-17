@@ -31,7 +31,7 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         this.rl = rl;
         windows = new HashMap<String, GuiWindow>();
 
-        awtFont = new Font("Times New Roman", Font.BOLD, 18); //name, style (PLAIN, BOLD, or ITALIC), size
+        awtFont = new Font("Times New Roman", Font.PLAIN, 18); //name, style (PLAIN, BOLD, or ITALIC), size
         this.font = new TrueTypeFont(awtFont, false); //base Font, anti-aliasing true/false
     }
 
