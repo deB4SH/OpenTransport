@@ -49,15 +49,15 @@ public class Map implements IRenderable{
                             rl.bindTextureByID(layers.get(i).getMap()[x][y].getTextureId());
                             GL11.glBegin(GL11.GL_QUADS);
 
-                            if ((int) rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y == 32) {
+                            if ((int) rl.getTextureSizeByIDHeight(layers.get(i).getMap()[x][y].getTextureId()) == 32) {
                                 GL11.glTexCoord2f(0, 0);
                                 GL11.glVertex2f(xpos, ypos);
                                 GL11.glTexCoord2f(1, 0);
                                 GL11.glVertex2f(xpos + tileWidth, ypos);
                                 GL11.glTexCoord2f(1, 1);
-                                GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y);
+                                GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByIDHeight(layers.get(i).getMap()[x][y].getTextureId()));
                                 GL11.glTexCoord2f(0, 1);
-                                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y);
+                                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(layers.get(i).getMap()[x][y].getTextureId()));
                                 GL11.glEnd();
                             }
                             // wenn tiles höher als 32 px sind, in dem fall nur 64, dann 32 abziehen damit es ordentlich gerendert wird
@@ -67,9 +67,9 @@ public class Map implements IRenderable{
                                 GL11.glTexCoord2f(1, 0);
                                 GL11.glVertex2f(xpos + tileWidth, ypos - tileHeight);
                                 GL11.glTexCoord2f(1, 1);
-                                GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeight);
+                                GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByIDHeight(layers.get(i).getMap()[x][y].getTextureId()) - tileHeight);
                                 GL11.glTexCoord2f(0, 1);
-                                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(layers.get(i).getMap()[x][y].getTextureId()).y - tileHeight);
+                                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(layers.get(i).getMap()[x][y].getTextureId()) - tileHeight);
                                 GL11.glEnd();
                             }
                         }

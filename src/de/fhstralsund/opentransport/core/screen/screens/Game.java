@@ -1,7 +1,7 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
 
-import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
+import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
 import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.entity.type.Vegetation;
@@ -52,7 +52,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.buildingController.setVeg(vegatation);
 
         generateTestStreet();
-        generateCars();
+        //generateCars();
 
         this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.buildingController,this.streetController,rl);
         this.cityController.spawnCity(new Vector2f(60,18),"Moew",100,this.buildingController,this.streetController,rl);

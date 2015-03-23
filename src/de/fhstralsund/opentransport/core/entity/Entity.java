@@ -52,11 +52,11 @@ public class Entity implements IUpdateable, IRenderable {
                 GL11.glTexCoord2f(0, 0);
                 GL11.glVertex2f(xpos, ypos);
                 GL11.glTexCoord2f(1, 0);
-                GL11.glVertex2f(xpos + rl.getTextureSizeByID(textureID).x, ypos);
+                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos);
                 GL11.glTexCoord2f(1, 1);
-                GL11.glVertex2f(xpos + rl.getTextureSizeByID(textureID).x, ypos + rl.getTextureSizeByID(textureID).y);
+                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos + rl.getTextureSizeByIDHeight(textureID));
                 GL11.glTexCoord2f(0, 1);
-                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByID(textureID).y);
+                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(textureID));
             GL11.glEnd();
         }
     }

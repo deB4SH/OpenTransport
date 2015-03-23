@@ -1,7 +1,7 @@
 package de.fhstralsund.opentransport.core.entity;
 
 import de.fhstralsund.opentransport.core.entity.type.Street;
-import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
+import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;

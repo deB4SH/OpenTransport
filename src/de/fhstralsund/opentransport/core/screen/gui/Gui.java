@@ -53,11 +53,11 @@ public class Gui implements IUpdateable, IRenderable, IGuiClose{
         int StreetWE = rl.getTextureID("res"+ File.separator+"street"+File.separator+"urban"+File.separator+"street_we.png");
 
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetNS, new Vector2f(buildWindow.getPosition().x + xoffset,
-                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetNS)), true));
+                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByIDWidth(StreetNS),rl.getTextureSizeByIDHeight(StreetNS)), true));
         xoffset += 30;
 
         buildWindow.getGuiWindowElements().add(new GuiWindowElement(StreetWE, new Vector2f(buildWindow.getPosition().x + xoffset,
-                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByID(StreetWE)), true));
+                buildWindow.getPosition().y + 30 * yoffset), new Vector2f(rl.getTextureSizeByIDWidth(StreetWE),rl.getTextureSizeByIDHeight(StreetWE)), true));
         xoffset += 30;
 
         // add last element - the destruction icon

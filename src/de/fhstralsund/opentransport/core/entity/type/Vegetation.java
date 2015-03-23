@@ -61,9 +61,9 @@ public class Vegetation implements IRenderable {
                             GL11.glTexCoord2f(1, 0);
                             GL11.glVertex2f(xpos + tileWidth, ypos - tileHeight);
                             GL11.glTexCoord2f(1, 1);
-                            GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByID(veg[x][y]).y - tileHeight);
+                            GL11.glVertex2f(xpos + tileWidth, ypos + (int) rl.getTextureSizeByIDHeight(veg[x][y]) - tileHeight);
                             GL11.glTexCoord2f(0, 1);
-                            GL11.glVertex2f(xpos, ypos + (int) rl.getTextureSizeByID(veg[x][y]).y - tileHeight);
+                            GL11.glVertex2f(xpos, ypos + (int) rl.getTextureSizeByIDHeight(veg[x][y]) - tileHeight);
                         GL11.glEnd();
                     }
                 }
