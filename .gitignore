@@ -2,7 +2,7 @@ OpenTransport.iml
 JavaFxApplication.iml
 .idea
 out
-
+configname
 *.class
 # Mobile Tools for Java (J2ME)
 .mtj
