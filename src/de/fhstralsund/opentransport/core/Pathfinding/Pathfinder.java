@@ -36,7 +36,7 @@ public class Pathfinder {
         //startnode hat keine "Bewegungskosten"
         notes[(int)start.x][(int)start.y].setMovementCostG(0);
 
-        ArrayList<Vector2f> resultway = new ArrayList<Vector2f>();
+        ArrayList<Vector2f> resultWay = new ArrayList<Vector2f>();
         // anfangswert
         closedNodes.add(notes[(int) start.x][(int) start.y]);
 
@@ -48,12 +48,16 @@ public class Pathfinder {
         // partendNodes wieder hoch gehen und weg zusammensetzen
         Node way = notes[(int)end.x][(int)end.y];
         while(way != null) {
-            resultway.add(way.getPosition());
+            resultWay.add(way.getPosition());
             way = way.getParentNode();
         }
-        Collections.reverse(resultway);
 
-       return resultway;
+        openNodes.clear();
+        closedNodes.clear();
+        notes = null;
+        Collections.reverse(resultWay);
+
+        return resultWay;
     }
 
     private void calcWay(Vector2f start) {

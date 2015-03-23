@@ -20,10 +20,10 @@ public class Vegetation implements IRenderable {
     public Vegetation(int mapSize, ResourceLoader rl, EntityController ec) {
         this.mapSize = mapSize;
         veg = new int[mapSize][mapSize];
-        generateVegeration(rl,ec);
+        generateVegetation(rl,ec);
     }
 
-    private void generateVegeration(ResourceLoader rl, EntityController ec) {
+    private void generateVegetation(ResourceLoader rl, EntityController ec) {
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
                 if ((i % 2 == 0 || j % 2 == 0) && i != 5 && j != 5 &&

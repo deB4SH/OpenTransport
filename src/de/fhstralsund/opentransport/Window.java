@@ -118,6 +118,7 @@ public class Window {
         rl.loadImageDir("res"+File.separator+"street"+File.separator+"urban");
         rl.loadImageDir("res"+File.separator+"cars");
         rl.loadImageDir("res"+File.separator+"building");
+        rl.loadImageDir("res"+File.separator+"industry");
         streetTID = new StreetTID(rl);
         carIDs = new CarID(rl);
 
