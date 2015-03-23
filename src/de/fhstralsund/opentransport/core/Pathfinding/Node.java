@@ -1,4 +1,4 @@
-package de.fhstralsund.opentransport.core.Pathfinding;
+package de.fhstralsund.opentransport.core.pathfinding;
 
 
 import org.lwjgl.util.vector.Vector2f;

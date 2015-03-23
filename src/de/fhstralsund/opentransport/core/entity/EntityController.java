@@ -1,7 +1,7 @@
 package de.fhstralsund.opentransport.core.entity;
 
 import de.fhstralsund.opentransport.core.entity.type.Street;
-import de.fhstralsund.opentransport.core.Pathfinding.Pathfinder;
+import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
@@ -21,7 +21,6 @@ public class EntityController implements IRenderable, IUpdateable {
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
         this.entities = new Entity[this.mapSize][this.mapSize];
-        pathfinder = new Pathfinder();
     }
 
 
@@ -31,29 +30,34 @@ public class EntityController implements IRenderable, IUpdateable {
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
 
+            //remove veg if existing there
+            if(veg != null && veg.isVegetationOn(entity.getTilePos())){
+                veg.removeVegetationAt(entity.getTilePos());
+            }
+
             //if tile == street.class
             if(entity.getClass() == Street.class){
 
-                //remove veg if existing there
-                if(veg.isVegetationOn(entity.getTilePos())){
-                    veg.removeVegetationAt(entity.getTilePos());
-                }
-
-                Vector2f seed = entity.getTilePos();
-                entity.updateTexture(this); //central
-                if(isEntityOnVec(new Vector2f(seed.getX()+1,seed.getY()))){ //north
-                    this.entities[(int)seed.getX()+1][(int)seed.getY()].updateTexture(this);
-                }
-                if(isEntityOnVec(new Vector2f(seed.getX()-1,seed.getY()))){ //south
-                    this.entities[(int)seed.getX()-1][(int)seed.getY()].updateTexture(this);
-                }
-                if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()+1))){ //east
-                    this.entities[(int)seed.getX()][(int)seed.getY()+1].updateTexture(this);
-                }
-                if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()-1))){ //west
-                    this.entities[(int)seed.getX()][(int)seed.getY()-1].updateTexture(this);
-                }
+                spawnStreets(entity);
             }
+        }
+    }
+
+    private void spawnStreets(Entity entity) {
+
+        Vector2f seed = entity.getTilePos();
+        entity.updateTexture(this); //central
+        if(isEntityOnVec(new Vector2f(seed.getX()+1,seed.getY()))){ //north
+            this.entities[(int)seed.getX()+1][(int)seed.getY()].updateTexture(this);
+        }
+        if(isEntityOnVec(new Vector2f(seed.getX()-1,seed.getY()))){ //south
+            this.entities[(int)seed.getX()-1][(int)seed.getY()].updateTexture(this);
+        }
+        if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()+1))){ //east
+            this.entities[(int)seed.getX()][(int)seed.getY()+1].updateTexture(this);
+        }
+        if(isEntityOnVec(new Vector2f(seed.getX(),seed.getY()-1))){ //west
+            this.entities[(int)seed.getX()][(int)seed.getY()-1].updateTexture(this);
         }
     }
 
@@ -126,6 +130,7 @@ public class EntityController implements IRenderable, IUpdateable {
     }
 
     public List<Vector2f> requestNewWay(Vector2f start, Vector2f target) {
+        pathfinder = new Pathfinder();
         return this.pathfinder.findWay(getcollisionArray(), start, target);
     }
 

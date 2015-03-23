@@ -1,4 +1,4 @@
-package de.fhstralsund.opentransport.core.Pathfinding;
+package de.fhstralsund.opentransport.core.pathfinding;
 
 import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class Pathfinder {
         //startnode hat keine "Bewegungskosten"
         notes[(int)start.x][(int)start.y].setMovementCostG(0);
 
-        ArrayList<Vector2f> resultway = new ArrayList<Vector2f>();
+        ArrayList<Vector2f> resultWay = new ArrayList<Vector2f>();
         // anfangswert
         closedNodes.add(notes[(int) start.x][(int) start.y]);
 
@@ -48,13 +48,17 @@ public class Pathfinder {
         // partendNodes wieder hoch gehen und weg zusammensetzen
         Node way = notes[(int)end.x][(int)end.y];
         while(way != null) {
-            resultway.add(way.getPosition());
+            resultWay.add(way.getPosition());
             way = way.getParentNode();
         }
-        Collections.reverse(resultway);
+
+        openNodes.clear();
+        closedNodes.clear();
+        notes = null;
+        Collections.reverse(resultWay);
 
 
-       return resultway;
+       return resultWay;
     }
 
     private void calcWay(Vector2f start) {

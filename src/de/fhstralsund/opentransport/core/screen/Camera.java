@@ -61,36 +61,36 @@ public class Camera implements IUpdateable{
 
         if(Game.MOUSESCROLL){
             if(Mouse.getX() > (width * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_D)) {
-                position.setX(position.getX() + 3);
+                position.setX(position.getX() + 5);
             }
 
             if(Mouse.getX() < (width * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_A)) {
-                position.setX(position.getX() - 3);
+                position.setX(position.getX() - 5);
             }
 
             if(Mouse.getY() > (height * 95) / 100 || Keyboard.isKeyDown(Keyboard.KEY_W)) {
-                position.setY(position.getY() - 3);
+                position.setY(position.getY() - 5);
             }
 
             if(Mouse.getY() < (height * 5) / 100 || Keyboard.isKeyDown(Keyboard.KEY_S)) {
-                position.setY(position.getY() + 3);
+                position.setY(position.getY() + 5);
             }
         }
         else{
             if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-                position.setX(position.getX() + 3);
+                position.setX(position.getX() + 5);
             }
 
             if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-                position.setX(position.getX() - 3);
+                position.setX(position.getX() - 5);
             }
 
             if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-                position.setY(position.getY() - 3);
+                position.setY(position.getY() - 5);
             }
 
             if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-                position.setY(position.getY() + 3);
+                position.setY(position.getY() + 5);
             }
         }
         clamp();
