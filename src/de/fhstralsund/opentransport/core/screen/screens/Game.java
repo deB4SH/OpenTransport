@@ -1,6 +1,5 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
-
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
 import de.fhstralsund.opentransport.core.entity.EntityController;
@@ -13,19 +12,19 @@ import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.GameScreen;
-import de.fhstralsund.opentransport.core.map.Map;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.gui.Gui;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.Color;
 
 import java.io.File;
 import java.util.Random;
 
 public class Game extends GameScreen implements IRenderable, IUpdateable {
 
-    private Map map;
+
     private ResourceLoader rl;
     private Vegetation vegatation;
     private int mapSize;
@@ -41,7 +40,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private CityController cityController;
 
     public Game(ResourceLoader rlo,int size) {
-        this.map = new Map(size, rlo);
         this.rl = rlo;
         this.mapSize = size; //quad map
         this.gui = new Gui(rl);
@@ -61,7 +59,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     @Override
     public void render(ResourceLoader rl) {
-        this.map.render(rl);
+        this.renderGreen();
         this.entityController.render(rl);
         vegatation.render(rl);
         gui.render(rl);
@@ -80,33 +78,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     @Override
     public String getScreenName() {
         return "game";
-    }
-
-    private void renderGreen(ResourceLoader rl){
-        for(int xTile=0; xTile < this.mapSize; xTile++) {
-            for (int yTile = 0; yTile < this.mapSize; yTile++) {
-                Camera cam = Camera.getInstance(); //TODO: rework to Controller/Object
-                float xpos = (xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) - cam.getPosition().x;
-                float ypos = (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) - cam.getPosition().y;
-                //screenrelated render
-                if ((xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) + Game.TILEWIDTH >= cam.getPosition().x &&
-                        (xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
-                        (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
-                        (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) - Game.TILEHEIGHT / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
-
-                    GL11.glBegin(GL11.GL_QUADS);
-                    GL11.glTexCoord2f(0, 0);
-                    GL11.glVertex2f(xpos, ypos);
-                    GL11.glTexCoord2f(1, 0);
-                    GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png")), ypos);
-                    GL11.glTexCoord2f(1, 1);
-                    GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png")), ypos + rl.getTextureSizeByIDHeight(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png")));
-                    GL11.glTexCoord2f(0, 1);
-                    GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png")));
-                    GL11.glEnd();
-                }
-            }
-        }
     }
 
     private void generateTestStreet(){
@@ -146,15 +117,15 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
                 this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40,80), new Vector2f(6, 30)),
                 entityController));
 
-        this.entityController.addEntity(new Car(new Vector2f(40,100), 20, false,
-                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40,100), new Vector2f(6, 100)),
+        this.entityController.addEntity(new Car(new Vector2f(40, 100), 20, false,
+                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 100), new Vector2f(6, 100)),
                 entityController));
     }
 
     private void generateCities() {
-        this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.entityController,this.entityController,rl);
-        this.cityController.spawnCity(new Vector2f(60,18),"Moew",100,this.entityController,this.entityController,rl);
-        this.cityController.spawnCity(new Vector2f(35,40),"Blubb",100,this.entityController,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(20, 20), "Wuff", 100, this.entityController, this.entityController, rl);
+        this.cityController.spawnCity(new Vector2f(60, 18), "Moew", 100, this.entityController, this.entityController, rl);
+        this.cityController.spawnCity(new Vector2f(35, 40), "Blubb", 100, this.entityController, this.entityController, rl);
     }
 
     private void generateIndustry() {
@@ -163,7 +134,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
             Vector2f position = new Vector2f(new Random().nextInt(500) + 3, new Random().nextInt(500) +3);
 
-            if( !entityController.isEntityOnVec(position)) {
+            if(!entityController.isEntityOnVec(position)) {
                 this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY()), false, "farm",
                         this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "farm.png")));
 
@@ -184,4 +155,39 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
             }
         }
     }
+
+    private void renderGreen(){
+
+        Color.white.bind();
+        Camera cam = Camera.getInstance();
+
+        float textureSizeByIDWidth = rl.getTextureSizeByIDWidth(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png"));
+        float textureSizeByIDHeight = rl.getTextureSizeByIDHeight(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png"));
+        rl.bindTextureByID(rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png"));
+
+        for(int xTile= 0; xTile < this.mapSize; xTile++) {
+            for (int yTile = 0; yTile < this.mapSize; yTile++) {
+                float xPos = (xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) - cam.getPosition().x;
+                float yPos = (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) - cam.getPosition().y;
+                //screenrelated render
+                if ((xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) + Game.TILEWIDTH >= cam.getPosition().x &&
+                        (xTile * Game.TILEWIDTH / 2) + (yTile * Game.TILEWIDTH / 2) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
+                        (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
+                        (yTile * Game.TILEHEIGHT / 2) - (xTile * Game.TILEHEIGHT / 2) - Game.TILEHEIGHT / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
+
+                    GL11.glBegin(GL11.GL_QUADS);
+                    GL11.glTexCoord2f(0, 0);
+                    GL11.glVertex2f(xPos, yPos);
+                    GL11.glTexCoord2f(1, 0);
+                    GL11.glVertex2f(xPos + textureSizeByIDWidth, yPos);
+                    GL11.glTexCoord2f(1, 1);
+                    GL11.glVertex2f(xPos + textureSizeByIDWidth, yPos + textureSizeByIDHeight);
+                    GL11.glTexCoord2f(0, 1);
+                    GL11.glVertex2f(xPos, yPos + textureSizeByIDHeight);
+                    GL11.glEnd();
+                }
+            }
+        }
+    }
+
 }
