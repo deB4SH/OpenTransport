@@ -50,10 +50,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.entityController.setVeg(vegatation);
         this.cityController = new CityController();
 
-        generateIndustry();
         generateTestStreet();
         generateCars();
         generateCities();
+        generateIndustry();
     }
 
 
@@ -74,13 +74,14 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         }
         gui.update(this.entityController);
         this.entityController.update();
+        this.cityController.update();
     }
 
     @Override
     public String getScreenName() {
         return "game";
     }
-    
+
     private void generateTestStreet(){
         for(int x=1; x<mapSize / 4; x++){
             this.entityController.addEntity(new Street(new Vector2f(x,3), StreetTID.urban_street_ns));

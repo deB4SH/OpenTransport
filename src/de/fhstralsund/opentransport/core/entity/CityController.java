@@ -21,16 +21,22 @@ public class CityController implements IRenderable,IUpdateable{
     }
 
     public void spawnCity(Vector2f seed, String cityName ,int popCap, EntityController entityController, ResourceLoader rl){
-        this.cityList.add(new City(seed,cityName, popCap, entityController));
+        this.cityList.add(new City(seed,cityName, popCap, entityController,rl));
         int number = cityList.size()-1;
         this.cityList.get(number).generateCity(rl);
 
         Gui.Citynames.put(cityName, seed);
     }
 
+    int a = 0;
     @Override
     public void update() {
-
+        a++;
+        if(a % 10 == 0){
+            for(City c: this.cityList){
+                c.update();
+            }
+        }
     }
 
     @Override
