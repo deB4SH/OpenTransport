@@ -65,6 +65,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.entityController.render(rl);
         vegatation.render(rl);
         gui.render(rl);
+        this.cityController.render(rl);
     }
 
     @Override
@@ -83,6 +84,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     }
 
     private void renderGreen(ResourceLoader rl){
+        rl.bindTextureByID(this.rl.getTextureID("res" + File.separator + "landscape" + File.separator + "ground.png"));
         for(int xTile=0; xTile < this.mapSize; xTile++) {
             for (int yTile = 0; yTile < this.mapSize; yTile++) {
                 Camera cam = Camera.getInstance(); //TODO: rework to Controller/Object
@@ -114,23 +116,23 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
             this.entityController.addEntity(new Street(new Vector2f(x,3), StreetTID.urban_street_ns));
         }
         for(int x=1; x<mapSize/ 4; x++){
-            this.entityController.addEntity(new Street(new Vector2f(x,6), StreetTID.urban_street_ns));
+            this.entityController.addEntity(new Street(new Vector2f(x, 6), StreetTID.urban_street_ns));
         }
         for(int y=1; y<mapSize/ 4; y++){
-            this.entityController.addEntity(new Street(new Vector2f(40,y), StreetTID.urban_street_we));
+            this.entityController.addEntity(new Street(new Vector2f(40, y), StreetTID.urban_street_we));
         }
         for(int y=1; y<mapSize/ 4; y++){
-            this.entityController.addEntity(new Street(new Vector2f(4,y), StreetTID.urban_street_we));
+            this.entityController.addEntity(new Street(new Vector2f(4, y), StreetTID.urban_street_we));
         }
         for(int y=1; y<mapSize/ 4; y++){
-            this.entityController.addEntity(new Street(new Vector2f(6,y), StreetTID.urban_street_we));
+            this.entityController.addEntity(new Street(new Vector2f(6, y), StreetTID.urban_street_we));
         }
         this.entityController.updateTexture();
     }
 
     private void generateCars() {
         this.pathfinder = new Pathfinder();
-        this.entityController.addEntity(new Car(new Vector2f(40,24), 20, false,
+        this.entityController.addEntity(new Car(new Vector2f(40, 24), 20, false,
                 this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 24), new Vector2f(4, 24)),
                 entityController));
 
@@ -152,13 +154,12 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     }
 
     private void generateCities() {
-        this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.entityController,this.entityController,rl);
-        this.cityController.spawnCity(new Vector2f(60,18),"Moew",100,this.entityController,this.entityController,rl);
-        this.cityController.spawnCity(new Vector2f(35,40),"Blubb",100,this.entityController,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(60,18),"Moew",100,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(35,40),"Blubb",100,this.entityController,rl);
     }
 
     private void generateIndustry() {
-
         for(int i  = 0; i < 100; i++) {
 
             Vector2f position = new Vector2f(new Random().nextInt(500) + 3, new Random().nextInt(500) +3);

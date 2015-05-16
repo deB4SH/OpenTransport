@@ -2,6 +2,7 @@ package de.fhstralsund.opentransport.core.entity;
 
 import de.fhstralsund.opentransport.core.entity.type.City;
 import de.fhstralsund.opentransport.core.entity.type.Street;
+import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.gui.Gui;
@@ -10,16 +11,17 @@ import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityController implements IUpdateable{
+public class CityController implements IRenderable,IUpdateable{
 
+    private static final boolean DEBUG = true;
     private List<City> cityList;
 
     public CityController() {
         this.cityList = new ArrayList<City>();
     }
 
-    public void spawnCity(Vector2f seed, String cityName ,int popCap, EntityController buildingController, EntityController streetController, ResourceLoader rl){
-        this.cityList.add(new City(seed,cityName, popCap, buildingController, streetController));
+    public void spawnCity(Vector2f seed, String cityName ,int popCap, EntityController entityController, ResourceLoader rl){
+        this.cityList.add(new City(seed,cityName, popCap, entityController));
         int number = cityList.size()-1;
         this.cityList.get(number).generateCity(rl);
 
@@ -29,5 +31,14 @@ public class CityController implements IUpdateable{
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void render(ResourceLoader rl) {
+        if(DEBUG){
+            for(City c: this.cityList){
+                c.showOpenblocks(rl);
+            }
+        }
     }
 }

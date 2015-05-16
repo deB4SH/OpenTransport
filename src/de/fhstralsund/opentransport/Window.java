@@ -111,6 +111,7 @@ public class Window {
     private void loadAssets(ResourceLoader rl) {
 
         rl.loadImageDir("res");
+        rl.loadImageDir("res"+File.separator+"debug");
         rl.loadImageDir("res"+File.separator+"background");
         rl.loadImageDir("res"+File.separator+"gui");
         rl.loadImageDir("res"+File.separator+"landscape");

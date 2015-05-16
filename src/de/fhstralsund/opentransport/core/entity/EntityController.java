@@ -125,6 +125,16 @@ public class EntityController implements IRenderable, IUpdateable {
         return false;
     }
 
+    public boolean isEntityOnVec(int x,int y){
+        if(x < this.mapSize-1 && y < this.mapSize-1 && x > 0 &&  y > 0){
+            if(this.entities[x][y] != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public static boolean[][] getCollisionMap() {
         return collisionMap;
     }
