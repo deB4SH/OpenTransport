@@ -9,15 +9,29 @@ import org.lwjgl.util.vector.Vector2f;
 public class Building extends Entity implements IRenderable,IUpdateable{
 
     private int citizienCount;
+    private boolean planned;
 
     public Building(Vector2f tilePos, Boolean enterAble, int textureID) {
         super(tilePos, enterAble);
         super.setTextureID(textureID);
+        this.planned = false;
     }
+
+    public Building(Vector2f tilePos, Boolean enterAble, int textureID, boolean planned) {
+        super(tilePos, enterAble);
+        super.setTextureID(textureID);
+        this.planned = planned;
+    }
+
 
     @Override
     public void render(ResourceLoader rl) {
-        super.render(rl);
+        if(!planned){
+            super.render(rl);
+        }
+        else{
+            //nothing
+        }
     }
 
     @Override
