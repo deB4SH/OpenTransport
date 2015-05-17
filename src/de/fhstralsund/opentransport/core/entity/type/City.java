@@ -147,6 +147,8 @@ public class City implements IUpdateable {
                     createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY() - 1);
                 }
             }
+
+            lookForNewOpenBlocks(castBlock,width,height);
         }
     }
 
@@ -165,6 +167,53 @@ public class City implements IUpdateable {
                 }
             }
         }
+    }
+
+    private void lookForNewOpenBlocks(Vector2f base,int width,int height){
+        //point one to check (below)
+        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()+2)){
+            //check if this point is maybe already in opennodes
+            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()+2)){
+                //seems to be ok so add it
+                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()+2));
+            }
+        }
+
+        //point two right side
+        if(!this.entityController.isEntityOnVec((int)base.getX()+width+2,(int)base.getY())){
+            //check if this point is maybe already in opennodes
+            if(!checkIfBuildingIsPlanned((int)base.getX()+width+2,(int)base.getY())){
+                //seems to be ok so add it
+                this.openBlocks.add(new Vector2f((int)base.getX()+width+2,(int)base.getY()));
+            }
+        }
+
+        //point three left side
+        if(!this.entityController.isEntityOnVec((int)base.getX()-2,(int)base.getY())){
+            //check if this point is maybe already in opennodes
+            if(!checkIfBuildingIsPlanned((int)base.getX()-2,(int)base.getY())){
+                //seems to be ok so add it
+                this.openBlocks.add(new Vector2f((int)base.getX()-2,(int)base.getY()));
+            }
+        }
+
+        //point one to check (top)
+        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()+height+2)){
+            //check if this point is maybe already in opennodes
+            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()+height+2)){
+                //seems to be ok so add it
+                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()+height+2));
+            }
+        }
+    }
+
+    private boolean isPointInOpenNode(int x, int y){
+        for(Vector2f e: this.openBlocks){
+            if(e.getX() == x && e.getY() == y){
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean checkIfBuildingIsPlanned(int x,int y){
@@ -203,7 +252,7 @@ public class City implements IUpdateable {
             }
         }
     }
-    
+
     @Override
     public void update() {
         Entity e = this.buildQueue.poll();
@@ -216,7 +265,8 @@ public class City implements IUpdateable {
 
     }
 
-    public void setRl(ResourceLoader rl) {
+    public void setRl(ResourceLoader rl)
+    {
         this.rl = rl;
     }
 }
