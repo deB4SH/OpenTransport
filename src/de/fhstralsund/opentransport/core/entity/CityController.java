@@ -44,7 +44,6 @@ public class CityController implements IRenderable,IUpdateable{
         if(DEBUG){
             for(City c: this.cityList){
                 c.showOpenblocks(rl);
-                c.showPlannedBuildings(rl);
             }
         }
     }

@@ -203,37 +203,7 @@ public class City implements IUpdateable {
             }
         }
     }
-
-    public void showPlannedBuildings(ResourceLoader rl){
-
-        System.out.println("[PB]:[" + this.cityName + "]:[" +this.blist.size()+"]");
-
-        int textureID = rl.getTextureID("res" + File.separator + "debug" + File.separator + "planned_building.png");
-        rl.bindTextureByID(textureID);
-        for(Building e: this.blist){
-            Camera cam = Camera.getInstance(); //TODO: rework to Controller/Object
-            float xpos = (e.getTilePos().getX() * Game.TILEWIDTH / 2) + (e.getTilePos().getY() * Game.TILEWIDTH / 2) - cam.getPosition().x;
-            float ypos = ((e.getTilePos().getY() * Game.TILEHEIGHT / 2) - (e.getTilePos().getX() * Game.TILEHEIGHT / 2) - cam.getPosition().y);
-            //screenrelated render
-            if((e.getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( e.getTilePos().getY() * Game.TILEWIDTH / 2 ) + Game.TILEWIDTH >= cam.getPosition().x &&
-                    (e.getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( e.getTilePos().getY() * Game.TILEWIDTH / 2 ) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
-                    (e.getTilePos().getY() * Game.TILEHEIGHT / 2 ) - ( e.getTilePos().getX() * Game.TILEHEIGHT / 2 ) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
-                    (e.getTilePos().getY() * Game.TILEHEIGHT / 2) - (e.getTilePos().getX() * Game.TILEHEIGHT / 2) - Game.TILEHEIGHT / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
-
-                GL11.glBegin(GL11.GL_QUADS);
-                GL11.glTexCoord2f(0, 0);
-                GL11.glVertex2f(xpos, ypos);
-                GL11.glTexCoord2f(1, 0);
-                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos);
-                GL11.glTexCoord2f(1, 1);
-                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos + rl.getTextureSizeByIDHeight(textureID));
-                GL11.glTexCoord2f(0, 1);
-                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(textureID));
-                GL11.glEnd();
-            }
-        }
-    }
-
+    
     @Override
     public void update() {
         Entity e = this.buildQueue.poll();
