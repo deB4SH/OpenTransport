@@ -22,6 +22,7 @@ public class City implements IUpdateable {
     private int startPopulation;
     private List<Vector2f> openBlocks;
     private Queue<Entity> buildQueue;
+    LinkedList<Building> blist;
 
     private EntityController entityController;
     private ResourceLoader rl;
@@ -35,6 +36,7 @@ public class City implements IUpdateable {
         this.entityController = entityController;
         this.openBlocks = new ArrayList<Vector2f>();
         this.buildQueue = new LinkedList<Entity>();
+        this.blist = new LinkedList<Building>();
         this.rl = rl;
     }
 
@@ -71,73 +73,86 @@ public class City implements IUpdateable {
         int width,height;
         boolean extendLeft,extendUp;
 
-        Vector2f castBlock = this.openBlocks.get(rand.nextInt(this.openBlocks.size()));
-        this.openBlocks.remove(castBlock);
-        if(rand.nextBoolean()){width=rand.nextInt(5);height=2;}
-        else{width=2;height=rand.nextInt(5);}
+        if(this.openBlocks.size() > 0) {
 
-        if(this.entityController.isEntityOnVec((int)castBlock.getX()-1,(int)castBlock.getY())){
-            extendLeft = false;
-        }
-        else{
-            extendLeft = true;
-        }
-        if(this.entityController.isEntityOnVec((int)castBlock.getX(),(int)castBlock.getY()-1)){
-            extendUp = false;
-        }
-        else{
-            extendUp = true;
-        }
 
-        int multx, multy;
-        if(extendLeft)
-            multx = -1;
-        else
-            multx = 1;
-        if(extendUp)
-            multy = -1;
-        else
-            multy = 1;
+            Vector2f castBlock = this.openBlocks.get(rand.nextInt(this.openBlocks.size()));
+            this.openBlocks.remove(castBlock);
+            if (rand.nextBoolean()) {
+                width = rand.nextInt(5);
+                height = 2;
+            } else {
+                width = 2;
+                height = rand.nextInt(5);
+            }
 
-        int minX, maxX, minY, maxY;
-        if(extendLeft)
-        {
-            minX = (int)castBlock.getX() - width;
-            maxX = (int)castBlock.getX();
-        }
-        else{
-            maxX = (int)castBlock.getX() + width;
-            minX = (int)castBlock.getX();
-        }
-        if(extendUp){
-            minY = (int)castBlock.getY();
-            maxY = (int)castBlock.getY() + height;
-        }
-        else{
-            minY = (int)castBlock.getY() - height;
-            maxY = (int)castBlock.getY();
-        }
+            if (this.entityController.isEntityOnVec((int) castBlock.getX() - 1, (int) castBlock.getY())) {
+                extendLeft = false;
+            } else {
+                extendLeft = true;
+            }
+            if (this.entityController.isEntityOnVec((int) castBlock.getX(), (int) castBlock.getY() - 1)) {
+                extendUp = false;
+            } else {
+                extendUp = true;
+            }
 
-        //generate block entites
-        for(int i=0;i<width; i++){
-            for(int j=0;j<height;j++){
-                Vector2f entityVec = new Vector2f(castBlock.getX()+i*multx,castBlock.getY()+j*multy);
-                int a = rl.getTextureID("res" + File.separator + "building" + File.separator + "house_01.png");
-                Entity  e = new Building(entityVec,false,a);
-                this.buildQueue.add(e);
+            int multx, multy;
+            if (extendLeft)
+                multx = -1;
+            else
+                multx = 1;
+            if (extendUp)
+                multy = -1;
+            else
+                multy = 1;
 
-                createStreetNearBuilding((int) entityVec.getX() - 1, (int) entityVec.getY(), minX, maxX, minY, maxX);
-                createStreetNearBuilding((int)entityVec.getX() + 1, (int)entityVec.getY(),minX,maxX,minY,maxX);
-                createStreetNearBuilding((int)entityVec.getX(), (int)entityVec.getY() - 1,minX,maxX,minY,maxX);
-                createStreetNearBuilding((int)entityVec.getX(), (int)entityVec.getY() + 1,minX,maxX,minY,maxX);
+            int minX, maxX, minY, maxY;
+            if (extendLeft) {
+                minX = (int) castBlock.getX() - width;
+                maxX = (int) castBlock.getX();
+            } else {
+                maxX = (int) castBlock.getX() + width;
+                minX = (int) castBlock.getX();
+            }
+            if (extendUp) {
+                minY = (int) castBlock.getY();
+                maxY = (int) castBlock.getY() + height;
+            } else {
+                minY = (int) castBlock.getY() - height;
+                maxY = (int) castBlock.getY();
+            }
 
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, rl.getTextureID("res" + File.separator + "building" + File.separator + "house_01.png")));
+                }
+            }
+
+            //generate block entites
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    Building bEntity = this.blist.poll();
+                    this.buildQueue.add(bEntity);
+
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() - 1, (int) bEntity.getTilePos().getY());
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY());
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX(), (int) bEntity.getTilePos().getY() - 1);
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX(), (int) bEntity.getTilePos().getY() + 1);
+                    //check diagonals
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() - 1, (int) bEntity.getTilePos().getY() - 1);
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY() + 1);
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() - 1, (int) bEntity.getTilePos().getY() + 1);
+                    createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY() - 1);
+                }
             }
         }
     }
 
-    private void createStreetNearBuilding(int x, int y,int minX,int maxX, int minY, int maxY){
+    private void createStreetNearBuilding(int x, int y){
         if(!this.entityController.isEntityOnVec(x,y)){
-            if(!(minX < x && x < maxX && minY < y && y < maxY)){
+            if(!checkIfBuildingIsPlanned(x,y)){
                 //point is not in building block, check if point is queued in building list
                 boolean contained = false;
                 for(Entity e: this.buildQueue){
@@ -150,6 +165,15 @@ public class City implements IUpdateable {
                 }
             }
         }
+    }
+
+    private boolean checkIfBuildingIsPlanned(int x,int y){
+        for(Building b: this.blist){
+            if(b.getTilePos().getX() == x && b.getTilePos().getY() == y){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void showOpenblocks(ResourceLoader rl){
@@ -180,11 +204,38 @@ public class City implements IUpdateable {
         }
     }
 
+    public void showPlannedBuildings(ResourceLoader rl){
+
+        System.out.println("[PB]:[" + this.cityName + "]:[" +this.blist.size()+"]");
+
+        int textureID = rl.getTextureID("res" + File.separator + "debug" + File.separator + "planned_building.png");
+        rl.bindTextureByID(textureID);
+        for(Building e: this.blist){
+            Camera cam = Camera.getInstance(); //TODO: rework to Controller/Object
+            float xpos = (e.getTilePos().getX() * Game.TILEWIDTH / 2) + (e.getTilePos().getY() * Game.TILEWIDTH / 2) - cam.getPosition().x;
+            float ypos = ((e.getTilePos().getY() * Game.TILEHEIGHT / 2) - (e.getTilePos().getX() * Game.TILEHEIGHT / 2) - cam.getPosition().y);
+            //screenrelated render
+            if((e.getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( e.getTilePos().getY() * Game.TILEWIDTH / 2 ) + Game.TILEWIDTH >= cam.getPosition().x &&
+                    (e.getTilePos().getX() * Game.TILEWIDTH / 2 ) + ( e.getTilePos().getY() * Game.TILEWIDTH / 2 ) <= cam.getPosition().x + cam.getRectangle().getWidth() &&
+                    (e.getTilePos().getY() * Game.TILEHEIGHT / 2 ) - ( e.getTilePos().getX() * Game.TILEHEIGHT / 2 ) + Game.TILEHEIGHT >= cam.getPosition().getY() &&
+                    (e.getTilePos().getY() * Game.TILEHEIGHT / 2) - (e.getTilePos().getX() * Game.TILEHEIGHT / 2) - Game.TILEHEIGHT / 2 <= cam.getPosition().getY() + cam.getRectangle().getHeight()) {
+
+                GL11.glBegin(GL11.GL_QUADS);
+                GL11.glTexCoord2f(0, 0);
+                GL11.glVertex2f(xpos, ypos);
+                GL11.glTexCoord2f(1, 0);
+                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos);
+                GL11.glTexCoord2f(1, 1);
+                GL11.glVertex2f(xpos + rl.getTextureSizeByIDWidth(textureID), ypos + rl.getTextureSizeByIDHeight(textureID));
+                GL11.glTexCoord2f(0, 1);
+                GL11.glVertex2f(xpos, ypos + rl.getTextureSizeByIDHeight(textureID));
+                GL11.glEnd();
+            }
+        }
+    }
+
     @Override
     public void update() {
-
-        System.out.print(this.cityName + " : " + this.buildQueue.size());
-
         Entity e = this.buildQueue.poll();
         if(e != null){
             this.entityController.addEntity(e);

@@ -32,7 +32,7 @@ public class CityController implements IRenderable,IUpdateable{
     @Override
     public void update() {
         a++;
-        if(a % 10 == 0){
+        if(a % 100 == 0){
             for(City c: this.cityList){
                 c.update();
             }
@@ -44,6 +44,7 @@ public class CityController implements IRenderable,IUpdateable{
         if(DEBUG){
             for(City c: this.cityList){
                 c.showOpenblocks(rl);
+                c.showPlannedBuildings(rl);
             }
         }
     }
