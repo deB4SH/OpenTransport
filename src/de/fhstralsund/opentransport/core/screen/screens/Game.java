@@ -1,6 +1,5 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
-import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.type.*;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
@@ -57,10 +56,9 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.cityController = new CityController();
 
         generateTestStreet();
-        generateCars();
+        //generateCars();
         generateCities();
         generateIndustry();
-
 
 
 

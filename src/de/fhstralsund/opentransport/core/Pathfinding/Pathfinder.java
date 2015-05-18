@@ -1,6 +1,9 @@
 package de.fhstralsund.opentransport.core.pathfinding;
 
+import org.lwjgl.Sys;
 import org.lwjgl.util.vector.Vector2f;
+
+import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +39,7 @@ public class Pathfinder {
             notes[(int) end.x][(int) end.y].setEndNode(true);
             //startnode hat keine "Bewegungskosten"
             notes[(int) start.x][(int) start.y].setMovementCostG(0);
+            notes[(int) start.x][(int) start.y].setDone(true);
 
             ArrayList<Vector2f> resultWay = new ArrayList<Vector2f>();
             // anfangswert
@@ -79,6 +83,7 @@ public class Pathfinder {
 
         List<Node> nodesToAdd = new ArrayList<Node>();
         Node temp;
+
         //add left, right, top, down
         if(start.x - 1 >= 0 && notes[(int) start.x - 1][(int) start.y] != null && !notes[(int) start.x - 1][(int) start.y].isDone() ) {
             temp = notes[(int) start.x - 1][(int) start.y];
@@ -116,6 +121,7 @@ public class Pathfinder {
         }
 
         for(Node element : openNodes) {
+
             // isDone bedeutet das die schon mal in der closed List waren
             if(element != null && !element.isDone()) {
                 if(element.isEndNode()) {
