@@ -113,6 +113,7 @@ public class Window {
         rl.loadImageDir("res");
         rl.loadImageDir("res"+File.separator+"debug");
         rl.loadImageDir("res"+File.separator+"background");
+        rl.loadImageDir("res"+File.separator+"ui");
         rl.loadImageDir("res"+File.separator+"gui");
         rl.loadImageDir("res"+File.separator+"landscape");
         rl.loadImageDir("res"+File.separator+"street"+File.separator+"rural");
