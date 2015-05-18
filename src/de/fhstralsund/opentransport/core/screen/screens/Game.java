@@ -1,13 +1,11 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
+import de.fhstralsund.opentransport.core.entity.Entity;
+import de.fhstralsund.opentransport.core.entity.type.*;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
 import de.fhstralsund.opentransport.core.entity.EntityController;
-import de.fhstralsund.opentransport.core.entity.type.Industry;
-import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
-import de.fhstralsund.opentransport.core.entity.type.Car;
-import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.screen.Camera;
@@ -15,7 +13,10 @@ import de.fhstralsund.opentransport.core.screen.GameScreen;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.gui.Gui;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadablePoint;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 
@@ -39,6 +40,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private EntityController entityController;
     private CityController cityController;
 
+    private Depot depot;
+
     public Game(ResourceLoader rlo,int size) {
         this.rl = rlo;
         this.mapSize = size; //quad map
@@ -54,6 +57,15 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         generateCars();
         generateCities();
         generateIndustry();
+
+
+
+
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight());
+        depot = new Depot(new Vector2f(new Vector2f(p.getX(), p.getY())),
+                false, rl.getTextureID("res"+ File.separator+"building"+File.separator+"road_Depot.png"),
+                this.entityController);
     }
 
 
@@ -64,6 +76,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         vegatation.render(rl);
         gui.render(rl);
         this.cityController.render(rl);
+
+        depot.render(rl);
     }
 
     @Override
@@ -75,6 +89,28 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         gui.update(this.entityController);
         this.entityController.update();
         this.cityController.update();
+
+
+
+        // TODO: fliegt raus wenn gui vorhanden ist
+        ///////////
+        depot.update();
+
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
+
+
+        float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
+        float isoMouseY = Math.round(((p.getX()  + cam.getPosition().getX()) / Game.TILEWIDTH) +  ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT))-1;
+
+        depot.setTilePos(new Vector2f(isoMouseX, isoMouseY));
+
+        if(Mouse.isButtonDown(0)) {
+            entityController.addEntity(new Depot(new Vector2f(isoMouseX, isoMouseY),true, rl.getTextureID("res"+ File.separator+"building"+File.separator+"road_Depot.png"),
+                    this.entityController));
+        }
+        ///////
+
     }
 
     @Override
@@ -103,23 +139,23 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private void generateCars() {
         this.pathfinder = new Pathfinder();
-        this.entityController.addEntity(new Car(new Vector2f(40, 24), 20, false,
+        this.entityController.addCar(new Car(new Vector2f(40, 24), 20, false,
                 this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 24), new Vector2f(4, 24)),
                 entityController));
 
-        this.entityController.addEntity(new Car(new Vector2f(44,3), 20, false,
-                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(44,3), new Vector2f(6, 9)),
+        this.entityController.addCar(new Car(new Vector2f(44, 3), 20, false,
+                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(44, 3), new Vector2f(6, 9)),
                 entityController));
 
-        this.entityController.addEntity(new Car(new Vector2f(40,50), 20, false,
-                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40,50), new Vector2f(6, 20)),
+        this.entityController.addCar(new Car(new Vector2f(40, 50), 20, false,
+                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 50), new Vector2f(6, 20)),
                 entityController));
 
-        this.entityController.addEntity(new Car(new Vector2f(40,80), 20, false,
-                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40,80), new Vector2f(6, 30)),
+        this.entityController.addCar(new Car(new Vector2f(40, 80), 20, false,
+                this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 80), new Vector2f(6, 30)),
                 entityController));
 
-        this.entityController.addEntity(new Car(new Vector2f(40, 100), 20, false,
+        this.entityController.addCar(new Car(new Vector2f(40, 100), 20, false,
                 this.pathfinder.findWay(this.entityController.getcollisionArray(), new Vector2f(40, 100), new Vector2f(6, 100)),
                 entityController));
     }

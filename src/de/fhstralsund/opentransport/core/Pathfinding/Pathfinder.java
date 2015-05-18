@@ -17,47 +17,53 @@ public class Pathfinder {
     }
 
     public ArrayList<Vector2f> findWay(boolean[][] collisionMap, Vector2f start, Vector2f end) {
-        openNodes.clear();
-        closedNodes.clear();
-        notes = new Node[collisionMap.length][collisionMap.length];
+        try {
+            openNodes.clear();
+            closedNodes.clear();
+            notes = new Node[collisionMap.length][collisionMap.length];
 
-        for(int x = 0; x < collisionMap.length; x++) {
-            for(int y = 0; y < collisionMap.length; y++) {
-                // Manhatten Heuristik
-                // anfänglicher Wert
-                if(collisionMap[x][y]) {
-                    notes[x][y] = new Node(new Vector2f(x, y), (int) (Math.abs(end.x - x) + Math.abs(end.y - y)), 10, null);
+            for (int x = 0; x < collisionMap.length; x++) {
+                for (int y = 0; y < collisionMap.length; y++) {
+                    // Manhatten Heuristik
+                    // anfänglicher Wert
+                    if (collisionMap[x][y]) {
+                        notes[x][y] = new Node(new Vector2f(x, y), (int) (Math.abs(end.x - x) + Math.abs(end.y - y)), 10, null);
+                    }
                 }
             }
+
+            //endNode ist das Ziel
+            notes[(int) end.x][(int) end.y].setEndNode(true);
+            //startnode hat keine "Bewegungskosten"
+            notes[(int) start.x][(int) start.y].setMovementCostG(0);
+
+            ArrayList<Vector2f> resultWay = new ArrayList<Vector2f>();
+            // anfangswert
+            closedNodes.add(notes[(int) start.x][(int) start.y]);
+
+
+            while (closedNodes.size() > 0) {
+                calcWay(start);
+            }
+
+            // partendNodes wieder hoch gehen und weg zusammensetzen
+            Node way = notes[(int) end.x][(int) end.y];
+            while (way != null) {
+                //TODO: OutOfMemoryError fixen
+                resultWay.add(way.getPosition());
+                way = way.getParentNode();
+            }
+
+            openNodes.clear();
+            closedNodes.clear();
+            notes = null;
+            Collections.reverse(resultWay);
+
+            return resultWay;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        //endNode ist das Ziel
-        notes[(int)end.x][(int)end.y].setEndNode(true);
-        //startnode hat keine "Bewegungskosten"
-        notes[(int)start.x][(int)start.y].setMovementCostG(0);
-
-        ArrayList<Vector2f> resultWay = new ArrayList<Vector2f>();
-        // anfangswert
-        closedNodes.add(notes[(int) start.x][(int) start.y]);
-
-
-        while(closedNodes.size() > 0) {
-            calcWay(start);
-        }
-
-        // partendNodes wieder hoch gehen und weg zusammensetzen
-        Node way = notes[(int)end.x][(int)end.y];
-        while(way != null) {
-            resultWay.add(way.getPosition());
-            way = way.getParentNode();
-        }
-
-        openNodes.clear();
-        closedNodes.clear();
-        notes = null;
-        Collections.reverse(resultWay);
-
-        return resultWay;
     }
 
     private void calcWay(Vector2f start) {

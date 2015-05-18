@@ -16,7 +16,8 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
     private List<Vector2f> path;
     private int currentNode = 0;
-    private EntityController streetController = null;
+    private EntityController entityController = null;
+    private Depot depot = null;
 
     public Car(Vector2f tilePos, int textureID, Boolean enterAble) {
         super(tilePos, enterAble);
@@ -30,11 +31,11 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         this.path = path;
     }
 
-    public Car(Vector2f tilePos, int textureID, boolean enterAble, ArrayList<Vector2f> path, EntityController streetController) {
+    public Car(Vector2f tilePos, int textureID, boolean enterAble, List<Vector2f> path, EntityController entityController) {
         super(tilePos, enterAble);
         super.setTextureID(textureID);
         this.path = path;
-        this.streetController = streetController;
+        this.entityController = entityController;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     }
 
     private void requestNewWay() {
-        if(streetController != null) {
-            path = this.streetController.requestNewWay(path.get(path.size() -1), path.get(0));        }
+        if(entityController != null) {
+            path = this.entityController.requestNewWay(path.get(path.size() -1), path.get(0));        }
     }
 }

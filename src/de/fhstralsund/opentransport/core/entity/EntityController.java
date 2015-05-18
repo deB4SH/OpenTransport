@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport.core.entity;
 
+import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.type.Vegetation;
@@ -8,6 +9,7 @@ import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntityController implements IRenderable, IUpdateable {
@@ -15,12 +17,14 @@ public class EntityController implements IRenderable, IUpdateable {
     private int mapSize;
     private static boolean[][] collisionMap;
     private Entity[][] entities;
+    private List<Car> cars;
 	private Pathfinder pathfinder;
     private Vegetation veg;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
         this.entities = new Entity[this.mapSize][this.mapSize];
+        this.cars = new ArrayList<>();
     }
 
 
@@ -93,6 +97,9 @@ public class EntityController implements IRenderable, IUpdateable {
                 }
             }
         }
+        for(Car c : cars) {
+            c.update();
+        }
     }
 
     @Override
@@ -103,6 +110,10 @@ public class EntityController implements IRenderable, IUpdateable {
                     entity.render(rl);
                 }
             }
+        }
+
+        for(Car c : cars) {
+            c.render(rl);
         }
     }
 
@@ -151,5 +162,9 @@ public class EntityController implements IRenderable, IUpdateable {
     public void remove(Vector2f entityInArray) {
         entities[(int)entityInArray.x][(int)entityInArray.y] = null;
         collisionMap[(int)entityInArray.x][(int)entityInArray.y] = false;
+    }
+
+    public void addCar(Car c) {
+        cars.add(c);
     }
 }
