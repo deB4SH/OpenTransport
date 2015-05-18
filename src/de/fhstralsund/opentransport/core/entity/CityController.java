@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CityController implements IRenderable,IUpdateable{
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private List<City> cityList;
 
     public CityController() {

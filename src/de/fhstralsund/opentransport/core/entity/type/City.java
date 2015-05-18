@@ -148,7 +148,7 @@ public class City implements IUpdateable {
                 }
             }
 
-            lookForNewOpenBlocks(castBlock,width,height);
+            lookForNewOpenBlocks(castBlock,width,height,multx,multy);
         }
     }
 
@@ -169,40 +169,37 @@ public class City implements IUpdateable {
         }
     }
 
-    private void lookForNewOpenBlocks(Vector2f base,int width,int height){
-        //point one to check (below)
-        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()+2)){
+    private void lookForNewOpenBlocks(Vector2f base,int width,int height,int multx,int multy){
+        //point 1
+        if(!this.entityController.isEntityOnVec((int)base.getX()+(width+1)*multx,(int)base.getY())){
             //check if this point is maybe already in opennodes
-            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()+2)){
+            if(!checkIfBuildingIsPlanned((int)base.getX()+(width+1)*multx,(int)base.getY())){
                 //seems to be ok so add it
-                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()+2));
+                this.openBlocks.add(new Vector2f((int)base.getX()+(width+1)*multx,(int)base.getY()));
             }
         }
-
-        //point two right side
-        if(!this.entityController.isEntityOnVec((int)base.getX()+width+2,(int)base.getY())){
+        //point2
+        if(!this.entityController.isEntityOnVec((int)base.getX()-1*multx,(int)base.getY())){
             //check if this point is maybe already in opennodes
-            if(!checkIfBuildingIsPlanned((int)base.getX()+width+2,(int)base.getY())){
+            if(!checkIfBuildingIsPlanned((int)base.getX()-1*multx,(int)base.getY())){
                 //seems to be ok so add it
-                this.openBlocks.add(new Vector2f((int)base.getX()+width+2,(int)base.getY()));
+                this.openBlocks.add(new Vector2f((int)base.getX()-1*multx,(int)base.getY()));
             }
         }
-
-        //point three left side
-        if(!this.entityController.isEntityOnVec((int)base.getX()-2,(int)base.getY())){
+        //point3
+        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()+(height+1)*multy)){
             //check if this point is maybe already in opennodes
-            if(!checkIfBuildingIsPlanned((int)base.getX()-2,(int)base.getY())){
+            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()+(height+1)*multy)){
                 //seems to be ok so add it
-                this.openBlocks.add(new Vector2f((int)base.getX()-2,(int)base.getY()));
+                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()+(height+1)*multy));
             }
         }
-
-        //point one to check (top)
-        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()+height+2)){
+        //point4
+        if(!this.entityController.isEntityOnVec((int)base.getX(),(int)base.getY()-1*multy)){
             //check if this point is maybe already in opennodes
-            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()+height+2)){
+            if(!checkIfBuildingIsPlanned((int)base.getX(),(int)base.getY()-1*multy)){
                 //seems to be ok so add it
-                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()+height+2));
+                this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()-1*multy));
             }
         }
     }

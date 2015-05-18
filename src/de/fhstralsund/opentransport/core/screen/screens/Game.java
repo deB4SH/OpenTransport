@@ -12,6 +12,7 @@ import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.GameScreen;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.gui.Gui;
+import de.fhstralsund.opentransport.core.screen.ui.UserInterface;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -31,6 +32,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private int mapSize;
     private Gui gui;
     private Pathfinder pathfinder;
+    private UserInterface ui;
 
     public static int TILEWIDTH=64;
     public static int TILEHEIGHT =32;
@@ -45,7 +47,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     public Game(ResourceLoader rlo,int size) {
         this.rl = rlo;
         this.mapSize = size; //quad map
-        this.gui = new Gui(rl);
+        //this.gui = new Gui(rl);
+        this.ui = new UserInterface(rlo);
 
         //init controller
         this.entityController = new EntityController(this.mapSize);
@@ -74,10 +77,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.renderGreen();
         this.entityController.render(rl);
         vegatation.render(rl);
-        gui.render(rl);
+        //gui.render(rl);
         this.cityController.render(rl);
-
-        depot.render(rl);
+        this.ui.render(rl);
+		depot.render(rl);
     }
 
     @Override
@@ -86,10 +89,10 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         if(Keyboard.isKeyDown(Keyboard.KEY_B)) {
             this.gui.createStreetGui();
         }
-        gui.update(this.entityController);
+        //gui.update(this.entityController);
         this.entityController.update();
         this.cityController.update();
-
+        this.ui.update();
 
 
         // TODO: fliegt raus wenn gui vorhanden ist
