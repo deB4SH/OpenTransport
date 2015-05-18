@@ -24,7 +24,7 @@ public class EntityController implements IRenderable, IUpdateable {
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
         this.entities = new Entity[this.mapSize][this.mapSize];
-        this.cars = new ArrayList<>();
+        this.cars = new ArrayList<Car>();
     }
 
 
