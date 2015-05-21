@@ -168,6 +168,10 @@ public class EntityController implements IRenderable, IUpdateable {
         collisionMap[(int)entityInArray.x][(int)entityInArray.y] = false;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
     public void addCar(Car c) {
         cars.add(c);
     }
