@@ -126,7 +126,8 @@ public class City implements IUpdateable {
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, rl.getTextureID("res" + File.separator + "building" + File.separator + "house_01.png")));
+                    int houseText = new Random().nextInt(4)+1;
+                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, rl.getTextureID("res" + File.separator + "building" + File.separator + "house_1_"+ houseText  +".png")));
                 }
             }
 
