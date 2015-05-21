@@ -31,16 +31,20 @@ public class Street extends Entity implements IUpdateable,IRenderable{
         boolean north=false,east=false,south=false,west=false;
 
         //check the directions
-        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX()+1,super.getTilePos().getY()))){
+        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX()+1,super.getTilePos().getY()))
+                && entityController.getEntityVec((int)super.getTilePos().getX()+1,(int)super.getTilePos().getY()).getClass() == Street.class){
             north = true;
         }
-        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX()-1,super.getTilePos().getY()))){
+        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX()-1,super.getTilePos().getY()))
+                && entityController.getEntityVec((int)super.getTilePos().getX()-1,(int)super.getTilePos().getY()).getClass() == Street.class){
             south = true;
         }
-        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX(),super.getTilePos().getY()+1))){
+        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX(),super.getTilePos().getY()+1))
+                && entityController.getEntityVec((int)super.getTilePos().getX(),(int)super.getTilePos().getY()+1).getClass() == Street.class){
             east = true;
         }
-        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX(),super.getTilePos().getY()-1))){
+        if(entityController.isEntityOnVec(new Vector2f(super.getTilePos().getX(),super.getTilePos().getY()-1))
+                && entityController.getEntityVec((int)super.getTilePos().getX(),(int)super.getTilePos().getY()-1).getClass() == Street.class){
             west = true;
         }
 
