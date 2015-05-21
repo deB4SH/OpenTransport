@@ -33,22 +33,18 @@ public class EntityController implements IRenderable, IUpdateable {
         if(!isEntityOnVec(entity.getTilePos())){
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
-
             //remove veg if existing there
             if(veg != null && veg.isVegetationOn(entity.getTilePos())){
                 veg.removeVegetationAt(entity.getTilePos());
             }
-
             //if tile == street.class
             if(entity.getClass() == Street.class){
-
                 spawnStreets(entity);
             }
         }
     }
 
     private void spawnStreets(Entity entity) {
-
         Vector2f seed = entity.getTilePos();
         entity.updateTexture(this); //central
         if(isEntityOnVec(new Vector2f(seed.getX()+1,seed.getY()))){ //north
@@ -134,6 +130,14 @@ public class EntityController implements IRenderable, IUpdateable {
             }
         }
         return false;
+    }
+
+    public Entity getEntityVec(Vector2f vec){
+        return this.entities[(int)vec.getX()][(int)vec.getY()];
+    }
+
+    public Entity getEntityVec(int x, int y){
+        return this.entities[x][y];
     }
 
     public boolean isEntityOnVec(int x,int y){
