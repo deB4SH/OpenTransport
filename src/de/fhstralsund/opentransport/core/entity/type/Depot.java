@@ -29,10 +29,12 @@ public class Depot extends Entity {
 
         //TODO: per GUI den Zielweg bestimmen
         if(i % 1000 == 0 && isPlaced) {
-            i  = 0;
-            entityController.addCar(new Car(this.getTilePos(), 20, false, entityController.requestNewWay(this.getTilePos(), new Vector2f(6, 20)),entityController));
+            i  = 2;
+            Car newCar = new Car(this.getTilePos(), 20, false, entityController.requestNewWay(this.getTilePos(), new Vector2f(6, 20)),entityController);
+            newCar.setDepot(this);
+            entityController.addCar(newCar);
         }
-        i++;
+        //i++;
 
     }
 

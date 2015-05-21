@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport.core.screen.screens;
 
+import de.fhstralsund.opentransport.core.entity.statics.IndustryType;
 import de.fhstralsund.opentransport.core.entity.type.*;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.CityController;
@@ -56,7 +57,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.cityController = new CityController();
 
         generateTestStreet();
-        //generateCars();
+        generateCars();
         generateCities();
         generateIndustry();
 
@@ -168,28 +169,20 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     }
 
     private void generateIndustry() {
+
         for(int i  = 0; i < 100; i++) {
 
-            Vector2f position = new Vector2f(new Random().nextInt(500) + 3, new Random().nextInt(500) +3);
+            int x = new Random().nextInt(500) + 3;
+            int y  =new Random().nextInt(500) + 3;
 
-            if(!entityController.isEntityOnVec(position)) {
-                this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY()), false, "farm",
-                        this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "farm.png")));
+            Vector2f position = new Vector2f(x, y);
 
-                if (new Random().nextInt(10) % 2 == 0) {
-                    this.entityController.addEntity(new Industry(new Vector2f(position.getX() + 1, position.getY()), false, "field",
-                            this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "field1.png")));
-                }
-
-                if (new Random().nextInt(10) % 2 == 0) {
-                    this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY() - 1), false, "field",
-                            this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "field2.png")));
-                }
-
-                if (new Random().nextInt(10) % 2 == 0) {
-                    this.entityController.addEntity(new Industry(new Vector2f(position.getX() - 1, position.getY()), false, "field",
-                            this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "field3.png")));
-                }
+            if(!entityController.isEntityOnVec(position) &&!entityController.isEntityOnVec(new Vector2f(x+1,y)) &&
+                    !entityController.isEntityOnVec(new Vector2f(x,y+1))
+                    ) {
+                this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY()), false, IndustryType.Farm,
+                        this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "farm.png"),
+                        entityController, rl));
             }
         }
     }

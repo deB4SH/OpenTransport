@@ -1,9 +1,7 @@
 package de.fhstralsund.opentransport.core.pathfinding;
 
-import org.lwjgl.Sys;
-import org.lwjgl.util.vector.Vector2f;
 
-import javax.sound.midi.SysexMessage;
+import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +19,7 @@ public class Pathfinder {
 
     public ArrayList<Vector2f> findWay(boolean[][] collisionMap, Vector2f start, Vector2f end) {
         try {
+
             openNodes.clear();
             closedNodes.clear();
             notes = new Node[collisionMap.length][collisionMap.length];
