@@ -43,12 +43,15 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     private CityController cityController;
 
     private Depot depot;
+    private int frameCount;
 
     public Game(ResourceLoader rlo,int size) {
         this.rl = rlo;
         this.mapSize = size; //quad map
         //this.gui = new Gui(rl);
         this.ui = new UserInterface(rlo);
+
+        this.frameCount = 0;
 
         //init controller
         this.entityController = new EntityController(this.mapSize);
@@ -92,6 +95,13 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.entityController.update();
         this.cityController.update();
         this.ui.update();
+
+        this.frameCount++;
+        if(this.frameCount % 100 == 0){
+            this.entityController.dailyupdate();
+            this.frameCount = 0;
+            System.out.println("NEW DAY");
+        }
 
 
         // TODO: fliegt raus wenn gui vorhanden ist

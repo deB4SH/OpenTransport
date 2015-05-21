@@ -81,6 +81,6 @@ public class Entity implements IUpdateable, IRenderable, IDailycycle {
 
     @Override
     public void dailyupdate() {
-
+        //nothing
     }
 }

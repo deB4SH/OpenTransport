@@ -2,6 +2,7 @@ package de.fhstralsund.opentransport.core.entity;
 
 import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.entity.type.Street;
+import de.fhstralsund.opentransport.core.interfaces.IDailycycle;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
 import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
@@ -12,7 +13,7 @@ import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityController implements IRenderable, IUpdateable {
+public class EntityController implements IRenderable, IUpdateable, IDailycycle {
 
     private int mapSize;
     private static boolean[][] collisionMap;
@@ -174,5 +175,15 @@ public class EntityController implements IRenderable, IUpdateable {
 
     public void addCar(Car c) {
         cars.add(c);
+    }
+
+    @Override
+    public void dailyupdate() {
+        for(int i=0; i < mapSize;i++){
+            for(int j=0; j < mapSize; j++){
+                if(entities[i][j] != null)
+                    entities[i][j].dailyupdate();
+            }
+        }
     }
 }

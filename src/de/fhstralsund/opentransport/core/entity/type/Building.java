@@ -38,7 +38,7 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
 
     private void setup(){
         this.tier = 1;
-        this.goodsInStorage = 100;
+        this.goodsInStorage = 200;
         this.maxCititzenCount = BuildingStatic.tierOneMaxCitizen;
         this.citizienCount = 2;
         this.willingToUpgrade = false;
@@ -61,6 +61,9 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
         if(!buildingDead){
             //TODO: updateplans for buildings(homes for the peeps)
         }
+        else{
+            this.setTextureID(BuildingStatic.tierOneHouseLeft);
+        }
     }
 
     @Override
@@ -68,7 +71,7 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
         if(!buildingDead) {
             int oldStorageVal = this.goodsInStorage;
             //get goods from store
-            if (personalStore == null) {
+            if (personalStore != null) {
                 this.goodsInStorage += this.personalStore.getGoods();
             }
             //update peeps
@@ -79,10 +82,11 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
                 float diffStorage = this.goodsInStorage * 100 / oldStorageVal;
 
                 if (this.goodsInStorage <= 0) {
-                    if (this.citizienCount - 1 < 0)
+                    if (this.citizienCount - 1 >= 0)
                         this.citizienCount -= 1;
                     if(this.citizienCount == 0){
                         this.buildingDead = true;
+                        System.out.println("Hey iam dead");
                         return;
                     }
                 } else if (diffStorage < 95) {
