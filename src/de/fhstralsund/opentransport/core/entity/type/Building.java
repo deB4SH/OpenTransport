@@ -17,6 +17,7 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
     private int tier;
     private boolean willingToUpgrade;
     private Store personalStore;
+    private boolean buildingDead;
 
     private final float consumptionTierOne = 1.10f;
     private final float conumptionTierTwo = 1.30f;
@@ -42,6 +43,7 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
         this.citizienCount = 2;
         this.willingToUpgrade = false;
         this.personalStore = null;
+        this.buildingDead = false;
     }
 
     @Override
@@ -56,59 +58,60 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
 
     @Override
     public void update() {
-        //TODO: updateplans for buildings(homes for the peeps)
+        if(!buildingDead){
+            //TODO: updateplans for buildings(homes for the peeps)
+        }
     }
 
     @Override
     public void dailyupdate(){
-        int oldStorageVal = this.goodsInStorage;
-        //get goods from store
-        if(personalStore == null){
-            this.goodsInStorage += this.personalStore.getGoods();
-        }
-        //update peeps
-        if(this.tier == 1){
-            //calc usage of citizens in building
-            int requirement = (int)(this.citizienCount * this.consumptionTierOne);
-            this.goodsInStorage -= requirement;
-            float diffStorage = this.goodsInStorage * 100 / oldStorageVal;
+        if(!buildingDead) {
+            int oldStorageVal = this.goodsInStorage;
+            //get goods from store
+            if (personalStore == null) {
+                this.goodsInStorage += this.personalStore.getGoods();
+            }
+            //update peeps
+            if (this.tier == 1) {
+                //calc usage of citizens in building
+                int requirement = (int) (this.citizienCount * this.consumptionTierOne);
+                this.goodsInStorage -= requirement;
+                float diffStorage = this.goodsInStorage * 100 / oldStorageVal;
 
-            if(this.goodsInStorage <= 0){
-                if(this.citizienCount-1 < 0)
-                    this.citizienCount -= 1;
-            }
-            else if(diffStorage < 95){
-                //nothing
-            }
-            else if(this.goodsInStorage > oldStorageVal){
-                if(!(this.citizienCount+1 > this.maxCititzenCount))
-                    this.citizienCount += 1;
-            }
-            else if(diffStorage > 150){
-                if(!(this.citizienCount+2 > this.maxCititzenCount))
-                    this.citizienCount += 2;
-                else if(!(this.citizienCount+1 > this.maxCititzenCount))
-                    this.citizienCount += 1;
-            }
-
-            //check if building is maxed out
-            if(this.citizienCount == this.maxCititzenCount){
-                if(this.goodsInStorage != 0){
-                    this.willingToUpgrade = true;
+                if (this.goodsInStorage <= 0) {
+                    if (this.citizienCount - 1 < 0)
+                        this.citizienCount -= 1;
+                    if(this.citizienCount == 0){
+                        this.buildingDead = true;
+                        return;
+                    }
+                } else if (diffStorage < 95) {
+                    //nothing
+                } else if (this.goodsInStorage > oldStorageVal) {
+                    if (!(this.citizienCount + 1 > this.maxCititzenCount))
+                        this.citizienCount += 1;
+                } else if (diffStorage > 150) {
+                    if (!(this.citizienCount + 2 > this.maxCititzenCount))
+                        this.citizienCount += 2;
+                    else if (!(this.citizienCount + 1 > this.maxCititzenCount))
+                        this.citizienCount += 1;
                 }
-                else{
+
+                //check if building is maxed out
+                if (this.citizienCount == this.maxCititzenCount) {
+                    if (this.goodsInStorage != 0) {
+                        this.willingToUpgrade = true;
+                    } else {
+                        this.willingToUpgrade = false;
+                    }
+                } else {
                     this.willingToUpgrade = false;
                 }
-            }
-            else{
-                this.willingToUpgrade = false;
-            }
-        }
-        else if(this.tier == 2){
+            } else if (this.tier == 2) {
 
-        }
-        else{
-            System.out.println("[ERROR]:["+this.toString()+"][Wrong TIER]");
+            } else {
+                System.out.println("[ERROR]:[" + this.toString() + "][Wrong TIER]");
+            }
         }
     }
 }
