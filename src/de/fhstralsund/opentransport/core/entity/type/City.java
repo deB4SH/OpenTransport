@@ -2,6 +2,7 @@ package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.BuildingStatic;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -126,8 +127,7 @@ public class City implements IUpdateable {
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    int houseText = new Random().nextInt(4)+1;
-                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, rl.getTextureID("res" + File.separator + "building" + File.separator + "house_1_"+ houseText  +".png")));
+                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, selectTierOneTexture()));
                 }
             }
 
@@ -202,6 +202,25 @@ public class City implements IUpdateable {
                 //seems to be ok so add it
                 this.openBlocks.add(new Vector2f((int)base.getX(),(int)base.getY()-1*multy));
             }
+        }
+    }
+
+    private int selectTierOneTexture(){
+        int cast = new Random().nextInt(4);
+        if(cast == 0){
+            return BuildingStatic.tierOneHouseOne;
+        }
+        else if(cast == 1){
+            return BuildingStatic.tierOneHouseTwo;
+        }
+        else if(cast == 2){
+            return BuildingStatic.tierOneHouseThree;
+        }
+        else if(cast == 3){
+            return BuildingStatic.tierOneHouseFour;
+        }
+        else{
+            return BuildingStatic.tierOneHouseLeft;
         }
     }
 

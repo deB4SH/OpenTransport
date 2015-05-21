@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport.core.entity;
 
+import de.fhstralsund.opentransport.core.interfaces.IDailycycle;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -8,7 +9,7 @@ import de.fhstralsund.opentransport.core.screen.screens.Game;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
-public class Entity implements IUpdateable, IRenderable {
+public class Entity implements IUpdateable, IRenderable, IDailycycle {
 
     private Vector2f tilePos;
     private boolean enterAble;
@@ -76,5 +77,10 @@ public class Entity implements IUpdateable, IRenderable {
 
     public void setTextureID(int textureID) {
         this.textureID = textureID;
+    }
+
+    @Override
+    public void dailyupdate() {
+
     }
 }

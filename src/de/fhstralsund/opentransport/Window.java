@@ -1,5 +1,6 @@
 package de.fhstralsund.opentransport;
 
+import de.fhstralsund.opentransport.core.entity.statics.BuildingStatic;
 import de.fhstralsund.opentransport.core.entity.statics.CarID;
 import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.screen.GamestateManager;
@@ -27,6 +28,7 @@ public class Window {
     private static Vector2f displaySize;
     private StreetTID streetTID;
     private CarID carIDs;
+    private BuildingStatic buildingStatic;
 
     public static void main(String[] args) {
         Window window = new Window();
@@ -102,6 +104,12 @@ public class Window {
 
         loadAssets(rl);
 
+        //init ids and statics
+        this.streetTID = new StreetTID(rl);
+        this.carIDs = new CarID(rl);
+        this.buildingStatic = new BuildingStatic(rl);
+
+        //init gamestate manager and change gamestate
         this.gs = new GamestateManager();
         this.gs.addGameState(new Game(rl, configmap.get("size")));
         this.gs.addGameState(new Menu(rl));
@@ -109,7 +117,6 @@ public class Window {
     }
 
     private void loadAssets(ResourceLoader rl) {
-
         rl.loadImageDir("res");
         rl.loadImageDir("res"+File.separator+"debug");
         rl.loadImageDir("res"+File.separator+"background");
@@ -121,9 +128,6 @@ public class Window {
         rl.loadImageDir("res"+File.separator+"cars");
         rl.loadImageDir("res"+File.separator+"building");
         rl.loadImageDir("res"+File.separator+"industry");
-        streetTID = new StreetTID(rl);
-        carIDs = new CarID(rl);
-
     }
 
     public static Vector2f getDisplay(){
