@@ -29,10 +29,14 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     private boolean isDelivering = true;
     private boolean isReturning = false;
 
-    private boolean headingNE;
-    private boolean headingSW;
-    private boolean headingNW;
-    private boolean headingSE;
+    enum heading {
+        NE,
+        SW,
+        NW,
+        SE
+    }
+
+    private heading isheading;
 
     public Car(Vector2f tilePos, int textureID, Boolean enterAble) {
         super(tilePos, enterAble);
@@ -51,7 +55,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         super.setTextureID(textureID);
         this.path = path;
         this.entityController = entityController;
-        this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.45f, 0.45f); //small numbers, percentage image and 1 of position
+        this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.5f, 0.5f); //small numbers, percentage image and 1 of position
     }
 
     @Override
@@ -63,7 +67,9 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         float movementY = 0f;
 
 
-        updateAgeAndBreakdown();
+        if(updateAgeAndBreakdown()) {
+            return;
+        }
 
         if (path != null && path.size() != 1) {
             wayPoint = path.get(currentNode);
@@ -92,29 +98,25 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
             if(movementX < 0 && movementY == 0) {
                 super.setTextureID(CarID.car_wood_NE);
-                headingNE = true;
-                headingNW = headingSE = headingSW = false;
+                isheading = heading.NE;
             }
             if(movementX > 0 && movementY <= 0) {
                 super.setTextureID(CarID.car_wood_SW);
-                headingSW = true;
-                headingNW = headingSE = headingNE = false;
+                isheading = heading.SW;
             }
             if(movementX >= 0 && movementY > 0) {
                 super.setTextureID(CarID.car_wood_NW);
-                headingNW = true;
-                headingNE = headingSE = headingSW = false;
+                isheading = heading.NW;
             }
             if(movementX <= 0 && movementY < 0) {
                 super.setTextureID(CarID.car_wood_SE);
-                headingSE = true;
-                headingNW = headingNE = headingSW = false;
+                isheading = heading.SE;
             }
 
 
         }
 
-        // do cars should block each other ?
+        // should cars block each other ?
         // todo: performance, each car looks over each car
         this.rectangle.x = super.getTilePos().x;
         this.rectangle.y = super.getTilePos().y;
@@ -122,13 +124,13 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         for(Car c : this.entityController.getCars()) {
             if(c != this) {
                 if (c.isDelivering && this.rectangle.contains(c.rectangle) && this.isDelivering && !this.isReturning && !c.isReturning
-                        && !c.headingSW && !this.headingNE && !c.headingNW && !this.headingSE) {
+                        && isheading == c.isheading) {
                     if(wayPoint != null && distance(wayPoint, this.getTilePos()) > distance(wayPoint, c.getTilePos())) {
                         return;
                     }
                 }
                 else if (c.isReturning && this.rectangle.contains(c.rectangle) && this.isReturning && !this.isDelivering && !c.isDelivering
-                        && !c.headingSW && !this.headingNE && !c.headingNW && !this.headingSE) {
+                        && isheading == c.isheading ) {
                     if(wayPoint != null && distance(wayPoint, this.getTilePos()) > distance(wayPoint, c.getTilePos())) {
                         return;
                     }
@@ -140,12 +142,12 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
     }
 
-    private void updateAgeAndBreakdown() {
+    private boolean updateAgeAndBreakdown() {
 
         if(age >= 10 && !breakdown) {
-            if(new Random().nextInt(200) / 10 < 0.2 * (age / 2 )) {
+            if(new Random(200).nextFloat() / 10f < 0.2f * (age / 2.0f )) {
                 breakdown = true;
-                age /= 1.5f;
+                age = age / 1.5f;
             }
         }
         age += .002f;
@@ -154,9 +156,10 @@ public class Car extends Entity implements IRenderable, IUpdateable{
             breakdown = breakdownTime <= 0 ? false : true;
             if(!breakdown)
                 breakdownTime = new Random(20).nextFloat() + 10;
-            return;
+            return true;
         }
 
+        return false;
     }
 
     @Override

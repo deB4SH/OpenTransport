@@ -44,6 +44,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private Depot depot;
     private int frameCount;
+    private int passedDays = 0;
 
     public Game(ResourceLoader rlo,int size) {
         this.rl = rlo;
@@ -100,7 +101,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         if(this.frameCount % 100 == 0){
             this.entityController.dailyupdate();
             this.frameCount = 0;
-            System.out.println("NEW DAY");
+            this.passedDays++;
+            System.out.println("DAY: " + passedDays);
         }
 
 
