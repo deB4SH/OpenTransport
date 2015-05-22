@@ -79,37 +79,39 @@ public class Building extends Entity implements IRenderable,IUpdateable, IDailyc
                 //calc usage of citizens in building
                 int requirement = (int) (this.citizienCount * this.consumptionTierOne);
                 this.goodsInStorage -= requirement;
-                float diffStorage = this.goodsInStorage * 100 / oldStorageVal;
+                if(oldStorageVal > 0){
+                    float diffStorage = this.goodsInStorage * 100 / oldStorageVal;
 
-                if (this.goodsInStorage <= 0) {
-                    if (this.citizienCount - 1 >= 0)
-                        this.citizienCount -= 1;
-                    if(this.citizienCount == 0){
-                        this.buildingDead = true;
-                        System.out.println("Hey iam dead");
-                        return;
+                    if (this.goodsInStorage <= 0) {
+                        if (this.citizienCount - 1 >= 0)
+                            this.citizienCount -= 1;
+                        if(this.citizienCount == 0){
+                            this.buildingDead = true;
+                            System.out.println("Hey iam dead");
+                            return;
+                        }
+                    } else if (diffStorage < 95) {
+                        //nothing
+                    } else if (this.goodsInStorage > oldStorageVal) {
+                        if (!(this.citizienCount + 1 > this.maxCititzenCount))
+                            this.citizienCount += 1;
+                    } else if (diffStorage > 150) {
+                        if (!(this.citizienCount + 2 > this.maxCititzenCount))
+                            this.citizienCount += 2;
+                        else if (!(this.citizienCount + 1 > this.maxCititzenCount))
+                            this.citizienCount += 1;
                     }
-                } else if (diffStorage < 95) {
-                    //nothing
-                } else if (this.goodsInStorage > oldStorageVal) {
-                    if (!(this.citizienCount + 1 > this.maxCititzenCount))
-                        this.citizienCount += 1;
-                } else if (diffStorage > 150) {
-                    if (!(this.citizienCount + 2 > this.maxCititzenCount))
-                        this.citizienCount += 2;
-                    else if (!(this.citizienCount + 1 > this.maxCititzenCount))
-                        this.citizienCount += 1;
-                }
 
-                //check if building is maxed out
-                if (this.citizienCount == this.maxCititzenCount) {
-                    if (this.goodsInStorage != 0) {
-                        this.willingToUpgrade = true;
+                    //check if building is maxed out
+                    if (this.citizienCount == this.maxCititzenCount) {
+                        if (this.goodsInStorage != 0) {
+                            this.willingToUpgrade = true;
+                        } else {
+                            this.willingToUpgrade = false;
+                        }
                     } else {
                         this.willingToUpgrade = false;
                     }
-                } else {
-                    this.willingToUpgrade = false;
                 }
             } else if (this.tier == 2) {
 
