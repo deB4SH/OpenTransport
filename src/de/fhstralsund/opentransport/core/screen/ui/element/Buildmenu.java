@@ -52,11 +52,11 @@ public class Buildmenu extends UIElement{
 
     @Override
     public void update() {
-        for(UIButton e: this.buildMenuButtons){
-            e.update();
+        if(isVisible()) {
+            for (UIButton e : this.buildMenuButtons) {
+                e.update();
+            }
         }
-
-        //TODO: add selected Element to Mouselistener?
     }
 
     public void addButton(UIButton button) {

@@ -240,6 +240,11 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
                         this));
                 dummyDepot = null;
             }
+
+            // right click - enough build
+            if (Mouse.isButtonDown(1)) {
+                dummyDepot = null;
+            }
         }
     }
 
@@ -249,7 +254,7 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
         }
         Camera cam = Camera.getInstance();
         ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight());
-        dummyStreet = new Street(new Vector2f(p.getX(), p.getY()),StreetTID.urban_street_ns);
+        dummyStreet = new Street(new Vector2f(p.getX(), p.getY()),StreetTID.urban_cross);
 
     }
 
