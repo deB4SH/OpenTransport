@@ -64,6 +64,4 @@ public class Topbar extends UIElement implements IRenderable,IUpdateable{
             e.update();
         }
     }
-
-
 }

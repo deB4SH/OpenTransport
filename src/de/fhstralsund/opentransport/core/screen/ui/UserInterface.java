@@ -1,8 +1,12 @@
 package de.fhstralsund.opentransport.core.screen.ui;
 
+import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.ui.action.CreateDepotAction;
+import de.fhstralsund.opentransport.core.screen.ui.action.CreateStreetAction;
 import de.fhstralsund.opentransport.core.screen.ui.element.Buildmenu;
 import de.fhstralsund.opentransport.core.screen.ui.element.Topbar;
 
@@ -12,26 +16,36 @@ import java.util.ArrayList;
 public class UserInterface implements IRenderable,IUpdateable{
 
     private static ArrayList<UIElement> uiElements;
+    private EntityController entityController;
 
     //basicElements
     Topbar topbar;
     Buildmenu buildmenu;
 
-    public UserInterface(ResourceLoader rl){
+    public UserInterface(ResourceLoader rl, EntityController entityController){
         uiElements = new ArrayList<UIElement>();
-        
+        this.entityController = entityController;
+
         this.setup(rl);
     }
 
     private void setup(ResourceLoader rl) {
         //create topbar
         topbar = new Topbar(true,"Topbar",100,0,600,50,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"topbar.png"));
-        addUIElement(topbar);
+        uiElements.add(topbar);
 
         //create buildmenu
-        buildmenu = new Buildmenu(false,"BuildMenu",100,100,200,400,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"buildmenu_bg.png"));
+        buildmenu = new Buildmenu(false,"BuildMenu",100,100,200,48,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"buildmenu_bg.png"));
+        UIButton buildStreetButton = new UIButton(new CreateStreetAction(), 100, 100, 48, 24, StreetTID.urban_street_ns, entityController);
+        UIButton buildDepotButton = new UIButton(new CreateDepotAction(), 100, 100, 48, 24, rl.getTextureID("res"+ File.separator+"building"+File.separator+"road_Depot.png"), entityController);
+        buildmenu.addButton(buildStreetButton);
+        buildmenu.addButton(buildDepotButton);
+
+
+
         UIButton buildMenuButton = new UIButton(buildmenu,0,0,30,30,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"build_button.png"));
         topbar.addButton(buildMenuButton);
+
         uiElements.add(buildmenu);
     }
 

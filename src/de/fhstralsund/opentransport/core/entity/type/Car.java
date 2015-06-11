@@ -4,6 +4,7 @@ package de.fhstralsund.opentransport.core.entity.type;
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.entity.statics.CarID;
+import de.fhstralsund.opentransport.core.entity.statics.CarType;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
@@ -26,6 +27,9 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     private boolean breakdown = false;
     private float breakdownTime = 5.0f;
 
+    private int speed = 20;
+    private CarType carType;
+
     private boolean isDelivering = true;
     private boolean isReturning = false;
 
@@ -36,7 +40,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         SE
     }
 
-    private heading isheading;
+    private heading isHeading;
 
     public Car(Vector2f tilePos, int textureID, Boolean enterAble) {
         super(tilePos, enterAble);
@@ -98,39 +102,39 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
             if(movementX < 0 && movementY == 0) {
                 super.setTextureID(CarID.car_wood_NE);
-                isheading = heading.NE;
+                isHeading = heading.NE;
             }
             if(movementX > 0 && movementY <= 0) {
                 super.setTextureID(CarID.car_wood_SW);
-                isheading = heading.SW;
+                isHeading = heading.SW;
             }
             if(movementX >= 0 && movementY > 0) {
                 super.setTextureID(CarID.car_wood_NW);
-                isheading = heading.NW;
+                isHeading = heading.NW;
             }
             if(movementX <= 0 && movementY < 0) {
                 super.setTextureID(CarID.car_wood_SE);
-                isheading = heading.SE;
+                isHeading = heading.SE;
             }
 
 
         }
 
         // should cars block each other ?
-        // todo: performance, each car looks over each car
+        // todo: performance, each car looks over each car, quadtree maybe ?
         this.rectangle.x = super.getTilePos().x;
         this.rectangle.y = super.getTilePos().y;
 
         for(Car c : this.entityController.getCars()) {
             if(c != this) {
                 if (c.isDelivering && this.rectangle.contains(c.rectangle) && this.isDelivering && !this.isReturning && !c.isReturning
-                        && isheading == c.isheading) {
+                        && isHeading == c.isHeading) {
                     if(wayPoint != null && distance(wayPoint, this.getTilePos()) > distance(wayPoint, c.getTilePos())) {
                         return;
                     }
                 }
                 else if (c.isReturning && this.rectangle.contains(c.rectangle) && this.isReturning && !this.isDelivering && !c.isDelivering
-                        && isheading == c.isheading ) {
+                        && isHeading == c.isHeading) {
                     if(wayPoint != null && distance(wayPoint, this.getTilePos()) > distance(wayPoint, c.getTilePos())) {
                         return;
                     }
@@ -138,7 +142,7 @@ public class Car extends Entity implements IRenderable, IUpdateable{
             }
         }
 
-        this.setTilePos(new Vector2f(this.getTilePos().x - movementX / 20, this.getTilePos().y - movementY / 20));
+        this.setTilePos(new Vector2f(this.getTilePos().x - movementX / speed, this.getTilePos().y - movementY / speed));
 
     }
 

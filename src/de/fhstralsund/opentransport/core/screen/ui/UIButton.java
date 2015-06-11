@@ -1,17 +1,16 @@
 package de.fhstralsund.opentransport.core.screen.ui;
 
 import de.fhstralsund.opentransport.Window;
+import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
-import org.lwjgl.Sys;
+import de.fhstralsund.opentransport.core.screen.ui.action.UiButtonAction;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.Color;
-
-import java.io.File;
 
 public class UIButton implements IRenderable, IUpdateable{
 
@@ -22,6 +21,9 @@ public class UIButton implements IRenderable, IUpdateable{
     private int height;
     private int textureID;
     private Rectangle collisionBox;
+    private UiButtonAction uiButtonAction;
+    private boolean mouseUp = false;
+    private EntityController entityController;
 
     public UIButton(UIElement linkedElement, int posX, int posY, int width, int height, int textureID) {
         this.linkedElement = linkedElement;
@@ -31,6 +33,17 @@ public class UIButton implements IRenderable, IUpdateable{
         this.height = height;
         this.textureID = textureID;
         this.collisionBox = new Rectangle(posX,posY,width,height);
+    }
+
+    public UIButton(UiButtonAction uiButtonAction, int posX, int posY, int width, int height, int textureID, EntityController entityController) {
+        this.uiButtonAction = uiButtonAction;
+        this.posX = posX;
+        this.posY = posY;
+        this.width = width;
+        this.height = height;
+        this.textureID = textureID;
+        this.collisionBox = new Rectangle(posX,posY,width,height);
+        this.entityController = entityController;
     }
 
     @Override
@@ -53,14 +66,23 @@ public class UIButton implements IRenderable, IUpdateable{
     public void update() {
         //TODO: clickevent
         Point mousePoint =  new Point(Mouse.getX(), -Mouse.getY() + (int)Window.getDisplay().getY());
-        if(this.collisionBox.contains(mousePoint) && Mouse.isButtonDown(0)){
-            if(this.linkedElement.isVisible()){
-                this.linkedElement.setVisible(false);
+        if(this.collisionBox.contains(mousePoint) && Mouse.isButtonDown(0) && !mouseUp){
+
+            if(uiButtonAction != null) {
+                uiButtonAction.fireAction(entityController);
             }
-            else{
-                this.linkedElement.setVisible(true);
+
+            if(this.linkedElement != null) {
+
+                if (this.linkedElement.isVisible()) {
+                    this.linkedElement.setVisible(false);
+                } else {
+                    this.linkedElement.setVisible(true);
+                }
             }
         }
+
+        mouseUp = Mouse.isButtonDown(0);
     }
 
     private void updateCollisionBox(){

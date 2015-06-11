@@ -26,6 +26,8 @@ public class BuildingStatic {
     public static int storeOne;
     public static int storeTwo;
 
+    public static int depot;
+
     public BuildingStatic(ResourceLoader rl) {
         tierOneMaxCitizen = 20;
         tierTwoMaxCitizen = 60;
@@ -43,6 +45,8 @@ public class BuildingStatic {
 
         storeOne = rl.getTextureID("res" + File.separator + "building" + File.separator + "store_1.png");
         storeTwo = rl.getTextureID("res" + File.separator + "building" + File.separator + "store_2.png");
+
+        depot = rl.getTextureID("res" + File.separator + "building" + File.separator + "road_Depot.png");
 
     }
 }

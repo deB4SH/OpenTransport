@@ -1,6 +1,9 @@
 package de.fhstralsund.opentransport.core.entity;
 
+import de.fhstralsund.opentransport.core.entity.statics.BuildingStatic;
+import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.entity.type.Car;
+import de.fhstralsund.opentransport.core.entity.type.Depot;
 import de.fhstralsund.opentransport.core.entity.type.Street;
 import de.fhstralsund.opentransport.core.interfaces.IDailycycle;
 import de.fhstralsund.opentransport.core.pathfinding.Pathfinder;
@@ -8,6 +11,11 @@ import de.fhstralsund.opentransport.core.entity.type.Vegetation;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.Camera;
+import de.fhstralsund.opentransport.core.screen.screens.Game;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadablePoint;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
@@ -21,6 +29,10 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
     private List<Car> cars;
 	private Pathfinder pathfinder;
     private Vegetation veg;
+
+    private Depot dummyDepot; // dummy dummyDepot
+    private Street dummyStreet; // dummy dummyStreet
+    private boolean mouseUp = true;
 
     public EntityController(int mapSize) {
         this.mapSize = mapSize;
@@ -38,7 +50,7 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
             if(veg != null && veg.isVegetationOn(entity.getTilePos())){
                 veg.removeVegetationAt(entity.getTilePos());
             }
-            //if tile == street.class
+            //if tile == dummyStreet.class
             if(entity.getClass() == Street.class){
                 spawnStreets(entity);
             }
@@ -97,7 +109,13 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
         for(Car c : cars) {
             c.update();
         }
+
+        updateDummyDepot();
+        updateDummyStreet();
+        mouseUp = Mouse.isButtonDown(0);
     }
+
+
 
     @Override
     public void render(ResourceLoader rl) {
@@ -111,6 +129,13 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
 
         for(Car c : cars) {
             c.render(rl);
+        }
+
+        if(dummyDepot != null) {
+            dummyDepot.render(rl);
+        }
+        if(dummyStreet != null) {
+            dummyStreet.render(rl);
         }
     }
 
@@ -184,6 +209,68 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
                 if(entities[i][j] != null)
                     entities[i][j].dailyupdate();
             }
+        }
+    }
+
+    public void buildDepot(){
+        if(dummyStreet != null) {
+            dummyStreet = null;
+        }
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight());
+        dummyDepot = new Depot(new Vector2f(new Vector2f(p.getX(), p.getY())),
+                false, BuildingStatic.depot, this);
+    }
+
+    private void updateDummyDepot() {
+        if(dummyDepot != null) {
+            dummyDepot.update();
+
+            Camera cam = Camera.getInstance();
+            ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
+
+
+            float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
+            float isoMouseY = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) + ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT)) - 1;
+
+            dummyDepot.setTilePos(new Vector2f(isoMouseX, isoMouseY));
+
+            if (Mouse.isButtonDown(0) && !mouseUp) {
+                this.addEntity(new Depot(new Vector2f(isoMouseX, isoMouseY), true, BuildingStatic.depot,
+                        this));
+                dummyDepot = null;
+            }
+        }
+    }
+
+    public void buildSteet() {
+        if(dummyDepot != null) {
+            dummyDepot = null;
+        }
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight());
+        dummyStreet = new Street(new Vector2f(p.getX(), p.getY()),StreetTID.urban_street_ns);
+
+    }
+
+    private void updateDummyStreet() {
+        if(dummyStreet == null){
+            return;
+        }
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
+
+        float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
+        float isoMouseY = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) + ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT)) - 1;
+
+        dummyStreet.setTilePos(new Vector2f(isoMouseX, isoMouseY));
+
+        if (Mouse.isButtonDown(0) && !mouseUp) {
+            this.addEntity(new Street(new Vector2f(isoMouseX, isoMouseY), StreetTID.urban_street_ns));
+        }
+        // right click - enough build
+        if (Mouse.isButtonDown(1)) {
+            dummyStreet = null;
         }
     }
 }

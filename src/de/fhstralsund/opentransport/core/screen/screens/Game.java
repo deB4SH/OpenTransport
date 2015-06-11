@@ -50,7 +50,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.rl = rlo;
         this.mapSize = size; //quad map
         //this.gui = new Gui(rl);
-        this.ui = new UserInterface(rlo);
+
 
         this.frameCount = 0;
 
@@ -65,15 +65,8 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         generateCities();
         generateIndustry();
 
-
-
-        Camera cam = Camera.getInstance();
-        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight());
-        depot = new Depot(new Vector2f(new Vector2f(p.getX(), p.getY())),
-                false, rl.getTextureID("res"+ File.separator+"building"+File.separator+"road_Depot.png"),
-                this.entityController);
+        this.ui = new UserInterface(rlo, entityController);
     }
-
 
     @Override
     public void render(ResourceLoader rl) {
@@ -83,7 +76,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         //gui.render(rl);
         this.cityController.render(rl);
         this.ui.render(rl);
-		depot.render(rl);
     }
 
     @Override
@@ -104,27 +96,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
             this.passedDays++;
             System.out.println("DAY: " + passedDays);
         }
-
-
-        // TODO: fliegt raus wenn gui vorhanden ist
-        ///////////
-        depot.update();
-
-        Camera cam = Camera.getInstance();
-        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
-
-
-        float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
-        float isoMouseY = Math.round(((p.getX()  + cam.getPosition().getX()) / Game.TILEWIDTH) +  ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT))-1;
-
-        depot.setTilePos(new Vector2f(isoMouseX, isoMouseY));
-
-        if(Mouse.isButtonDown(0)) {
-            entityController.addEntity(new Depot(new Vector2f(isoMouseX, isoMouseY),true, rl.getTextureID("res"+ File.separator+"building"+File.separator+"road_Depot.png"),
-                    this.entityController));
-        }
-        ///////
-
     }
 
     @Override
