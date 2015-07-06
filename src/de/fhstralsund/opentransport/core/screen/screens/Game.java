@@ -58,7 +58,7 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.cityController = new CityController();
 
         generateTestStreet();
-        generateCars();
+        //generateCars();
         generateCities();
         generateIndustry();
 
@@ -145,19 +145,27 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
 
     private void generateIndustry() {
 
-        for(int i  = 0; i < 100; i++) {
+        for(int i  = 0; i < 400; i++) {
 
-            int x = new Random().nextInt(500) + 3;
-            int y  =new Random().nextInt(500) + 3;
+            int x = new Random().nextInt(mapSize);
+            int y = new Random().nextInt(mapSize);
 
             Vector2f position = new Vector2f(x, y);
 
             if(!entityController.isEntityOnVec(position) &&!entityController.isEntityOnVec(new Vector2f(x+1,y)) &&
                     !entityController.isEntityOnVec(new Vector2f(x,y+1))
                     ) {
+                int type = new Random().nextInt(2);
+                if(type == 0) {
                 this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY()), false, IndustryType.Farm,
                         this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "farm.png"),
                         entityController, rl));
+                }
+                if(type == 1) {
+                    this.entityController.addEntity(new Industry(new Vector2f(position.getX(), position.getY()), false, IndustryType.Wood,
+                            this.rl.getTextureID("res" + File.separator + "industry" + File.separator + "wood.png"),
+                            entityController, rl));
+                }
             }
         }
     }

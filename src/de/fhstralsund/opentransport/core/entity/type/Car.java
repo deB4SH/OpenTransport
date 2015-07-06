@@ -33,6 +33,8 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     private boolean isDelivering = true;
     private boolean isReturning = false;
 
+    private Storage storage;
+
     enum heading {
         NE,
         SW,

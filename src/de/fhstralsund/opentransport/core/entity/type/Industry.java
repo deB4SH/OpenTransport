@@ -7,6 +7,7 @@ import de.fhstralsund.opentransport.core.entity.statics.IndustryType;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.Camera;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.io.File;
@@ -19,8 +20,6 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
     private EntityController entityController;
     private int availableGeneratingComponents = 0;
     float availableAmount = 0;
-
-    float resourceTick = 100.0f;
 
     public Industry(Vector2f tilePos, Boolean enterAble, IndustryType type, int textureID) {
         super(tilePos, enterAble);
@@ -38,6 +37,25 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
         if(type == IndustryType.Farm) {
             generateFields(tilePos, rl);
         }
+        if(type == IndustryType.Wood) {
+            checkForAvailableWood(entityController);
+        }
+    }
+
+    private void checkForAvailableWood(EntityController entityController) {
+        Camera cam = Camera.getInstance();
+        int forestAround = 0;
+        for(int i = -3; i <= 3; i++) {
+            for(int j = -3; j <= 3; j++) {
+                if(super.getTilePos().getX() + i > 0 && super.getTilePos().getX() + i < cam.getSize() && super.getTilePos().getY() + j > 0 && super.getTilePos().getY() + j < cam.getSize()) {
+                    if (entityController.getVeg().isVegetationOn((int) super.getTilePos().getX() + i, (int) super.getTilePos().getY() + j)) {
+                        forestAround++;
+                    }
+                }
+            }
+        }
+        availableGeneratingComponents = forestAround;
+        forestAround = 0;
     }
 
     private void generateFields(Vector2f tilePos, ResourceLoader rl) {
@@ -70,21 +88,16 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
     @Override
     public void update() {
 
-        if(type == IndustryType.Farm) {
-            resourceTick -= 0.1f;
-
-            if(resourceTick == 0) {
-                resourceTick = 100.0f;
-
-                int toAdd = 30 * availableGeneratingComponents;
-                toAdd = toAdd == 0 ? 30 : toAdd;
-                availableAmount += toAdd;
-            }
-        }
     }
 
     @Override
     public void dailyupdate(){
+        int toAdd = 30 * availableGeneratingComponents;
+        toAdd = toAdd == 0 ? 30 : toAdd;
+        availableAmount += toAdd;
+    }
 
+    public IndustryType getType() {
+        return type;
     }
 }
