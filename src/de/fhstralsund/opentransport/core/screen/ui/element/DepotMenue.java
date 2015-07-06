@@ -82,8 +82,8 @@ public class DepotMenue extends UIElement {
             renderText("Depot ausgewaehlt: " + endChosen, new Vector2f(getPosX(), getPosY() + 10));
         }
         Storage depotStorage = DepotMenueVendor.startDepot.getStorage();
-        renderText("Storage inhalt, Food : " +      depotStorage.getGoods(Goods.Food), new Vector2f(getPosX(), getPosY() + 30));
-        renderText("Storage inhalt, Furniture : " + depotStorage.getGoods(Goods.Furniture), new Vector2f(getPosX(), getPosY() + 60));
+        renderText("Food : " +      depotStorage.getGoods(Goods.Food), new Vector2f(getPosX(), getPosY() + 30));
+        renderText("Furniture : " + depotStorage.getGoods(Goods.Furniture), new Vector2f(getPosX(), getPosY() + 50));
 
         //render all buttonElements
         for(UIButton e: this.buildMenuButtons){
