@@ -2,6 +2,7 @@ package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.Goods;
 import de.fhstralsund.opentransport.core.entity.statics.IndustryType;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
@@ -58,6 +59,15 @@ public class Depot extends Entity {
     @Override
     public void update() {
 
+        for(int i = 0; i < nearbyindustry.size(); i++) {
+            if(((Industry)nearbyindustry.get(i)).getType() == IndustryType.Farm) {
+                storage.addGoods(Goods.Food, ((Industry)nearbyindustry.get(i)).getAvailableAmount());
+            }
+            if(((Industry)nearbyindustry.get(i)).getType() == IndustryType.Wood) {
+                storage.addGoods(Goods.Furniture, ((Industry)nearbyindustry.get(i)).getAvailableAmount() / 20);
+            }
+        }
+
         Camera cam = Camera.getInstance();
         ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
 
@@ -69,6 +79,7 @@ public class Depot extends Entity {
                 if(!DepotMenueVendor.getDepotMenue().isVisible()) {
                     DepotMenueVendor.getDepotMenue().setVisible(true);
                     DepotMenueVendor.startPos = this.getTilePos();
+                    DepotMenueVendor.startDepot = this;
                 }
             }
         }
@@ -121,5 +132,18 @@ public class Depot extends Entity {
 
             GL11.glEnd();
         }
+    }
+
+    public void requestRessources(Storage carStorage){
+        carStorage.addAllGoods(this.storage);
+        storage = new Storage(this);
+    }
+
+    public void giveRessources(Storage carStorage){
+        this.storage.addAllGoods(carStorage);
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 }

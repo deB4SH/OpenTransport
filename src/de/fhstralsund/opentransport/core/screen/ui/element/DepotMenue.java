@@ -3,8 +3,10 @@ package de.fhstralsund.opentransport.core.screen.ui.element;
 import de.fhstralsund.opentransport.*;
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.Goods;
 import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.entity.type.Depot;
+import de.fhstralsund.opentransport.core.entity.type.Storage;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
@@ -38,7 +40,6 @@ public class DepotMenue extends UIElement {
 
     private boolean endChosen = false;
     private Entity endDepot = null;
-    private boolean carChosen = false;
 
 
     private EntityController ec;
@@ -80,7 +81,9 @@ public class DepotMenue extends UIElement {
         }else {
             renderText("Depot ausgewaehlt: " + endChosen, new Vector2f(getPosX(), getPosY() + 10));
         }
-        renderText("Auto   ausgewaehlt: " + carChosen, new Vector2f(getPosX(), getPosY() + 30));
+        Storage depotStorage = DepotMenueVendor.startDepot.getStorage();
+        renderText("Storage inhalt, Food : " +      depotStorage.getGoods(Goods.Food), new Vector2f(getPosX(), getPosY() + 30));
+        renderText("Storage inhalt, Furniture : " + depotStorage.getGoods(Goods.Furniture), new Vector2f(getPosX(), getPosY() + 60));
 
         //render all buttonElements
         for(UIButton e: this.buildMenuButtons){
@@ -142,6 +145,7 @@ public class DepotMenue extends UIElement {
         DepotMenueVendor.startPos = null;
         this.endDepot = null;
         endChosen = false;
+        DepotMenueVendor.startDepot = null;
     }
 
     public UIButton getCreateCarAction() {

@@ -42,6 +42,14 @@ public class Storage {
         }
     }
 
+    public void addAllGoods(Storage anotherStorage) {
+        for(Goods goods : anotherStorage.storage.keySet()) {
+            if(this.storage.containsKey(goods)) {
+                this.storage.put(goods, this.storage.get(goods).intValue() + anotherStorage.storage.get(goods).intValue());
+            }
+        }
+    }
+
     public int getGoods(Goods type){
         return this.storage.get(type).intValue();
     }

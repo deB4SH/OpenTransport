@@ -43,7 +43,7 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
 
     public void addEntity(Entity entity){
         //check if there is an entity on this vector
-        if(!isEntityOnVec(entity.getTilePos()) && entity.getTilePos().getX() > 0 && entity.getTilePos().getY() > 0){
+        if(!isEntityOnVec(entity.getTilePos()) && entity.getTilePos().getX() > 0 && entity.getTilePos().getY() > 0 && entity.getTilePos().getX() < mapSize -1 && entity.getTilePos().getY() < mapSize -1){
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
             //remove veg if existing there

@@ -19,7 +19,7 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
     private IndustryType type;
     private EntityController entityController;
     private int availableGeneratingComponents = 0;
-    float availableAmount = 0;
+    private int availableAmount = 0;
 
     public Industry(Vector2f tilePos, Boolean enterAble, IndustryType type, int textureID) {
         super(tilePos, enterAble);
@@ -99,5 +99,11 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
 
     public IndustryType getType() {
         return type;
+    }
+
+    public int getAvailableAmount() {
+        int tempReturn = availableAmount;
+        availableAmount = 0;
+        return tempReturn;
     }
 }
