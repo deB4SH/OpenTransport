@@ -5,7 +5,12 @@ import de.fhstralsund.opentransport.core.entity.EntityController;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
+import de.fhstralsund.opentransport.core.screen.ui.element.DepotMenue;
+import de.fhstralsund.opentransport.core.screen.ui.element.DepotMenueVendor;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadablePoint;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.io.File;
@@ -15,7 +20,7 @@ public class Depot extends Entity {
     public boolean isPlaced = false;
     private EntityController entityController;
 
-    int i = 0;
+    private boolean mouseUp = false;
 
     public Depot(Vector2f tilePos, Boolean enterAble, int textureId, EntityController entityController) {
         super(tilePos, enterAble);
@@ -27,15 +32,21 @@ public class Depot extends Entity {
     @Override
     public void update() {
 
-        //TODO: per GUI den Zielweg bestimmen
-        if(i % 1000 == 0 && isPlaced) {
-            i  = 2;
-            Car newCar = new Car(this.getTilePos(), 20, false, entityController.requestNewWay(this.getTilePos(), new Vector2f(6, 20)),entityController);
-            newCar.setDepot(this);
-            entityController.addCar(newCar);
-        }
-        //i++;
+        Camera cam = Camera.getInstance();
+        ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
 
+        float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
+        float isoMouseY = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) + ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT)) - 1;
+
+        if(this.getTilePos().getX() == isoMouseX && this.getTilePos().getY() == isoMouseY && Mouse.isButtonDown(0) && !mouseUp) {
+            if (isPlaced) {
+                if(!DepotMenueVendor.getDepotMenue().isVisible()) {
+                    DepotMenueVendor.getDepotMenue().setVisible(true);
+                    DepotMenueVendor.startPos = this.getTilePos();
+                }
+            }
+        }
+        mouseUp = Mouse.isButtonDown(0);
     }
 
     @Override

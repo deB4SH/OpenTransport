@@ -64,7 +64,7 @@ public class UIButton implements IRenderable, IUpdateable{
 
     @Override
     public void update() {
-        //TODO: clickevent
+
         Point mousePoint =  new Point(Mouse.getX(), -Mouse.getY() + (int)Window.getDisplay().getY());
         if(this.collisionBox.contains(mousePoint) && Mouse.isButtonDown(0) && !mouseUp){
 
@@ -137,5 +137,14 @@ public class UIButton implements IRenderable, IUpdateable{
 
     public void setTextureID(int textureID) {
         this.textureID = textureID;
+    }
+
+
+    public Rectangle getCollisionBox() {
+        return collisionBox;
+    }
+
+    public UiButtonAction getUiButtonAction() {
+        return uiButtonAction;
     }
 }

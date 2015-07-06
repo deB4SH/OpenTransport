@@ -24,13 +24,11 @@ public class Buildmenu extends UIElement{
         this.buildMenuButtons = new ArrayList<UIButton>();
         this.textureID = textureID;
         this.startButtonPosX = super.getPosX();
-
-        buildObj.add(new UISubelement(true, false, "street", this.getPosX() + 10, this.getPosY() + 10, 24, 48));
     }
 
     @Override
     public void render(ResourceLoader rl) {
-        //TODO: render base
+
         Color.white.bind();
         rl.bindTextureByID(textureID);
             GL11.glBegin(GL11.GL_QUADS);

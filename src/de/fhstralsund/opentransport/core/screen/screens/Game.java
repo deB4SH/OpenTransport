@@ -38,18 +38,15 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     public static int TILEHEIGHT =32;
     public static boolean MOUSESCROLL = false;
 
-
     private EntityController entityController;
     private CityController cityController;
 
-    private Depot depot;
     private int frameCount;
     private int passedDays = 0;
 
     public Game(ResourceLoader rlo,int size) {
         this.rl = rlo;
         this.mapSize = size; //quad map
-        //this.gui = new Gui(rl);
 
 
         this.frameCount = 0;
@@ -73,7 +70,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
         this.renderGreen();
         this.entityController.render(rl);
         vegatation.render(rl);
-        //gui.render(rl);
         this.cityController.render(rl);
         this.ui.render(rl);
     }
@@ -81,10 +77,6 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     @Override
     public void update() {
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_B)) {
-            this.gui.createStreetGui();
-        }
-        //gui.update(this.entityController);
         this.entityController.update();
         this.cityController.update();
         this.ui.update();
