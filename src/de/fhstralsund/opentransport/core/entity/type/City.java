@@ -10,7 +10,6 @@ import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
-import sun.security.tools.keytool.Resources_sv;
 
 import java.io.File;
 import java.util.*;
@@ -21,9 +20,10 @@ public class City implements IUpdateable {
     private String cityName;
     private Vector2f seed;
     private int startPopulation;
+    private int storeNeed;
     private List<Vector2f> openBlocks;
     private Queue<Entity> buildQueue;
-    LinkedList<Building> blist;
+    private LinkedList<Entity> preBuildQueuePlanning;
 
     private EntityController entityController;
     private ResourceLoader rl;
@@ -37,8 +37,9 @@ public class City implements IUpdateable {
         this.entityController = entityController;
         this.openBlocks = new ArrayList<Vector2f>();
         this.buildQueue = new LinkedList<Entity>();
-        this.blist = new LinkedList<Building>();
+        this.preBuildQueuePlanning = new LinkedList<Entity>();
         this.rl = rl;
+        this.storeNeed = 0;
     }
 
     public void addBuilding(Building e){
@@ -50,6 +51,10 @@ public class City implements IUpdateable {
         this.entityController.addEntity(e);
     }
 
+    /***
+     * Generates a city at a specifc point (set in constructor)
+     * @param rl RessourcenLoader
+     */
     public void generateCity(ResourceLoader rl){
         //place at seed a street
         addStreet(new Street(seed, StreetTID.urban_cross));
@@ -69,14 +74,15 @@ public class City implements IUpdateable {
         addStreet(new Street(new Vector2f(seed.getX(),seed.getY()-1), StreetTID.urban_street_we));
     }
 
+    /***
+     * Expands the city related to their openNodes found near the Buildings
+     */
     public void expandCity(){
         Random rand = new Random(new Random().nextInt(Integer.MAX_VALUE));
         int width,height;
         boolean extendLeft,extendUp;
 
         if(this.openBlocks.size() > 0) {
-
-
             Vector2f castBlock = this.openBlocks.get(rand.nextInt(this.openBlocks.size()));
             this.openBlocks.remove(castBlock);
             if (rand.nextBoolean()) {
@@ -124,19 +130,23 @@ public class City implements IUpdateable {
                 maxY = (int) castBlock.getY();
             }
 
-
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    this.blist.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, selectTierOneTexture()));
+                    if(this.storeNeed > 50){
+                        //add store here
+                        this.preBuildQueuePlanning.add(new Store(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, selectTierOneStoreTexture()));
+                        //set need to 0
+                        this.storeNeed = 0;
+                    }
+                    this.preBuildQueuePlanning.add(new Building(new Vector2f(castBlock.getX() + x * multx, castBlock.getY() + y * multy), false, selectTierOneTexture(), this));
                 }
             }
 
             //generate block entites
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    Building bEntity = this.blist.poll();
+                    Entity bEntity = this.preBuildQueuePlanning.poll();
                     this.buildQueue.add(bEntity);
-
                     createStreetNearBuilding((int) bEntity.getTilePos().getX() - 1, (int) bEntity.getTilePos().getY());
                     createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY());
                     createStreetNearBuilding((int) bEntity.getTilePos().getX(), (int) bEntity.getTilePos().getY() - 1);
@@ -148,8 +158,17 @@ public class City implements IUpdateable {
                     createStreetNearBuilding((int) bEntity.getTilePos().getX() + 1, (int) bEntity.getTilePos().getY() - 1);
                 }
             }
-
             lookForNewOpenBlocks(castBlock,width,height,multx,multy);
+        }
+    }
+
+    private int selectTierOneStoreTexture() {
+
+        if(new Random().nextBoolean()){
+            return rl.getTextureID("res" + File.separator + "building" + File.separator + "store_1.png");
+        }
+        else{
+            return rl.getTextureID("res" + File.separator + "building" + File.separator + "store_2.png");
         }
     }
 
@@ -234,7 +253,7 @@ public class City implements IUpdateable {
     }
 
     private boolean checkIfBuildingIsPlanned(int x,int y){
-        for(Building b: this.blist){
+        for(Entity b: this.preBuildQueuePlanning){
             if(b.getTilePos().getX() == x && b.getTilePos().getY() == y){
                 return true;
             }
@@ -285,5 +304,17 @@ public class City implements IUpdateable {
     public void setRl(ResourceLoader rl)
     {
         this.rl = rl;
+    }
+
+    public int getStoreNeed() {
+        return storeNeed;
+    }
+
+    public void setStoreNeed(int storeNeed) {
+        this.storeNeed = storeNeed;
+    }
+
+    public List<Building> getCityBuilding() {
+        return cityBuilding;
     }
 }

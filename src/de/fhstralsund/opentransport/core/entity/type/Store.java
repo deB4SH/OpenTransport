@@ -1,6 +1,7 @@
 package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.Entity;
+import de.fhstralsund.opentransport.core.entity.statics.Goods;
 import de.fhstralsund.opentransport.core.interfaces.IDailycycle;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
@@ -12,17 +13,20 @@ import java.util.List;
 
 public class Store extends Entity implements IUpdateable,IRenderable,IDailycycle {
 
-    private int goodStorage;
+    private Storage storage;
     private List<Building> buildingList;
+    private int textureID;
 
-    public Store(Vector2f tilePos, Boolean enterAble) {
+    public Store(Vector2f tilePos, Boolean enterAble, int textureID) {
         super(tilePos, enterAble);
+        super.setTextureID(textureID);
+        this.textureID = textureID;
         this.setup();
     }
 
     private void setup(){
         this.buildingList = new ArrayList<Building>();
-        this.goodStorage = 0;
+        this.storage = new Storage(this);
     }
 
     @Override
@@ -40,12 +44,14 @@ public class Store extends Entity implements IUpdateable,IRenderable,IDailycycle
 
     }
 
-    public int getGoods(){
-        if(goodStorage > 0){
-            int split = this.goodStorage/this.buildingList.size();
-            this.goodStorage-=split;
-            if(this.goodStorage-split <= 0){
-                return this.goodStorage;
+    public int getFood(){
+        int goodStorage = this.storage.getGoods(Goods.Food);
+        if( goodStorage > 0){
+            int split = goodStorage/this.buildingList.size();
+            goodStorage-=split;
+            this.storage.consumeGoods(Goods.Food,split);
+            if(goodStorage-split <= 0){
+                return goodStorage;
             }
             return split;
         }
