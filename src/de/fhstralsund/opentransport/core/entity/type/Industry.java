@@ -92,8 +92,8 @@ public class Industry extends Entity implements IUpdateable, IRenderable, IDaily
 
     @Override
     public void dailyupdate(){
-        int toAdd = 30 * availableGeneratingComponents;
-        toAdd = toAdd == 0 ? 30 : toAdd;
+        int toAdd = new Random().nextInt(50) * availableGeneratingComponents;
+        toAdd = toAdd  < 20 ? 30 : toAdd;
         availableAmount += toAdd;
     }
 

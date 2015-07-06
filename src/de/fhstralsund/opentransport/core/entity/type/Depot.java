@@ -38,7 +38,9 @@ public class Depot extends Entity {
 
             for(int i = -4; i <= 4; i++) {
                 for (int j = -4; j <= 4; j++) {
-                    if(i != 0 || j!= 0) {
+                    if((i != 0 || j!= 0)
+                            && (int) tilePos.getX() - i > 0 && (int) tilePos.getY() - j > 0
+                            && (int) tilePos.getX() - i < Camera.getInstance().getSize() && (int) tilePos.getY() - j < Camera.getInstance().getSize()) {
                         Entity temp = entityController.getEntityVec((int) tilePos.getX() - i, (int) tilePos.getY() - j);
                         if (temp != null && temp.getClass() == Industry.class) {
                             if(((Industry)temp).getType() != IndustryType.Field) {
@@ -49,7 +51,6 @@ public class Depot extends Entity {
                 }
             }
         }
-
 
         this.setTextureID(textureId);
         this.entityController = entityController;
@@ -64,7 +65,7 @@ public class Depot extends Entity {
                 storage.addGoods(Goods.Food, ((Industry)nearbyindustry.get(i)).getAvailableAmount());
             }
             if(((Industry)nearbyindustry.get(i)).getType() == IndustryType.Wood) {
-                storage.addGoods(Goods.Furniture, ((Industry)nearbyindustry.get(i)).getAvailableAmount() / 20);
+                storage.addGoods(Goods.Furniture, ((Industry)nearbyindustry.get(i)).getAvailableAmount() / 25);
             }
         }
 
