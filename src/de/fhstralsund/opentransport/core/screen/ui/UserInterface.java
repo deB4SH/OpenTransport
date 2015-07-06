@@ -5,9 +5,11 @@ import de.fhstralsund.opentransport.core.entity.statics.StreetTID;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import de.fhstralsund.opentransport.core.screen.ui.action.CreateCarAction;
 import de.fhstralsund.opentransport.core.screen.ui.action.CreateDepotAction;
 import de.fhstralsund.opentransport.core.screen.ui.action.CreateStreetAction;
 import de.fhstralsund.opentransport.core.screen.ui.element.Buildmenu;
+import de.fhstralsund.opentransport.core.screen.ui.element.DepotMenue;
 import de.fhstralsund.opentransport.core.screen.ui.element.Topbar;
 
 import java.io.File;
@@ -21,6 +23,7 @@ public class UserInterface implements IRenderable,IUpdateable{
     //basicElements
     Topbar topbar;
     Buildmenu buildmenu;
+    DepotMenue depotmenue;
 
     public UserInterface(ResourceLoader rl, EntityController entityController){
         uiElements = new ArrayList<UIElement>();
@@ -41,12 +44,15 @@ public class UserInterface implements IRenderable,IUpdateable{
         buildmenu.addButton(buildStreetButton);
         buildmenu.addButton(buildDepotButton);
 
+        depotmenue = new DepotMenue(false,"DepotMenu",100,200,200,130,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"buildmenu_bg.png"), entityController);
+        depotmenue.setCreateCarAction(new UIButton(new CreateCarAction(), 100, 280, 60, 40, rl.getTextureID("res"+ File.separator+"ui"+File.separator+"hire.png"), entityController));
 
 
         UIButton buildMenuButton = new UIButton(buildmenu,0,0,30,30,rl.getTextureID("res"+ File.separator+"ui"+File.separator+"build_button.png"));
         topbar.addButton(buildMenuButton);
 
         uiElements.add(buildmenu);
+        uiElements.add(depotmenue);
     }
 
 

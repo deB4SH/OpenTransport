@@ -60,7 +60,19 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         this.path = path;
         this.entityController = entityController;
         this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.5f, 0.5f); //small numbers, percentage image and 1 of position
+
     }
+
+    public Car(Vector2f tilePos, int textureID, boolean enterAble, Vector2f target,EntityController entityController) {
+        super(tilePos, enterAble);
+        super.setTextureID(textureID);
+        this.entityController = entityController;
+        this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.5f, 0.5f); //small numbers, percentage image and 1 of position
+
+        this.path = entityController.requestNewWay(tilePos, target);
+
+    }
+
 
     @Override
     public void update() {

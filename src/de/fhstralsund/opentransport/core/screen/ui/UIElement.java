@@ -3,6 +3,7 @@ package de.fhstralsund.opentransport.core.screen.ui;
 import de.fhstralsund.opentransport.core.interfaces.IRenderable;
 import de.fhstralsund.opentransport.core.interfaces.IUpdateable;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
+import org.lwjgl.util.vector.Vector2f;
 
 import java.util.List;
 
