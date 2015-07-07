@@ -3,8 +3,10 @@ package de.fhstralsund.opentransport.core.screen.ui.element;
 import de.fhstralsund.opentransport.*;
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.Goods;
 import de.fhstralsund.opentransport.core.entity.type.Car;
 import de.fhstralsund.opentransport.core.entity.type.Depot;
+import de.fhstralsund.opentransport.core.entity.type.Storage;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
@@ -12,6 +14,7 @@ import de.fhstralsund.opentransport.core.screen.ui.UIButton;
 import de.fhstralsund.opentransport.core.screen.ui.UIElement;
 import de.fhstralsund.opentransport.core.screen.ui.UISubelement;
 import de.fhstralsund.opentransport.core.screen.ui.action.CreateCarAction;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.*;
@@ -37,7 +40,6 @@ public class DepotMenue extends UIElement {
 
     private boolean endChosen = false;
     private Entity endDepot = null;
-    private boolean carChosen = false;
 
 
     private EntityController ec;
@@ -75,11 +77,13 @@ public class DepotMenue extends UIElement {
         GL11.glEnd();
 
         if(endChosen) {
-            renderText("Depot ausgewaehlt: " + endDepot.toString(), new Vector2f(getPosX(), getPosY() + 10));
+            renderText("Depot ausgewaehlt: " + ((Depot)endDepot).localnumber, new Vector2f(getPosX(), getPosY() + 10));
         }else {
             renderText("Depot ausgewaehlt: " + endChosen, new Vector2f(getPosX(), getPosY() + 10));
         }
-        renderText("Auto   ausgewaehlt: " + carChosen, new Vector2f(getPosX(), getPosY() + 30));
+        Storage depotStorage = DepotMenueVendor.startDepot.getStorage();
+        renderText("Food : " +      depotStorage.getGoods(Goods.Food), new Vector2f(getPosX(), getPosY() + 30));
+        renderText("Furniture : " + depotStorage.getGoods(Goods.Furniture), new Vector2f(getPosX(), getPosY() + 50));
 
         //render all buttonElements
         for(UIButton e: this.buildMenuButtons){
@@ -113,12 +117,13 @@ public class DepotMenue extends UIElement {
             }
 
             if(endDepot != null && createCarAction.getCollisionBox().contains(new Point(Mouse.getX(), -Mouse.getY() + (int) de.fhstralsund.opentransport.Window.getDisplay().getY()))
-                && Mouse.isButtonDown(0) &&!mouseUp) {
+                && Mouse.isButtonDown(0) && !mouseUp) {
                 createCarAction.getUiButtonAction().fireAction(ec, DepotMenueVendor.startPos, endDepot);
-                this.setVisible(false);
-                DepotMenueVendor.startPos = null;
-                this.endDepot = null;
-                endChosen = false;
+                cancelGui();
+            }
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+                cancelGui();
             }
 
             mouseUp = Mouse.isButtonDown(0);
@@ -133,6 +138,14 @@ public class DepotMenue extends UIElement {
         tmp.setPosY(super.getPosY()+80);
 
         buildMenuButtons.add(button);
+    }
+
+    private void cancelGui(){
+        this.setVisible(false);
+        DepotMenueVendor.startPos = null;
+        this.endDepot = null;
+        endChosen = false;
+        DepotMenueVendor.startDepot = null;
     }
 
     public UIButton getCreateCarAction() {

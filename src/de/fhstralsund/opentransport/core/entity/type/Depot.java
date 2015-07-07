@@ -2,10 +2,11 @@ package de.fhstralsund.opentransport.core.entity.type;
 
 import de.fhstralsund.opentransport.core.entity.Entity;
 import de.fhstralsund.opentransport.core.entity.EntityController;
+import de.fhstralsund.opentransport.core.entity.statics.Goods;
+import de.fhstralsund.opentransport.core.entity.statics.IndustryType;
 import de.fhstralsund.opentransport.core.io.ResourceLoader;
 import de.fhstralsund.opentransport.core.screen.Camera;
 import de.fhstralsund.opentransport.core.screen.screens.Game;
-import de.fhstralsund.opentransport.core.screen.ui.element.DepotMenue;
 import de.fhstralsund.opentransport.core.screen.ui.element.DepotMenueVendor;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -14,23 +15,59 @@ import org.lwjgl.util.ReadablePoint;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Depot extends Entity {
 
     public boolean isPlaced = false;
+    public static int globalNumbers = 0;
+    public int localnumber = 0;
     private EntityController entityController;
+    private List<Entity> nearbyindustry = new ArrayList<>();
+    private Storage storage;
 
     private boolean mouseUp = false;
 
     public Depot(Vector2f tilePos, Boolean enterAble, int textureId, EntityController entityController) {
         super(tilePos, enterAble);
         this.isPlaced = enterAble;
+        if(isPlaced) {
+            localnumber = globalNumbers;
+            globalNumbers++;
+
+            for(int i = -4; i <= 4; i++) {
+                for (int j = -4; j <= 4; j++) {
+                    if((i != 0 || j!= 0)
+                            && (int) tilePos.getX() - i > 0 && (int) tilePos.getY() - j > 0
+                            && (int) tilePos.getX() - i < Camera.getInstance().getSize() && (int) tilePos.getY() - j < Camera.getInstance().getSize()) {
+                        Entity temp = entityController.getEntityVec((int) tilePos.getX() - i, (int) tilePos.getY() - j);
+                        if (temp != null && temp.getClass() == Industry.class) {
+                            if(((Industry)temp).getType() != IndustryType.Field) {
+                                nearbyindustry.add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         this.setTextureID(textureId);
         this.entityController = entityController;
+        this.storage = new Storage(this);
     }
 
     @Override
     public void update() {
+
+        for(int i = 0; i < nearbyindustry.size(); i++) {
+            if(((Industry)nearbyindustry.get(i)).getType() == IndustryType.Farm) {
+                storage.addGoods(Goods.Food, ((Industry)nearbyindustry.get(i)).getAvailableAmount());
+            }
+            if(((Industry)nearbyindustry.get(i)).getType() == IndustryType.Wood) {
+                storage.addGoods(Goods.Furniture, ((Industry)nearbyindustry.get(i)).getAvailableAmount() / 25);
+            }
+        }
 
         Camera cam = Camera.getInstance();
         ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
@@ -43,6 +80,7 @@ public class Depot extends Entity {
                 if(!DepotMenueVendor.getDepotMenue().isVisible()) {
                     DepotMenueVendor.getDepotMenue().setVisible(true);
                     DepotMenueVendor.startPos = this.getTilePos();
+                    DepotMenueVendor.startDepot = this;
                 }
             }
         }
@@ -95,5 +133,18 @@ public class Depot extends Entity {
 
             GL11.glEnd();
         }
+    }
+
+    public void requestRessources(Storage carStorage){
+        carStorage.addAllGoods(this.storage);
+        storage = new Storage(this);
+    }
+
+    public void giveRessources(Storage carStorage){
+        this.storage.addAllGoods(carStorage);
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 }

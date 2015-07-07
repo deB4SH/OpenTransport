@@ -20,7 +20,10 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     private List<Vector2f> path;
     private int currentNode = 0;
     private EntityController entityController = null;
-    private Depot depot = null;
+
+    private Depot startDepot = null;
+    private Depot endDepot = null;
+
     private Rectangle rectangle;
 
     private float age = 0.0f;
@@ -32,6 +35,8 @@ public class Car extends Entity implements IRenderable, IUpdateable{
 
     private boolean isDelivering = true;
     private boolean isReturning = false;
+
+    private Storage storage;
 
     enum heading {
         NE,
@@ -46,12 +51,14 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         super(tilePos, enterAble);
         super.setTextureID(textureID);
         this.path = new ArrayList<Vector2f>();
+        this.storage = new Storage(this);
     }
 
     public Car(Vector2f tilePos, int textureID, Boolean enterAble, List<Vector2f> path) {
         super(tilePos, enterAble);
         super.setTextureID(textureID);
         this.path = path;
+        this.storage = new Storage(this);
     }
 
     public Car(Vector2f tilePos, int textureID, boolean enterAble, List<Vector2f> path, EntityController entityController) {
@@ -60,22 +67,27 @@ public class Car extends Entity implements IRenderable, IUpdateable{
         this.path = path;
         this.entityController = entityController;
         this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.5f, 0.5f); //small numbers, percentage image and 1 of position
-
+        this.storage = new Storage(this);
     }
 
-    public Car(Vector2f tilePos, int textureID, boolean enterAble, Vector2f target,EntityController entityController) {
+    public Car(Vector2f tilePos, int textureID, boolean enterAble, Vector2f target, EntityController entityController) {
         super(tilePos, enterAble);
         super.setTextureID(textureID);
         this.entityController = entityController;
         this.rectangle = new Rectangle(super.getTilePos().x, super.getTilePos().y, 0.5f, 0.5f); //small numbers, percentage image and 1 of position
-
         this.path = entityController.requestNewWay(tilePos, target);
-
+        this.storage = new Storage(this);
     }
 
 
     @Override
     public void update() {
+
+        if(startDepot == null && endDepot == null && path != null) {
+            startDepot = (Depot)entityController.getEntityVec((int)path.get(0).getX(), (int)path.get(0).getY());
+            startDepot.requestRessources(this.storage);
+            endDepot = (Depot)entityController.getEntityVec((int)path.get(path.size()-1).getX(), (int)path.get(path.size()-1).getY());
+        }
 
         Vector2f wayPoint = null;
 
@@ -101,11 +113,13 @@ public class Car extends Entity implements IRenderable, IUpdateable{
                     if(isDelivering) {
                         isDelivering = false;
                         isReturning = true;
+                        endDepot.giveRessources(this.storage);
                         return;
                     }
                     if(isReturning){
                         isReturning = false;
                         isDelivering = true;
+                        startDepot.requestRessources(this.storage);
                     }
                 }
             }
@@ -197,6 +211,10 @@ public class Car extends Entity implements IRenderable, IUpdateable{
     }
 
     public void setDepot(Depot depot) {
-        this.depot = depot;
+        this.startDepot = depot;
+    }
+
+    public Depot getDepot() {
+        return startDepot;
     }
 }

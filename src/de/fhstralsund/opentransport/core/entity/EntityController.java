@@ -28,6 +28,7 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
     private Entity[][] entities;
     private List<Car> cars;
 	private Pathfinder pathfinder;
+
     private Vegetation veg;
 
     private Depot dummyDepot; // dummy dummyDepot
@@ -42,7 +43,7 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
 
     public void addEntity(Entity entity){
         //check if there is an entity on this vector
-        if(!isEntityOnVec(entity.getTilePos()) && entity.getTilePos().getX() > 0 && entity.getTilePos().getY() > 0){
+        if(!isEntityOnVec(entity.getTilePos()) && entity.getTilePos().getX() > 0 && entity.getTilePos().getY() > 0 && entity.getTilePos().getX() < mapSize -1 && entity.getTilePos().getY() < mapSize -1){
             this.entities[(int)entity.getTilePos().getX()][(int)entity.getTilePos().getY()] = entity;
             collisionMap = getcollisionArray();
             //remove veg if existing there
@@ -228,7 +229,6 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
             Camera cam = Camera.getInstance();
             ReadablePoint p = new Point(Mouse.getX(), -Mouse.getY() + cam.getRectangle().getHeight()); // invertieren weil windows andere koordinaten liefert
 
-
             float isoMouseX = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) - ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT));
             float isoMouseY = Math.round(((p.getX() + cam.getPosition().getX()) / Game.TILEWIDTH) + ((p.getY() + cam.getPosition().getY()) / Game.TILEHEIGHT)) - 1;
 
@@ -276,5 +276,9 @@ public class EntityController implements IRenderable, IUpdateable, IDailycycle {
         if (Mouse.isButtonDown(1)) {
             dummyStreet = null;
         }
+    }
+
+    public Vegetation getVeg() {
+        return veg;
     }
 }
