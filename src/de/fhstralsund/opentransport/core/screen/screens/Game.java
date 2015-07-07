@@ -138,9 +138,11 @@ public class Game extends GameScreen implements IRenderable, IUpdateable {
     }
 
     private void generateCities() {
-        this.cityController.spawnCity(new Vector2f(20,20),"Wuff",100,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(20,50),"Wuff",100,this.entityController,rl);
         this.cityController.spawnCity(new Vector2f(18,40),"Moew",100,this.entityController,rl);
-        this.cityController.spawnCity(new Vector2f(35,40),"Blubb",100,this.entityController,rl);
+        this.cityController.spawnCity(new Vector2f(35,60),"Blubb",100,this.entityController,rl);
+
+
     }
 
     private void generateIndustry() {
