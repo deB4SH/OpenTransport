@@ -24,7 +24,7 @@ public class Depot extends Entity {
     public static int globalNumbers = 0;
     public int localnumber = 0;
     private EntityController entityController;
-    private List<Entity> nearbyindustry = new ArrayList<>();
+    private List<Entity> nearbyindustry = new ArrayList<Entity>();
     private Storage storage;
 
     private boolean mouseUp = false;
